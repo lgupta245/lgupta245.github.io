@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lakshay Gupta | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+:root{--bg:#eef2f9;--panel:#fff;--head:#e4eaf5;--line:#cfd7e8;--ink:#0d1630;--mute:#55607d;--acc:#0a7f95;--up:#0f8a5f;--warn:#c2570c;--path:10,127,149;--grid:rgba(13,22,48,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#050a17;--panel:#0a1226;--head:#0e1832;--line:#1a2744;--ink:#e7ecfa;--mute:#8f9cc0;--acc:#3fd8ee;--up:#34d399;--warn:#ffa24a;--path:63,216,238;--grid:rgba(143,156,192,.09)}}
+:root[data-theme="dark"]{--bg:#050a17;--panel:#0a1226;--head:#0e1832;--line:#1a2744;--ink:#e7ecfa;--mute:#8f9cc0;--acc:#3fd8ee;--up:#34d399;--warn:#ffa24a;--path:63,216,238;--grid:rgba(143,156,192,.09)}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font-family:Sora,system-ui,sans-serif;line-height:1.6;background:var(--bg);
+ background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:44px 44px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.win{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.win>.bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.55rem 1rem;background:var(--head);border-bottom:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--mute)}
+.win>.bar b{color:var(--ink);font-weight:500}
+.mono{font-family:'IBM Plex Mono',monospace}.mute{color:var(--mute)}.acc{color:var(--acc)}.up{color:var(--up)}.warn{color:var(--warn)}
+.row{display:grid;grid-template-columns:1.1fr 1.8fr .9fr .7fr;gap:.75rem;padding:.8rem 1rem;border-top:1px solid var(--line);align-items:baseline;font-size:.92rem}
+.row.h{border-top:0;font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--mute)}
+.row.c{grid-template-columns:1fr auto}
+@media(max-width:640px){.row:not(.c){grid-template-columns:1fr auto}.row:not(.c):not(.h)>:nth-child(2){grid-column:1/3;order:3;color:var(--mute)}.row.h{display:none}}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:.75rem;border:1px solid var(--line);border-radius:4px;padding:.15rem .5rem;color:var(--mute)}
+.nav a{color:var(--mute);transition:color .15s}.nav a:hover{color:var(--acc)}
+a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--up);display:inline-block;margin-right:.45rem}
+</style>
+</head>
+<body>
+
+<header class="sticky z-20 backdrop-blur" style="top:env(safe-area-inset-top,0px);background:color-mix(in srgb,var(--bg) 85%,transparent);border-bottom:1px solid var(--line)">
+  <div class="mx-auto max-w-6xl px-5 h-14 flex items-center justify-between">
+    <a href="#top" class="mono text-sm font-medium">lakshay<span class="acc">.gupta</span></a>
+    <nav class="nav hidden md:flex gap-6 text-sm"><a href="#experience">Experience</a><a href="#education">Education</a><a href="#credentials">Credentials</a><a href="#leadership">Leadership</a><a href="#contact">Contact</a></nav>
+    <span class="mono text-xs mute hidden sm:block"><span class="dot"></span>Open to conversations</span>
+  </div>
+</header>
+
+<main id="top" class="mx-auto max-w-6xl px-5 pb-16">
+
+<!-- HERO -->
+<section class="pt-10 pb-6">
+  <div class="grid lg:grid-cols-12 gap-6 items-stretch">
+    <div class="lg:col-span-5 flex flex-col justify-center">
+      <p class="mono text-sm mute mb-3">Finance &amp; Risk</p>
+      <h1 class="text-5xl sm:text-6xl font-extrabold tracking-tight leading-[1.02]">Lakshay<br>Gupta</h1>
+      <p class="mt-5 text-lg mute max-w-md">MBA candidate in finance. Two years of risk assessment and compliance work behind me, and both FRM levels cleared.</p>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="mailto:Lakshay.gupta760@nmims.in" class="rounded-md px-5 py-2.5 text-sm font-semibold" style="background:var(--acc);color:var(--bg)">Email me</a>
+        <a href="https://linkedin.com/in/lakshayg" target="_blank" rel="noopener" class="rounded-md px-5 py-2.5 text-sm font-semibold" style="border:1px solid var(--line);background:var(--panel)">LinkedIn</a>
+      </div>
+    </div>
+    <div class="lg:col-span-7 win">
+      <div class="bar"><b>Monte Carlo: 200 portfolio paths, 120 days</b><span id="var" class="warn">VaR 95%: …</span></div>
+      <canvas id="mc" class="block w-full" style="height:340px" aria-label="Animated simulation of 200 portfolio return paths with a histogram of outcomes and the worst 5 percent highlighted"></canvas>
+    </div>
+  </div>
+
+  <div class="mt-6 win grid grid-cols-2 md:grid-cols-4" style="gap:1px;background:var(--line)">
+    <div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute">FRM, GARP USA</div><div class="text-2xl font-extrabold">Level I + II</div><div class="mono text-xs up">▲ Cleared</div></div>
+    <div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute">Risk &amp; Asset Manager</div><div class="text-2xl font-extrabold">25 months</div><div class="mono text-xs up">▲ Apr 2024 – Jun 2026</div></div>
+    <div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute">Team led and mentored</div><div class="text-2xl font-extrabold">5 people</div><div class="mono text-xs up">▲ Appreciation Award</div></div>
+    <div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute">Graduation CGPA</div><div class="text-2xl font-extrabold">9.36 / 10</div><div class="mono text-xs up">▲ Delhi University</div></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="py-8">
+  <div class="win">
+    <div class="bar"><b>Experience</b><span>1 position</span></div>
+    <div class="row c" style="border-top:0"><div><h2 class="text-xl font-extrabold">Risk &amp; Asset Manager</h2><p class="acc text-sm">The Dragon Year Limited</p></div><span class="mono text-sm mute">Apr 2024 – Jun 2026</span></div>
+    <div class="grid md:grid-cols-2" style="border-top:1px solid var(--line)">
+      <div class="p-5 md:border-r" style="border-color:var(--line)"><div class="mono text-xs acc mb-1">Risk assessment</div><p class="text-sm">Ran risk assessments and sensitivity analyses across digital media assets and business processes to identify, evaluate and mitigate potential risks and vulnerabilities.</p></div>
+      <div class="p-5"><div class="mono text-xs acc mb-1">Compliance testing</div><p class="text-sm">Performed functional testing of compliance management software to validate system performance and adherence to internal compliance standards.</p></div>
+      <div class="p-5 md:border-r" style="border-top:1px solid var(--line);border-color:var(--line)"><div class="mono text-xs acc mb-1">Team leadership</div><p class="text-sm">Led onboarding and training of 5+ new team members through process walkthroughs, shared best practices and ongoing operational support.</p></div>
+      <div class="p-5" style="border-top:1px solid var(--line)"><div class="mono text-xs up mb-1">Recognition</div><p class="text-sm">Received an Appreciation Award and a Letter of Recommendation for outstanding performance while leading and mentoring a team of 5.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="py-8">
+  <div class="win">
+    <div class="bar"><b>Education</b><span>4 records</span></div>
+    <div class="row h"><span>Program</span><span>Detail</span><span>Period</span><span>Score</span></div>
+    <div class="row"><b>MBA (Core)</b><span>Finance specialisation</span><span class="mono">2026 – 2028</span><span class="mono acc">Pursuing</span></div>
+    <div class="row"><b>Graduation</b><span>Ramjas College, Delhi University</span><span class="mono">2019 – 2022</span><span class="mono up">9.36/10</span></div>
+    <div class="row"><b>Class XII</b><span>Arunodaya Public School, CBSE</span><span class="mono">2019</span><span class="mono">87.20%</span></div>
+    <div class="row"><b>Class X</b><span>Arunodaya Public School, CBSE</span><span class="mono">2017</span><span class="mono">85.50%</span></div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section id="credentials" class="py-8">
+  <div class="grid lg:grid-cols-5 gap-6">
+    <div class="lg:col-span-3 win">
+      <div class="bar"><b>Certifications</b><span>5 completed</span></div>
+      <div class="row c" style="border-top:0;background:color-mix(in srgb,var(--acc) 8%,transparent)"><div><b>Financial Risk Manager (FRM®), Levels I and II</b><div class="text-sm mute">Global Association of Risk Professionals (GARP), USA</div></div><span class="mono text-xs up">▲ Cleared</span></div>
+      <div class="row c"><span>Excel and Copilot Fundamentals, Microsoft (Coursera)</span><span class="mono mute">2026</span></div>
+      <div class="row c"><span>Reading Financial Statements, CFI (Coursera)</span><span class="mono mute">2026</span></div>
+      <div class="row c"><span>Financial Markets and Instruments, Rice University (Coursera)</span><span class="mono mute">2026</span></div>
+      <div class="row c"><span>Market Concepts, Bloomberg for Education</span><span class="mono mute">2026</span></div>
+      <div class="row c"><span>Financial Modelling &amp; Valuation, Proschool (IMS)</span><span class="mono mute">2023</span></div>
+    </div>
+    <div class="lg:col-span-2 win">
+      <div class="bar"><b>Toolkit</b></div>
+      <div class="p-5">
+        <div class="mono text-xs mute mb-2">Software</div>
+        <div class="flex flex-wrap gap-2 mb-6"><span class="chip">MS Excel (Advanced)</span><span class="chip">PowerPoint</span><span class="chip">Canva</span><span class="chip">Google Workspace</span><span class="chip">Bloomberg</span></div>
+        <div class="mono text-xs mute mb-2">Focus areas</div>
+        <div class="flex flex-wrap gap-2"><span class="chip">Risk assessment</span><span class="chip">Sensitivity analysis</span><span class="chip">Compliance</span><span class="chip">Quality control</span><span class="chip">Financial modelling</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section id="leadership" class="py-8">
+  <div class="grid lg:grid-cols-2 gap-6">
+    <div class="win">
+      <div class="bar"><b>Positions of responsibility</b></div>
+      <div class="row c" style="border-top:0"><span>Member, Intuito (The Digital Club)</span><span class="mono text-sm mute">Aug 2026 – Present</span></div>
+      <div class="row c"><span>Member, Equinox (The Entrepreneurship Committee)</span><span class="mono text-sm mute">Aug 2026 – Present</span></div>
+      <div class="row c"><div><span>Class Representative, Ramjas College, Delhi University</span><div class="text-sm mute">Primary liaison between faculty and students.</div></div><span class="mono text-sm mute">2019 – 2022</span></div>
+    </div>
+    <div class="win">
+      <div class="bar"><b>Beyond work</b></div>
+      <div class="p-5 space-y-4 text-sm">
+        <p><b class="acc">VIBGYOR.</b> Helped establish a beauty salon for the transgender community, supporting its launch and sustainable livelihood generation.</p>
+        <p><b class="acc">Beti Ek Lakshya Foundation.</b> Volunteered with educational support and plantation drives for underprivileged communities in Delhi.</p>
+        <p><b class="acc">Off the clock.</b> Reading fiction, cycling, and solving the Rubik’s Cube.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-8">
+  <div class="win">
+    <div class="bar"><b>Contact</b><span><span class="dot"></span>Open to conversations</span></div>
+    <div class="p-8 sm:p-12 text-center">
+      <h2 class="text-3xl sm:text-4xl">Let’s talk risk, markets or internships.</h2>
+      <div class="mt-7 flex flex-wrap justify-center gap-3">
+        <a href="mailto:Lakshay.gupta760@nmims.in" class="rounded-md px-5 py-2.5 text-sm font-semibold" style="background:var(--acc);color:var(--bg)">Lakshay.gupta760@nmims.in</a>
+        <a href="https://linkedin.com/in/lakshayg" target="_blank" rel="noopener" class="rounded-md px-5 py-2.5 text-sm font-semibold" style="border:1px solid var(--line)">linkedin.com/in/lakshayg</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="mx-auto max-w-6xl px-5 pb-8 mono text-xs mute">© 2026 Lakshay Gupta. The chart above is a random simulation, not market data.</footer>
+
+<script>
+(function(){
+var cv=document.getElementById('mc'),ctx=cv.getContext('2d'),N=200,T=120,B=26,paths=[];
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,t0;
+function g(){var u=0;while(!u)u=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(6.2832*Math.random())}
+for(var i=0;i<N;i++){var p=[100],x=100;for(var k=1;k<=T;k++){x*=Math.exp(.0004+.011*g());p.push(x)}paths.push(p)}
+var ends=paths.map(function(p){return p[T]}).sort(function(a,b){return a-b}),thr=ends[Math.floor(N*.05)];
+document.getElementById('var').textContent='VaR 95%: '+(thr-100).toFixed(1).replace('-','−')+'%';
+var all=[].concat.apply([],paths),min=Math.min.apply(null,all),max=Math.max.apply(null,all),bw=(max-min)/B;
+function bins(i){var b=new Array(B).fill(0);paths.forEach(function(p){b[Math.min(B-1,Math.floor((p[i]-min)/bw))]++});return b}
+var maxc=Math.max.apply(null,bins(T));
+function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function draw(prog){
+ var d=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;cv.width=w*d;cv.height=h*d;ctx.setTransform(d,0,0,d,0,0);
+ var L=46,R=w-14,cw=w*.7,hx=cw+14,hw=R-hx,top=12,bot=h-26,steps=Math.floor(prog*T);
+ var X=function(i){return L+i/T*(cw-L)},Y=function(v){return bot-(v-min)/(max-min)*(bot-top)};
+ var line=css('--line'),mute=css('--mute'),rgb=css('--path'),warn=css('--warn');
+ ctx.clearRect(0,0,w,h);ctx.font='11px "IBM Plex Mono",monospace';ctx.textBaseline='middle';
+ for(var v=Math.ceil(min/10)*10;v<=max;v+=10){ctx.strokeStyle=line;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(L,Y(v));ctx.lineTo(R,Y(v));ctx.stroke();ctx.fillStyle=mute;ctx.textAlign='right';ctx.fillText((v>=100?'+':'')+(v-100).toFixed(0).replace('-','−')+'%',L-8,Y(v))}
+ ctx.textAlign='left';ctx.fillText('day 0',L,h-10);ctx.textAlign='right';ctx.fillText('day 120',cw,h-10);ctx.textAlign='left';ctx.fillText('outcomes',hx,h-10);
+ var done=prog>=1;
+ paths.forEach(function(p){var tail=p[T]<=thr&&done;ctx.beginPath();for(var i=0;i<=steps;i++){i?ctx.lineTo(X(i),Y(p[i])):ctx.moveTo(X(i),Y(p[i]))}ctx.strokeStyle=tail?warn:'rgba('+rgb+',.17)';ctx.lineWidth=tail?1.5:1;ctx.stroke()});
+ var b=bins(steps);
+ b.forEach(function(c,j){var lo=min+j*bw,len=c/maxc*hw;ctx.fillStyle=(lo+bw<=thr)?warn:'rgba('+rgb+',.55)';ctx.fillRect(hx,Y(lo+bw)+1,len,Math.max(1,Y(lo)-Y(lo+bw)-2))});
+ if(done){ctx.setLineDash([5,4]);ctx.strokeStyle=warn;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(L,Y(thr));ctx.lineTo(R,Y(thr));ctx.stroke();ctx.setLineDash([])}
+}
+function tick(ts){t0=t0||ts;var p=Math.min((ts-t0)/3400,1);draw(p);if(p<1)requestAnimationFrame(tick)}
+reduce?draw(1):requestAnimationFrame(tick);
+var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){draw(1)},120)});
+})();
+</script>
+</body>
+</html>

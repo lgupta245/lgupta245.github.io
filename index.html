@@ -35,6 +35,19 @@ a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 .tg:first-child{border-radius:6px 0 0 6px}.tg:last-child{border-radius:0 6px 6px 0;border-left:0}
 .tg[aria-pressed=true]{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:500}
 .tg:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.dt{border-collapse:separate;border-spacing:0}.dt th,.dt td{padding:.4rem .8rem;text-align:right;white-space:nowrap}.dt th:first-child,.dt td:first-child{text-align:left}
+.dt th{position:sticky;top:0;background:var(--head);color:var(--mute);font-weight:500}.dt td{border-top:1px solid var(--line)}
+.rg{-webkit-appearance:none;appearance:none;width:100%;height:20px;background:transparent;margin:0;display:block;cursor:pointer}
+.rg::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(to right,var(--acc) var(--p,50%),var(--line) var(--p,50%))}
+.rg::-moz-range-track{height:4px;border-radius:4px;background:linear-gradient(to right,var(--acc) var(--p,50%),var(--line) var(--p,50%))}
+.rg::-webkit-slider-thumb{-webkit-appearance:none;margin-top:-7px;width:18px;height:18px;border-radius:50%;background:var(--panel);border:2px solid var(--acc);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 20%,transparent)}
+.rg::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--panel);border:2px solid var(--acc);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 20%,transparent)}
+.rg:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:4px}
+.vi{background:transparent;border:0;border-bottom:1px dashed var(--line);color:var(--acc);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:1rem;text-align:right;padding:.1rem .25rem}
+.vi:focus{outline:2px solid var(--acc);outline-offset:2px;border-radius:3px}
+.sec{display:grid;grid-template-columns:minmax(84px,1fr) 1.5fr 70px 28px;gap:.7rem;align-items:center;padding:.6rem 0;border-top:1px solid var(--line)}
+.rm{background:none;border:1px solid var(--line);color:var(--mute);border-radius:6px;width:28px;height:28px;cursor:pointer;line-height:1;font-size:1rem}
+.rm:hover{color:var(--warn);border-color:var(--warn)}.rm:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -92,7 +105,7 @@ a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 <!-- PROJECTS -->
 <section id="projects" class="py-8">
   <div class="win">
-    <div class="bar"><b>Projects</b><span>1 project</span></div>
+    <div class="bar"><b>Projects</b><span>2 projects</span></div>
     <div class="row c" style="border-top:0">
       <div>
         <h2 class="text-xl font-extrabold">Black-Scholes Option Greeks Dashboard</h2>
@@ -113,6 +126,59 @@ a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
     <p id="par" class="mono text-xs mute px-5 py-3" style="border-top:1px solid var(--line)"></p>
     <div id="ch" class="grid sm:grid-cols-2 lg:grid-cols-3" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"></div>
     <p class="mono text-xs mute px-5 py-3" style="border-top:1px solid var(--line)">European options, no dividends. Theta is shown per day, Vega per 1 volatility point and Rho per 1% rate move. Charts plot the selected option against the stock price; the amber line marks the spot price S and the grey line the strike X.</p>
+    <div class="row c">
+      <div>
+        <h2 class="text-xl font-extrabold">Historical Simulation VaR Dashboard</h2>
+        <p class="text-sm mute mt-1 max-w-3xl">Estimates portfolio Value at Risk with the historical simulation method. It ranks past portfolio returns from worst to best and reads off the percentile for the chosen confidence level: <span class="mono">VaR = −return at the (100 − confidence) percentile × portfolio value</span>. My notebook runs this on 15 years of daily prices for ICICI Bank, HDFC Bank, Kotak Bank, Axis Bank and the Nifty 50. This dashboard lets anyone load their own prices from Excel, then set the portfolio value, time horizon and confidence level, and choose which securities to hold and at what weights.</p>
+        <div class="flex flex-wrap gap-2 mt-3"><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">yfinance</span><span class="chip">Matplotlib</span><span class="chip">Historical simulation</span></div>
+      </div>
+    </div>
+    <div class="p-5" style="border-top:1px solid var(--line)">
+      <div class="flex flex-wrap items-end gap-3">
+        <div class="grow" style="min-width:240px"><label class="mono text-xs mute block mb-1" for="hf">Upload prices (Excel .xlsx / .xls, or .csv)</label><input id="hf" type="file" class="inp" accept=".xlsx,.xls,.csv"></div>
+        <button id="hs" type="button" class="tg" style="flex:none;border-radius:6px;border-left:1px solid var(--line);padding:.55rem 1rem">Use sample data</button>
+      </div>
+      <p id="hstat" class="mono text-xs acc mt-3"></p>
+      <p class="mono text-xs mute mt-1">Format: row 1 holds headers, one column holds dates, and the other columns hold prices (one stock, several stocks, or a portfolio value). The file is read in your browser and is not uploaded anywhere.</p>
+    </div>
+    <div class="grid lg:grid-cols-2" style="gap:1px;background:var(--line);border-top:1px solid var(--line)">
+      <div class="p-5" style="background:var(--panel)">
+        <h3 class="text-sm font-semibold mb-5">Parameters</h3>
+        <div class="mb-6">
+          <div class="flex items-center justify-between gap-3"><label class="text-sm" for="hcl">Confidence level</label><span class="flex items-center gap-1"><input id="hcl" class="vi" style="width:7ch" type="number" step="any" min="50" max="99.99" value="95"><span class="mono acc">%</span></span></div>
+          <input id="hclr" class="rg mt-2" type="range" min="90" max="99.5" step="0.5" value="95" aria-label="Confidence level slider">
+          <div class="flex justify-between mono text-xs mute mt-1"><span>90%</span><span>99.5%</span></div>
+        </div>
+        <div class="mb-6">
+          <div class="flex items-center justify-between gap-3"><label class="text-sm" for="hd">Time horizon</label><span class="flex items-center gap-1"><input id="hd" class="vi" style="width:6ch" type="number" step="1" min="1" max="250" value="5"><span class="mono acc">days</span></span></div>
+          <input id="hdr" class="rg mt-2" type="range" min="1" max="60" step="1" value="5" aria-label="Time horizon slider">
+          <div class="flex justify-between mono text-xs mute mt-1"><span>1d</span><span>60d</span></div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between gap-3 flex-wrap"><label class="text-sm" for="hpv">Portfolio value</label><span class="flex items-center gap-2"><select id="hcur" class="inp" style="width:auto;padding:.2rem .4rem" aria-label="Currency"><option>₹</option><option>$</option><option>€</option><option>£</option></select><input id="hpv" class="vi" style="width:12ch" type="number" step="any" min="1" value="10000000"></span></div>
+          <input id="hpvr" class="rg mt-2" type="range" min="5000000" max="50000000" step="100000" value="10000000" aria-label="Portfolio value slider">
+          <div class="flex justify-between mono text-xs mute mt-1"><span id="hpl1">₹50L</span><span id="hpl2">₹5Cr</span></div>
+        </div>
+        <p class="mono text-xs mute mt-5">Drag a slider or type an exact value. Typed values can go beyond the slider range.</p>
+      </div>
+      <div class="p-5" style="background:var(--panel)">
+        <div class="flex items-center justify-between gap-3 mb-2"><h3 class="text-sm font-semibold">Securities and weights</h3><button id="heq" type="button" class="chip" style="cursor:pointer;background:transparent">Equal weights</button></div>
+        <div id="hsecs"></div>
+        <div id="hwt" class="mono text-xs mute mt-3" style="border-top:1px solid var(--line);padding-top:.75rem"></div>
+        <div id="hadds" class="flex flex-wrap gap-2 mt-4 items-center"><select id="hadd" class="inp" style="width:auto;flex:1;min-width:140px" aria-label="Security to add"></select><button id="haddb" type="button" class="tg" style="flex:none;border-radius:6px;border-left:1px solid var(--line);padding:.45rem 1rem">Add security</button></div>
+        <p class="mono text-xs mute mt-3">Remove any security with the × button, and add it back from the columns in your file. Weights are scaled to 100% automatically.</p>
+      </div>
+    </div>
+    <div id="herr" class="warn mono text-sm px-5 pb-3" role="alert" hidden></div>
+    <p id="hsum" class="px-5 py-4 text-sm" style="border-top:1px solid var(--line)"></p>
+    <div id="hm" class="grid grid-cols-2 sm:grid-cols-3" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"></div>
+    <div class="overflow-x-auto" style="border-top:1px solid var(--line)"><table class="dt w-full mono text-xs" id="hvt"></table></div>
+    <div class="grid lg:grid-cols-2" style="gap:1px;background:var(--line);border-top:1px solid var(--line)">
+      <div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Portfolio value over time (rebased to your portfolio value)</div><canvas id="hc1" class="block w-full" style="height:230px" role="img" aria-label="Portfolio value over time"></canvas></div>
+      <div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2" id="hc2t">Distribution of returns and VaR lines</div><canvas id="hc2" class="block w-full" style="height:230px" role="img" aria-label="Histogram of historical portfolio returns with VaR lines"></canvas><div id="hleg" class="flex flex-wrap gap-x-4 gap-y-1 mt-2 mono text-xs mute"></div></div>
+    </div>
+    <div class="p-5" style="border-top:1px solid var(--line)"><div class="mono text-xs mute mb-2" id="hprevt"></div><div class="overflow-auto" style="max-height:240px;border:1px solid var(--line);border-radius:6px"><div id="hprev"></div></div></div>
+    <p class="mono text-xs mute px-5 py-3" style="border-top:1px solid var(--line)">Method: daily log returns of the selected columns are combined using your chosen weights, summed over rolling windows of the chosen horizon, and the VaR is the percentile loss of those windows. Expected shortfall is the average loss in the tail beyond VaR. The sample data is simulated and is not real market prices. Historical VaR assumes the future looks like the past and can miss extreme events that are absent from the data.</p>
   </div>
 </section>
 
@@ -271,6 +337,145 @@ $('bc').addEventListener('click',function(){setType(true)});$('bp').addEventList
 var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(run,120)});
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',run);
 run();addEventListener('load',run);
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},cur='₹',D=null,inc={},wt={};
+function css(k){return getComputedStyle(document.documentElement).getPropertyValue(k).trim()}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function mk(y,m,d){return new Date(y,m,d,12)}
+function ds(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function money(v){return (v<0?'−':'')+cur+Math.abs(Math.round(v)).toLocaleString('en-IN')}
+function cf(v){return v.toLocaleString('en-US',{notation:'compact',maximumFractionDigits:1})}
+function toDate(v){
+ if(v instanceof Date&&!isNaN(v)){var q=new Date(v.getTime()+432e5);return mk(q.getFullYear(),q.getMonth(),q.getDate())}
+ if(typeof v==='string'){v=v.trim();var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(v);if(m)return mk(+m[1],m[2]-1,+m[3]);
+  if(/\d{1,4}[\/\-.\s][A-Za-z0-9]{1,9}[\/\-.\s]\d{1,4}/.test(v)){var p=Date.parse(v);if(!isNaN(p)){var z=new Date(p);return mk(z.getFullYear(),z.getMonth(),z.getDate())}}}
+ return null}
+function num(v){if(typeof v==='number')return v;if(typeof v==='string')return parseFloat(v.replace(/[,₹$€£\s]/g,''));return NaN}
+function parseAOA(aoa,name){
+ aoa=aoa.filter(function(r){return r&&r.some(function(c){return c!==null&&c!==''})});
+ if(aoa.length<3)throw new Error('The file needs a header row and at least two data rows.');
+ var hdr=aoa[0],rows=aoa.slice(1),nc=Math.max.apply(null,aoa.map(function(r){return r.length})),dc=-1,j;
+ for(j=0;j<nc&&dc<0;j++){var k=0;rows.forEach(function(r){if(toDate(r[j]))k++});if(k/rows.length>.7)dc=j}
+ if(dc<0)throw new Error('Could not find a date column. Put the dates in one column and add headers in row 1.');
+ var cols=[];
+ for(j=0;j<nc;j++){if(j===dc)continue;var k2=0;rows.forEach(function(r){if(isFinite(num(r[j])))k2++});if(k2/rows.length>.7)cols.push(j)}
+ if(!cols.length)throw new Error('Could not find a numeric price column.');
+ var recs=rows.map(function(r){return{d:toDate(r[dc]),p:cols.map(function(c){return num(r[c])})}}).filter(function(x){return x.d});
+ recs.sort(function(a,b){return a.d-b.d});
+ return{name:name,dates:recs.map(function(x){return x.d}),cols:cols.map(function(c){return hdr[c]==null?'Column '+(c+1):String(hdr[c])}),px:cols.map(function(_,k){return recs.map(function(x){return x.p[k]})})}}
+function sample(){
+ var seed=20260522;function rnd(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}
+ function gn(){var u=rnd()||1e-9;return Math.sqrt(-2*Math.log(u))*Math.cos(6.2832*rnd())}
+ var dates=[],d=mk(2021,9,25),end=mk(2026,9,22);
+ while(d<=end){if(d.getDay()%6)dates.push(d);d=mk(d.getFullYear(),d.getMonth(),d.getDate()+1)}
+ var names=['Bank A','Bank B','Bank C','Bank D','Index'],p0=[100,150,180,90,100],vol=[.015,.014,.016,.017,.009],px=names.map(function(_,k){return[p0[k]]});
+ for(var i=1;i<dates.length;i++){var mf=gn()*(rnd()<.03?2.6:1);names.forEach(function(_,k){var ld=k===4?.9:.6;px[k].push(px[k][i-1]*Math.exp(.0004+vol[k]*(ld*mf+Math.sqrt(1-ld*ld)*gn())))})}
+ px=px.map(function(a){return a.map(function(v){return Math.round(v*100)/100})});
+ return{name:'Sample data (simulated, not real market prices)',dates:dates,cols:names,px:px}}
+function fail(m){var e=$('herr');e.textContent=m;e.hidden=false}
+function setData(x){
+ D=x;inc={};wt={};x.cols.forEach(function(c,i){inc[i]=true;wt[i]=100/x.cols.length});renderSec();
+ var n=x.dates.length;
+ $('hstat').textContent=x.name+': '+n.toLocaleString()+' rows, '+x.cols.length+' price column'+(x.cols.length>1?'s':'')+', '+ds(x.dates[0])+' to '+ds(x.dates[n-1]);
+ var m=Math.min(n,100),b='';
+ for(var i=n-1;i>=n-m;i--){b+='<tr><td>'+ds(x.dates[i])+'</td>'+x.px.map(function(a){var v=a[i];return '<td>'+(isFinite(v)?v.toLocaleString('en-IN',{maximumFractionDigits:2}):'–')+'</td>'}).join('')+'</tr>'}
+ $('hprev').innerHTML='<table class="dt w-full mono text-xs"><thead><tr><th>Date</th>'+x.cols.map(function(c){return '<th>'+esc(c)+'</th>'}).join('')+'</tr></thead><tbody>'+b+'</tbody></table>';
+ $('hprevt').textContent='Price data by date (most recent '+m+' of '+n.toLocaleString()+' rows)';
+ run()}
+function pct(a,q){var i=(a.length-1)*q/100,lo=Math.floor(i),hi=Math.ceil(i);return a[lo]+(a[hi]-a[lo])*(i-lo)}
+function calc(){
+ var idx=Object.keys(inc).filter(function(k){return inc[k]&&wt[k]>0}).map(Number);
+ if(!idx.length)throw new Error('Add at least one security with a weight above zero.');
+ var tw=idx.reduce(function(a,k){return a+wt[k]},0);
+ var keep=[],i,n=D.dates.length;
+ for(i=0;i<n;i++){var ok=true;idx.forEach(function(k){if(!(D.px[k][i]>0))ok=false});if(ok)keep.push(i)}
+ var rets=[],dts=[];
+ for(i=1;i<keep.length;i++){var t=0;idx.forEach(function(k){t+=wt[k]/tw*Math.log(D.px[k][keep[i]]/D.px[k][keep[i-1]])});rets.push(t);dts.push(D.dates[keep[i]])}
+ return{rets:rets,dts:dts,d0:D.dates[keep[0]]}}
+function cv2(cv){var d=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;cv.width=w*d;cv.height=h*d;var c=cv.getContext('2d');c.setTransform(d,0,0,d,0,0);c.font='10.5px "IBM Plex Mono",monospace';c.textBaseline='middle';return{c:c,w:w,h:h}}
+function grid(c,w,h,L,T,B,R,mn,mx,f){for(var i=0;i<=4;i++){var v=mn+(mx-mn)*i/4,y=h-B-(v-mn)/(mx-mn)*(h-B-T);c.strokeStyle=css('--line');c.lineWidth=1;c.beginPath();c.moveTo(L,y);c.lineTo(w-R,y);c.stroke();c.fillStyle=css('--mute');c.textAlign='right';c.fillText(f(v),L-6,y)}}
+function line(cv,dates,vals){
+ var o=cv2(cv),c=o.c,w=o.w,h=o.h,L=54,R=8,T=10,B=22,mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),pd=(mx-mn||1)*.06,n=vals.length;mn-=pd;mx+=pd;
+ grid(c,w,h,L,T,B,R,mn,mx,cf);
+ var X=function(i){return L+i/(n-1)*(w-L-R)},Y=function(v){return h-B-(v-mn)/(mx-mn)*(h-B-T)},st=Math.max(1,Math.floor(n/600));
+ c.strokeStyle=css('--acc');c.lineWidth=1.6;c.beginPath();for(var i=0;i<n;i+=st){i?c.lineTo(X(i),Y(vals[i])):c.moveTo(X(i),Y(vals[i]))}c.lineTo(X(n-1),Y(vals[n-1]));c.stroke();
+ c.fillStyle=css('--mute');c.textAlign='left';c.fillText(ds(dates[0]),L,h-8);c.textAlign='right';c.fillText(ds(dates[n-1]),w-R,h-8)}
+function hist(cv,rv,lines){
+ var o=cv2(cv),c=o.c,w=o.w,h=o.h,L=36,R=8,T=10,B=22,mn=Math.min.apply(null,rv),mx=Math.max.apply(null,rv);
+ lines.forEach(function(l){mn=Math.min(mn,l.x);mx=Math.max(mx,l.x)});var sp=(mx-mn)||1;mn-=sp*.03;mx+=sp*.03;
+ var NB=50,bw=(mx-mn)/NB,cnt=new Array(NB).fill(0);rv.forEach(function(v){cnt[Math.min(NB-1,Math.floor((v-mn)/bw))]++});var mc=Math.max.apply(null,cnt);
+ var X=function(v){return L+(v-mn)/(mx-mn)*(w-L-R)};
+ grid(c,w,h,L,T,B,R,0,mc,function(v){return Math.round(v)});
+ c.fillStyle='rgba('+css('--path')+',.55)';
+ cnt.forEach(function(k,j){var x0=X(mn+j*bw),x1=X(mn+(j+1)*bw),y=h-B-k/mc*(h-B-T);c.fillRect(x0+.5,y,Math.max(1,x1-x0-1),h-B-y)});
+ c.setLineDash([5,4]);c.lineWidth=2;lines.forEach(function(l){c.strokeStyle=l.col;c.beginPath();c.moveTo(X(l.x),T);c.lineTo(X(l.x),h-B);c.stroke()});c.setLineDash([]);
+ c.fillStyle=css('--mute');c.textAlign='left';c.fillText(cf(mn),L,h-8);c.textAlign='right';c.fillText(cf(mx),w-R,h-8);
+ if(mn<0&&mx>0){c.textAlign='center';c.fillText('0',X(0),h-8)}}
+function run(){
+ if(!D)return;
+ $('herr').hidden=true;
+ try{
+  cur=$('hcur').value;labs();
+  var PV=parseFloat($('hpv').value),h=Math.round(parseFloat($('hd').value)),cl=parseFloat($('hcl').value);
+  if(!(PV>0))throw new Error('Portfolio value must be greater than zero.');
+  if(!(h>=1&&h<=250))throw new Error('Time horizon must be between 1 and 250 days.');
+  if(!(cl>=50&&cl<100))throw new Error('Confidence level must be between 50 and 99.99.');
+  var c=calc();
+  if(c.rets.length<h+30)throw new Error('Not enough data. A '+h+'-day horizon needs at least '+(h+30)+' daily returns.');
+  var pre=[0],i;c.rets.forEach(function(r,k){pre.push(pre[k]+r)});
+  var rr=[];for(i=0;i+h<pre.length;i++)rr.push(pre[i+h]-pre[i]);
+  var so=rr.slice().sort(function(a,b){return a-b});
+  function stat(L){var q=pct(so,100-L),tail=so.filter(function(v){return v<=q}),m=tail.reduce(function(a,b){return a+b},0)/tail.length;return{v:-q*PV,p:-q*100,es:-m*PV}}
+  var S=stat(cl),yrs=(c.dts[c.dts.length-1]-c.d0)/315576e5;
+  $('hsum').innerHTML='In <b>'+cl+'%</b> of the historical <b>'+h+'-day</b> windows, the loss on a <b>'+money(PV)+'</b> portfolio was no more than <b class="acc">'+money(S.v)+'</b>.';
+  var tiles=[['Value at Risk',money(S.v),h+'-day, '+cl+'% confidence'],['VaR as % of portfolio',S.p.toFixed(2)+'%',''],['Expected shortfall',money(S.es),'average loss beyond VaR'],['Worst '+h+'-day loss',money(-so[0]*PV),'in this dataset'],['Observations',rr.length.toLocaleString(),h+'-day windows'],['Data span',yrs.toFixed(1)+' years',ds(c.d0)+' to '+ds(c.dts[c.dts.length-1])]];
+  $('hm').innerHTML=tiles.map(function(x){return '<div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute">'+x[0]+'</div><div class="text-xl font-extrabold">'+x[1]+'</div><div class="mono text-xs mute">'+x[2]+'</div></div>'}).join('');
+  var lv=[90,95,99];if(lv.indexOf(cl)<0){lv.push(cl);lv.sort(function(a,b){return a-b})}
+  $('hvt').innerHTML='<thead><tr><th>Confidence</th><th>VaR ('+h+'-day)</th><th>% of portfolio</th><th>Expected shortfall</th></tr></thead><tbody>'+lv.map(function(L){var t=stat(L);return '<tr'+(L===cl?' style="color:var(--acc)"':'')+'><td>'+L+'%</td><td>'+money(t.v)+'</td><td>'+t.p.toFixed(2)+'%</td><td>'+money(t.es)+'</td></tr>'}).join('')+'</tbody>';
+  var cols={90:'#f59e0b',95:'#ef4444',99:'#a855f7'},lines=lv.map(function(L){return{x:-stat(L).v,col:cols[L]||css('--acc'),L:L,v:stat(L).v}});
+  $('hleg').innerHTML=lines.map(function(l){return '<span><span style="display:inline-block;width:14px;border-top:2px dashed '+l.col+';vertical-align:middle;margin-right:6px"></span>'+l.L+'%: '+money(l.v)+'</span>'}).join('');
+  $('hc2t').textContent='Distribution of '+h+'-day returns ('+cur+') and VaR lines. Height shows number of windows.';
+  var vals=[PV],cum=0;c.rets.forEach(function(r){cum+=r;vals.push(PV*Math.exp(cum))});
+  line($('hc1'),[c.d0].concat(c.dts),vals);
+  hist($('hc2'),rr.map(function(r){return r*PV}),lines);
+ }catch(e){fail(e.message)}}
+function fill(r){r.style.setProperty('--p',Math.max(0,Math.min(100,(r.value-r.min)/(r.max-r.min)*100))+'%')}
+function link(n,r){var nn=$(n),rr=$(r);fill(rr);rr.addEventListener('input',function(){nn.value=rr.value;fill(rr);run()});nn.addEventListener('input',function(){rr.value=nn.value;fill(rr);run()})}
+function labs(){var inr=cur==='₹';$('hpl1').textContent=cur+(inr?'50L':'5M');$('hpl2').textContent=cur+(inr?'5Cr':'50M')}
+function ids(){return Object.keys(inc).filter(function(k){return inc[k]}).map(Number)}
+function info(){
+ var tot=ids().reduce(function(a,k){return a+wt[k]},0);
+ Array.prototype.forEach.call($('hsecs').children,function(row){var i=+row.dataset.i;row.querySelector('[data-eff]').textContent=(tot>0?(wt[i]/tot*100).toFixed(1):'0.0')+'% of portfolio'});
+ var ok=Math.abs(tot-100)<.05;$('hwt').innerHTML='Total of entered weights: <span class="'+(ok?'up':'warn')+'">'+tot.toFixed(1)+'%</span>'+(ok?'':' (scaled to 100% automatically)')}
+function renderSec(){
+ var on=ids(),rest=D.cols.map(function(c,i){return i}).filter(function(i){return !inc[i]});
+ $('hsecs').innerHTML=on.map(function(i){var nm=esc(D.cols[i]);return '<div class="sec" data-i="'+i+'"><div><div class="text-sm">'+nm+'</div><div class="mono text-xs mute" data-eff></div></div><input type="range" class="rg" min="0" max="100" step="0.5" value="'+wt[i]+'" aria-label="Weight of '+nm+'"><input type="number" class="inp" step="any" min="0" value="'+(+wt[i].toFixed(2))+'" aria-label="Weight of '+nm+' in percent"><button type="button" class="rm" aria-label="Remove '+nm+'">×</button></div>'}).join('');
+ Array.prototype.forEach.call($('hsecs').children,function(row){
+  var i=+row.dataset.i,r=row.querySelector('.rg'),n=row.querySelector('.inp');fill(r);
+  r.addEventListener('input',function(){n.value=r.value;fill(r);wt[i]=+r.value;info();run()});
+  n.addEventListener('input',function(){r.value=n.value;fill(r);wt[i]=Math.max(0,parseFloat(n.value)||0);info();run()});
+  row.querySelector('.rm').addEventListener('click',function(){if(on.length<2){fail('Keep at least one security in the portfolio.');return}inc[i]=false;renderSec();run()})});
+ $('hadd').innerHTML=rest.map(function(i){return '<option value="'+i+'">'+esc(D.cols[i])+'</option>'}).join('');
+ $('hadds').style.display=rest.length?'flex':'none';
+ info()}
+$('haddb').addEventListener('click',function(){var i=+$('hadd').value;if(isNaN(i))return;var on=ids(),avg=on.length?on.reduce(function(a,k){return a+wt[k]},0)/on.length:100;inc[i]=true;wt[i]=avg;renderSec();run()});
+$('heq').addEventListener('click',function(){var on=ids();on.forEach(function(k){wt[k]=100/on.length});renderSec();run()});
+link('hcl','hclr');link('hd','hdr');link('hpv','hpvr');
+$('hcur').addEventListener('change',run);
+$('hs').addEventListener('click',function(){$('hf').value='';setData(sample())});
+$('hf').addEventListener('change',function(e){
+ var f=e.target.files[0];if(!f)return;
+ if(typeof XLSX==='undefined'){fail('The Excel reader could not load. Check your connection and reload the page.');return}
+ var rd=new FileReader();
+ rd.onload=function(){try{var wb=XLSX.read(new Uint8Array(rd.result),{type:'array',cellDates:true}),ws=wb.Sheets[wb.SheetNames[0]];setData(parseAOA(XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null}),f.name))}catch(x){fail(x.message)}};
+ rd.onerror=function(){fail('Could not read that file.')};rd.readAsArrayBuffer(f)});
+var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(run,120)});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',run);
+setData(sample());addEventListener('load',run);
 })();
 </script>
 </body>

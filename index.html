@@ -29,6 +29,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nav a{color:var(--mute);transition:color .15s}.nav a:hover{color:var(--acc)}
 a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--up);display:inline-block;margin-right:.45rem}
+.inp{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:.45rem .6rem;font-family:'IBM Plex Mono',monospace;font-size:.9rem}
+.inp:focus{outline:2px solid var(--acc);outline-offset:1px}
+.tg{flex:1;padding:.45rem;border:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:.85rem;background:var(--bg);color:var(--mute);cursor:pointer}
+.tg:first-child{border-radius:6px 0 0 6px}.tg:last-child{border-radius:0 6px 6px 0;border-left:0}
+.tg[aria-pressed=true]{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:500}
+.tg:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -36,7 +42,7 @@ a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 <header class="sticky z-20 backdrop-blur" style="top:env(safe-area-inset-top,0px);background:color-mix(in srgb,var(--bg) 85%,transparent);border-bottom:1px solid var(--line)">
   <div class="mx-auto max-w-6xl px-5 h-14 flex items-center justify-between">
     <a href="#top" class="mono text-sm font-medium">lakshay<span class="acc">.gupta</span></a>
-    <nav class="nav hidden md:flex gap-6 text-sm"><a href="#experience">Experience</a><a href="#education">Education</a><a href="#credentials">Credentials</a><a href="#leadership">Leadership</a><a href="#contact">Contact</a></nav>
+    <nav class="nav hidden md:flex gap-6 text-sm"><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#education">Education</a><a href="#credentials">Credentials</a><a href="#leadership">Leadership</a><a href="#contact">Contact</a></nav>
     <span class="mono text-xs mute hidden sm:block"><span class="dot"></span>Open to conversations</span>
   </div>
 </header>
@@ -80,6 +86,33 @@ a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
       <div class="p-5 md:border-r" style="border-top:1px solid var(--line);border-color:var(--line)"><div class="mono text-xs acc mb-1">Team leadership</div><p class="text-sm">Led onboarding and training of 5+ new team members through process walkthroughs, shared best practices and ongoing operational support.</p></div>
       <div class="p-5" style="border-top:1px solid var(--line)"><div class="mono text-xs up mb-1">Recognition</div><p class="text-sm">Received an Appreciation Award and a Letter of Recommendation for outstanding performance while leading and mentoring a team of 5.</p></div>
     </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="py-8">
+  <div class="win">
+    <div class="bar"><b>Projects</b><span>1 project</span></div>
+    <div class="row c" style="border-top:0">
+      <div>
+        <h2 class="text-xl font-extrabold">Black-Scholes Option Greeks Dashboard</h2>
+        <p class="text-sm mute mt-1 max-w-3xl">Prices European call and put options and calculates the five Greeks (Delta, Gamma, Vega, Theta, Rho). I built the model in Python with NumPy and SciPy, then turned it into this live dashboard: enter any inputs below and every number and chart updates.</p>
+        <div class="flex flex-wrap gap-2 mt-3"><span class="chip">Python</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">Black-Scholes</span><span class="chip">Option Greeks</span></div>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 p-5" style="border-top:1px solid var(--line)">
+      <div><label class="mono text-xs mute block mb-1" for="s">Spot price (S)</label><input id="s" class="inp" type="number" step="any" value="120"></div>
+      <div><label class="mono text-xs mute block mb-1" for="x">Strike price (X)</label><input id="x" class="inp" type="number" step="any" value="100"></div>
+      <div><label class="mono text-xs mute block mb-1" for="t">Expiry (years)</label><input id="t" class="inp" type="number" step="any" value="1"></div>
+      <div><label class="mono text-xs mute block mb-1" for="r">Risk-free rate (%)</label><input id="r" class="inp" type="number" step="any" value="5"></div>
+      <div><label class="mono text-xs mute block mb-1" for="v">Volatility (%)</label><input id="v" class="inp" type="number" step="any" value="20"></div>
+      <div><span class="mono text-xs mute block mb-1">Option type</span><div class="flex" role="group" aria-label="Option type"><button type="button" id="bc" class="tg" aria-pressed="true">Call</button><button type="button" id="bp" class="tg" aria-pressed="false">Put</button></div></div>
+    </div>
+    <div id="err" class="warn mono text-sm px-5 pb-3" role="alert" hidden></div>
+    <div id="m" class="grid grid-cols-2 sm:grid-cols-4" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"></div>
+    <p id="par" class="mono text-xs mute px-5 py-3" style="border-top:1px solid var(--line)"></p>
+    <div id="ch" class="grid sm:grid-cols-2 lg:grid-cols-3" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"></div>
+    <p class="mono text-xs mute px-5 py-3" style="border-top:1px solid var(--line)">European options, no dividends. Theta is shown per day, Vega per 1 volatility point and Rho per 1% rate move. Charts plot the selected option against the stock price; the amber line marks the spot price S and the grey line the strike X.</p>
   </div>
 </section>
 
@@ -184,6 +217,60 @@ function draw(prog){
 function tick(ts){t0=t0||ts;var p=Math.min((ts-t0)/3400,1);draw(p);if(p<1)requestAnimationFrame(tick)}
 reduce?draw(1):requestAnimationFrame(tick);
 var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){draw(1)},120)});
+})();
+</script>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},call=true;
+function N(x){var t=1/(1+.2316419*Math.abs(x)),p=.3989423*Math.exp(-x*x/2)*t*(.3193815+t*(-.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return x>0?1-p:p}
+function n(x){return Math.exp(-x*x/2)/Math.sqrt(2*Math.PI)}
+function bs(S,X,t,r,s,c){var st=Math.sqrt(t),d1=(Math.log(S/X)+(r+.5*s*s)*t)/(s*st),d2=d1-s*st,e=Math.exp(-r*t),t1=-(S*n(d1)*s)/(2*st);
+ return{d1:d1,d2:d2,
+  price:c?S*N(d1)-X*e*N(d2):X*e*N(-d2)-S*N(-d1),
+  delta:c?N(d1):N(d1)-1,
+  gamma:n(d1)/(S*s*st),
+  vega:S*st*n(d1)/100,
+  theta:(c?t1-r*X*e*N(d2):t1+r*X*e*N(-d2))/365,
+  rho:(c?X*t*e*N(d2):-X*t*e*N(-d2))/100}}
+var specs=[['Option price','price'],['Delta (Δ)','delta'],['Gamma (Γ)','gamma'],['Vega (ν), per 1 vol pt','vega'],['Theta (Θ), per day','theta'],['Rho (ρ), per 1% rate','rho']];
+var host=$('ch');
+specs.forEach(function(sp){var d=document.createElement('div');d.style.background='var(--panel)';d.className='p-4';d.innerHTML='<div class="mono text-xs mute mb-2">'+sp[0]+' vs stock price</div><canvas id="c_'+sp[1]+'" class="block w-full" style="height:190px" role="img" aria-label="'+sp[0]+' plotted against stock price"></canvas>';host.appendChild(d)});
+function css(k){return getComputedStyle(document.documentElement).getPropertyValue(k).trim()}
+function draw(cv,xs,ys,S,Sy,K,pay){
+ var d=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;cv.width=w*d;cv.height=h*d;var c=cv.getContext('2d');c.setTransform(d,0,0,d,0,0);
+ var L=48,R=8,T=12,B=22,all=pay?ys.concat(pay):ys,mn=Math.min.apply(null,all),mx=Math.max.apply(null,all),rg=(mx-mn)||Math.abs(mx)||1;mn-=rg*.08;mx+=rg*.08;rg=mx-mn;
+ var dec=rg<.05?4:rg<.5?3:rg<5?2:rg<50?1:0,x0=xs[0],x1=xs[xs.length-1];
+ var px=function(v){return L+(v-x0)/(x1-x0)*(w-L-R)},py=function(v){return h-B-(v-mn)/rg*(h-B-T)};
+ var line=css('--line'),mute=css('--mute'),acc=css('--acc'),warn=css('--warn');
+ c.font='10.5px "IBM Plex Mono",monospace';c.textBaseline='middle';
+ for(var i=0;i<=4;i++){var v=mn+rg*i/4;c.strokeStyle=line;c.lineWidth=1;c.beginPath();c.moveTo(L,py(v));c.lineTo(w-R,py(v));c.stroke();c.fillStyle=mute;c.textAlign='right';c.fillText(v.toFixed(dec),L-6,py(v))}
+ if(mn<0&&mx>0){c.strokeStyle=mute;c.beginPath();c.moveTo(L,py(0));c.lineTo(w-R,py(0));c.stroke()}
+ c.fillStyle=mute;c.textAlign='left';c.fillText(x0.toFixed(0),L,h-8);c.textAlign='right';c.fillText(x1.toFixed(0),w-R,h-8);
+ c.setLineDash([4,4]);c.strokeStyle=mute;c.beginPath();c.moveTo(px(K),T);c.lineTo(px(K),h-B);c.stroke();
+ c.strokeStyle=warn;c.beginPath();c.moveTo(px(S),T);c.lineTo(px(S),h-B);c.stroke();c.setLineDash([]);
+ if(pay){c.setLineDash([2,3]);c.strokeStyle=mute;c.beginPath();pay.forEach(function(v,i){i?c.lineTo(px(xs[i]),py(v)):c.moveTo(px(xs[i]),py(v))});c.stroke();c.setLineDash([])}
+ c.strokeStyle=acc;c.lineWidth=2;c.beginPath();ys.forEach(function(v,i){i?c.lineTo(px(xs[i]),py(v)):c.moveTo(px(xs[i]),py(v))});c.stroke();
+ c.fillStyle=warn;c.beginPath();c.arc(px(S),py(Sy),4,0,6.2832);c.fill();
+ c.textAlign='center';c.fillStyle=warn;c.fillText('S',px(S),T-4);c.fillStyle=mute;if(Math.abs(px(S)-px(K))>14)c.fillText('X',px(K),T-4)}
+function val(i){return parseFloat($(i).value)}
+function run(){
+ var S=val('s'),X=val('x'),t=val('t'),r=val('r')/100,v=val('v')/100,err=$('err');
+ if(!(S>0&&X>0&&t>0&&v>0)||isNaN(r)){err.textContent='Enter positive values for spot, strike, expiry and volatility.';err.hidden=false;return}
+ err.hidden=true;
+ var o=bs(S,X,t,r,v,call),oc=bs(S,X,t,r,v,true),op=bs(S,X,t,r,v,false);
+ var intr=call?Math.max(S-X,0):Math.max(X-S,0),itm=call?S>X:S<X,mon=Math.abs(S-X)/X<.005?'At the money':itm?'In the money':'Out of the money';
+ var tiles=[['Option price',o.price.toFixed(2),''],['Delta (Δ)',o.delta.toFixed(4),''],['Gamma (Γ)',o.gamma.toFixed(4),''],['Vega (ν)',o.vega.toFixed(3),'per 1 vol point'],['Theta (Θ)',o.theta.toFixed(3),'per day'],['Rho (ρ)',o.rho.toFixed(3),'per 1% rate'],['Time value',(o.price-intr).toFixed(2),'Intrinsic '+intr.toFixed(2)],['Moneyness',mon,(call?'Call':'Put')+' option']];
+ $('m').innerHTML=tiles.map(function(x){return '<div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute">'+x[0]+'</div><div class="text-xl font-extrabold">'+x[1]+'</div><div class="mono text-xs mute">'+x[2]+'</div></div>'}).join('');
+ var diff=(oc.price-op.price)-(S-X*Math.exp(-r*t));
+ $('par').innerHTML='d1 = '+o.d1.toFixed(4)+' &nbsp;|&nbsp; d2 = '+o.d2.toFixed(4)+' &nbsp;|&nbsp; Put-call parity check: C − P = S − X·e<sup>−rt</sup> <span class="'+(Math.abs(diff)<1e-4?'up':'warn')+'">'+(Math.abs(diff)<1e-4?'✓ holds':'✗ off')+' (difference '+diff.toExponential(1)+')</span>';
+ var lo=Math.min(S,X)*.6,hi=Math.max(S,X)*1.4,xs=[],i;for(i=0;i<=100;i++)xs.push(lo+(hi-lo)*i/100);
+ specs.forEach(function(sp){var k=sp[1],ys=xs.map(function(x){return bs(x,X,t,r,v,call)[k]}),pay=k==='price'?xs.map(function(x){return call?Math.max(x-X,0):Math.max(X-x,0)}):null;draw($('c_'+k),xs,ys,S,o[k],X,pay)})}
+['s','x','t','r','v'].forEach(function(i){$(i).addEventListener('input',run)});
+function setType(c){call=c;$('bc').setAttribute('aria-pressed',c);$('bp').setAttribute('aria-pressed',!c);run()}
+$('bc').addEventListener('click',function(){setType(true)});$('bp').addEventListener('click',function(){setType(false)});
+var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(run,120)});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',run);
+run();addEventListener('load',run);
 })();
 </script>
 </body>

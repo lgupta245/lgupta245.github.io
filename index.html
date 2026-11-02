@@ -9,9 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 <style>
-:root{--bg:#eef2f9;--panel:#fff;--head:#e4eaf5;--line:#cfd7e8;--ink:#0d1630;--mute:#55607d;--acc:#0a7f95;--up:#0f8a5f;--warn:#c2570c;--path:10,127,149;--grid:rgba(13,22,48,.07)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#050a17;--panel:#0a1226;--head:#0e1832;--line:#1a2744;--ink:#e7ecfa;--mute:#8f9cc0;--acc:#3fd8ee;--up:#34d399;--warn:#ffa24a;--path:63,216,238;--grid:rgba(143,156,192,.09)}}
-:root[data-theme="dark"]{--bg:#050a17;--panel:#0a1226;--head:#0e1832;--line:#1a2744;--ink:#e7ecfa;--mute:#8f9cc0;--acc:#3fd8ee;--up:#34d399;--warn:#ffa24a;--path:63,216,238;--grid:rgba(143,156,192,.09)}
+:root{--down:#c62828;--bg:#eef2f9;--panel:#fff;--head:#e4eaf5;--line:#cfd7e8;--ink:#0d1630;--mute:#55607d;--acc:#0a7f95;--up:#0f8a5f;--warn:#c2570c;--path:10,127,149;--grid:rgba(13,22,48,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--down:#ff6b6b;--bg:#050a17;--panel:#0a1226;--head:#0e1832;--line:#1a2744;--ink:#e7ecfa;--mute:#8f9cc0;--acc:#3fd8ee;--up:#34d399;--warn:#ffa24a;--path:63,216,238;--grid:rgba(143,156,192,.09)}}
+:root[data-theme="dark"]{--down:#ff6b6b;--bg:#050a17;--panel:#0a1226;--head:#0e1832;--line:#1a2744;--ink:#e7ecfa;--mute:#8f9cc0;--acc:#3fd8ee;--up:#34d399;--warn:#ffa24a;--path:63,216,238;--grid:rgba(143,156,192,.09)}
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
 body{margin:0;color:var(--ink);font-family:Sora,system-ui,sans-serif;line-height:1.6;background:var(--bg);
@@ -105,7 +105,7 @@ a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 <!-- PROJECTS -->
 <section id="projects" class="py-8">
   <div class="win">
-    <div class="bar"><b>Projects</b><span>2 projects</span></div>
+    <div class="bar"><b>Projects</b><span>5 projects</span></div>
     <div class="row c" style="border-top:0">
       <div>
         <h2 class="text-xl font-extrabold">Black-Scholes Option Greeks Dashboard</h2>
@@ -179,6 +179,57 @@ a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
     </div>
     <div class="p-5" style="border-top:1px solid var(--line)"><div class="mono text-xs mute mb-2" id="hprevt"></div><div class="overflow-auto" style="max-height:240px;border:1px solid var(--line);border-radius:6px"><div id="hprev"></div></div></div>
     <p class="mono text-xs mute px-5 py-3" style="border-top:1px solid var(--line)">Method: daily log returns of the selected columns are combined using your chosen weights, summed over rolling windows of the chosen horizon, and the VaR is the percentile loss of those windows. Expected shortfall is the average loss in the tail beyond VaR. The sample data is simulated and is not real market prices. Historical VaR assumes the future looks like the past and can miss extreme events that are absent from the data.</p>
+    <div class="row c">
+      <div>
+        <h2 class="text-xl font-extrabold">Probability Distribution Dashboard</h2>
+        <p class="text-sm mute mt-1 max-w-3xl">Two tools in one. First, upload a column of numbers from Excel and the dashboard finds which of the 14 core distributions describes it best, with a full set of statistics and charts. Second, explore each of the 14 distributions (Bernoulli, Binomial, Poisson, Discrete Uniform, Normal, Standard Normal, Continuous Uniform, Exponential, Chi-Square, Student’s t, F, Beta, Lognormal and Pareto) on its own graph, with its own mean, standard deviation and confidence-level sliders.</p>
+        <div class="flex flex-wrap gap-2 mt-3"><span class="chip">14 distributions</span><span class="chip">Excel upload</span><span class="chip">Maximum likelihood</span><span class="chip">AIC</span><span class="chip">Skewness and kurtosis</span><span class="chip">Confidence interval</span></div>
+      </div>
+    </div>
+    <div class="p-5" style="border-top:1px solid var(--line)">
+      <h3 class="font-extrabold">Fit a distribution to your own data</h3>
+      <p class="text-sm mute mt-1 max-w-3xl">Each candidate is fitted by maximum likelihood and ranked by AIC. Whole-number data is compared with the discrete distributions (Bernoulli, Binomial, Poisson, Discrete Uniform), and other data with the continuous ones.</p>
+      <div class="flex flex-wrap items-end gap-3 mt-4">
+        <div class="grow" style="min-width:230px"><label class="mono text-xs mute block mb-1" for="uf">Upload data (Excel .xlsx / .xls, or .csv)</label><input id="uf" type="file" class="inp" accept=".xlsx,.xls,.csv"></div>
+        <div style="min-width:170px"><label class="mono text-xs mute block mb-1" for="ucol">Column to analyse</label><select id="ucol" class="inp"></select></div>
+        <div style="min-width:190px"><label class="mono text-xs mute block mb-1" for="usamp">Or try a simulated sample</label><select id="usamp" class="inp"></select></div>
+        <label id="uchkw" class="chip" style="display:none;cursor:pointer;align-items:center;gap:.4rem"><input id="uc" type="checkbox"> Treat whole numbers as continuous</label>
+      </div>
+      <p id="ustat" class="mono text-xs acc mt-3"></p>
+      <p class="mono text-xs mute mt-1">Format: row 1 holds headers and each numeric column is one data set. The file is read in your browser and is not uploaded anywhere.</p>
+    </div>
+    <div id="uerr" class="warn mono text-sm px-5 pb-3" role="alert" hidden></div>
+    <div id="ures">
+      <p id="usum" class="px-5 py-4 text-sm" style="border-top:1px solid var(--line)"></p>
+      <div id="ush" class="px-5 pb-3 mono text-xs mute"></div>
+      <div class="grid lg:grid-cols-2" style="gap:1px;background:var(--line);border-top:1px solid var(--line)">
+        <div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Your data and the fitted distribution</div><canvas id="ug1" class="block w-full" style="height:230px" role="img" aria-label="Your data with the fitted distribution"></canvas><div id="uleg" class="flex flex-wrap gap-x-4 gap-y-1 mt-2 mono text-xs mute"></div></div>
+        <div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Cumulative distribution: your data (grey) against the fit</div><canvas id="ug2" class="block w-full" style="height:230px" role="img" aria-label="Cumulative distribution of your data against the fitted distribution"></canvas></div>
+      </div>
+      <div class="grid lg:grid-cols-2" style="gap:1px;background:var(--line);border-top:1px solid var(--line)">
+        <div class="p-5 overflow-x-auto" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Statistics: your data against the fitted distribution</div><table id="ust" class="dt w-full mono text-xs"></table><p id="ushp" class="text-xs mute mt-3"></p></div>
+        <div class="p-5" style="background:var(--panel)"><div class="mono text-xs mute mb-2">All candidates ranked by AIC (lower is a better fit). Click View to chart one.</div><div class="overflow-x-auto"><table id="urk" class="dt w-full mono text-xs"></table></div></div>
+      </div>
+    </div>
+    <div class="px-5 pt-6 pb-3" style="border-top:1px solid var(--line)"><h3 class="font-extrabold">Explore the 14 distributions</h3><p class="text-sm mute mt-1">Each graph has its own mean, standard deviation and confidence-level sliders, plus its key statistics.</p></div>
+    <div id="zgrid" class="grid md:grid-cols-2" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"></div>
+    <p class="mono text-xs mute px-5 py-3" style="border-top:1px solid var(--line)">Notes: the KS distance is the largest gap between your data’s cumulative curve and the fitted one, and a p-value is not shown because the parameters are estimated from the same data. Files with more than 5,000 continuous values are fitted on an even sample. Student’s t is fitted with a location and scale. On the graphs below, the grey dashed line marks the mean and the amber band holds the chosen confidence level. Some sliders are locked because the distribution has no independent mean and standard deviation: Bernoulli, Poisson, Exponential and Chi-Square have one parameter, Student’s t has a fixed mean of 0, and the Standard Normal is fixed. Binomial and Discrete Uniform show the closest whole-number match. The simulated samples are generated in the browser and are not real data.</p>
+    <div class="row c">
+      <div>
+        <h2 class="text-xl font-extrabold">MarketPulse: Stock Market Forecasting &amp; Financial Risk Analytics</h2>
+        <p class="text-sm mute mt-1 max-w-3xl">The full project is a Python and Streamlit dashboard with 11 pages, a SQLite forecast tracker and 95 automated tests. This panel runs its core methods live in your browser: upload a price file (Excel or CSV with Date and Close columns) or use the simulated sample, then explore stationarity tests, forecasting models and risk measures, with sliders and options that update every chart.</p>
+        <div class="flex flex-wrap gap-2 mt-3"><span class="chip">Python</span><span class="chip">Streamlit</span><span class="chip">statsmodels</span><span class="chip">ADF / KPSS</span><span class="chip">ARIMA</span><span class="chip">GARCH</span><span class="chip">VaR / CVaR</span><span class="chip">SQLite</span><span class="chip">pytest</span></div>
+      </div>
+    </div>
+    <div id="mkroot"></div>
+    <div class="row c">
+      <div>
+        <h2 class="text-xl font-extrabold">CAPM and Portfolio Performance Dashboard</h2>
+        <p class="text-sm mute mt-1 max-w-3xl">An interactive workbench for the Capital Asset Pricing Model and the five core portfolio-management measures: Sharpe ratio, Treynor ratio, Jensen’s alpha, information ratio and tracking error. Use the formula calculator to see each measure and the Security and Capital Market Lines respond as you move the inputs, or upload your own data (Excel or CSV) to estimate beta and alpha by regression and score a portfolio against the market.</p>
+        <div class="flex flex-wrap gap-2 mt-3"><span class="chip">CAPM</span><span class="chip">Security Market Line</span><span class="chip">Capital Market Line</span><span class="chip">Sharpe</span><span class="chip">Treynor</span><span class="chip">Jensen’s alpha</span><span class="chip">Information ratio</span><span class="chip">Tracking error</span><span class="chip">Regression</span></div>
+      </div>
+    </div>
+    <div id="cproot"></div>
   </div>
 </section>
 
@@ -466,6 +517,785 @@ $('hf').addEventListener('change',function(e){
 var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(run,120)});
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',run);
 setData(sample());addEventListener('load',run);
+})();
+</script>
+<script>
+(function(){
+var PI=Math.PI,LN=Math.log,EX=Math.exp,SQ=Math.sqrt,INF=Infinity,NI=-Infinity;
+var LG=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+function lgam(x){if(x<.5)return LN(PI/Math.sin(PI*x))-lgam(1-x);x-=1;var a=LG[0],t=x+7.5;for(var i=1;i<9;i++)a+=LG[i]/(x+i);return .5*LN(2*PI)+(x+.5)*LN(t)-t+LN(a)}
+function gP(a,x){if(x<=0)return 0;var gl=lgam(a),i;
+ if(x<a+1){var ap=a,sum=1/a,del=sum;for(i=0;i<500;i++){ap++;del*=x/ap;sum+=del;if(Math.abs(del)<Math.abs(sum)*1e-14)break}return sum*EX(-x+a*LN(x)-gl)}
+ var b=x+1-a,c=1e300,d=1/b,h=d;for(i=1;i<500;i++){var an=-i*(i-a);b+=2;d=an*d+b;if(Math.abs(d)<1e-300)d=1e-300;c=b+an/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;var de=d*c;h*=de;if(Math.abs(de-1)<1e-14)break}
+ return 1-EX(-x+a*LN(x)-gl)*h}
+function bcf(a,b,x){var qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<1e-300)d=1e-300;d=1/d;var h=d;
+ for(var m=1;m<500;m++){var m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<1e-300)d=1e-300;c=1+aa/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;h*=d*c;
+  aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<1e-300)d=1e-300;c=1+aa/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;var del=d*c;h*=del;if(Math.abs(del-1)<1e-14)break}return h}
+function bI(x,a,b){if(x<=0)return 0;if(x>=1)return 1;var bt=EX(lgam(a+b)-lgam(a)-lgam(b)+a*LN(x)+b*LN(1-x));return x<(a+1)/(a+b+2)?bt*bcf(a,b,x)/a:1-bt*bcf(b,a,1-x)/b}
+function Nc(z){return .5*(1+(z<0?-1:1)*gP(.5,z*z/2))}
+function lb(a,b){return lgam(a)+lgam(b)-lgam(a+b)}
+function cmb(n,k){return lgam(n+1)-lgam(k+1)-lgam(n-k+1)}
+var D=[
+{nm:'Bernoulli',disc:1,pn:['p'],def:[.3],r:{m:[.01,.99],s:[0,.6]},ls:1,need:'a mean between 0 and 1',desc:'One trial with two outcomes: success (1) with probability p, or failure (0).',
+ f:function(x,p){return x===0?1-p[0]:x===1?p[0]:0},F:function(x,p){return x<0?0:x<1?1-p[0]:1},sup:function(){return[0,1]},
+ mom:function(p){var q=p[0],v=q*(1-q);return{m:q,v:v,s:(1-2*q)/SQ(v),k:(1-6*v)/v}},inv:function(m){return m>0&&m<1?[m]:null}},
+{nm:'Binomial',disc:1,pn:['n','p'],def:[20,.3],r:{m:[1,100],s:[.3,10]},need:'a standard deviation smaller than the square root of the mean',desc:'Number of successes in n independent trials, each with success probability p.',
+ f:function(x,p){var n=p[0],q=p[1];if(x<0||x>n||x!==Math.floor(x))return 0;if(q>=1)return x===n?1:0;return EX(cmb(n,x)+x*LN(q)+(n-x)*LN(1-q))},
+ F:function(x,p){var n=p[0],q=p[1],k=Math.floor(x);return k<0?0:k>=n?1:q>=1?0:bI(1-q,n-k,k+1)},sup:function(p){return[0,p[0]]},
+ mom:function(p){var n=p[0],q=p[1],v=n*q*(1-q);return{m:n*q,v:v,s:(1-2*q)/SQ(v),k:(1-6*q*(1-q))/v}},
+ inv:function(m,s){if(!(m>0&&s>0&&s*s<m))return null;var q=1-s*s/m,n=Math.max(Math.ceil(m-1e-9),Math.round(m/q));return n>5000?null:[n,m/n]}},
+{nm:'Poisson',disc:1,pn:['λ'],def:[4],r:{m:[.5,60],s:[.5,8]},ls:1,need:'a positive mean',desc:'Number of events in a fixed interval when events occur at a constant average rate.',
+ f:function(x,p){return x<0||x!==Math.floor(x)?0:EX(-p[0]+x*LN(p[0])-lgam(x+1))},F:function(x,p){var k=Math.floor(x);return k<0?0:1-gP(k+1,p[0])},sup:function(){return[0,INF]},
+ mom:function(p){return{m:p[0],v:p[0],s:1/SQ(p[0]),k:1/p[0]}},inv:function(m){return m>0?[m]:null}},
+{nm:'Discrete Uniform',disc:1,pn:['a (min)','b (max)'],def:[1,6],r:{m:[-10,60],s:[.5,15]},need:'a standard deviation above zero',desc:'Each whole number from a to b is equally likely, like a fair die.',
+ f:function(x,p){return x<p[0]||x>p[1]||x!==Math.floor(x)?0:1/(p[1]-p[0]+1)},F:function(x,p){var k=Math.floor(x);return k<p[0]?0:k>=p[1]?1:(k-p[0]+1)/(p[1]-p[0]+1)},sup:function(p){return[p[0],p[1]]},
+ mom:function(p){var N=p[1]-p[0]+1;return{m:(p[0]+p[1])/2,v:(N*N-1)/12,s:0,k:-6*(N*N+1)/(5*(N*N-1))}},
+ inv:function(m,s){if(!(s>0))return null;var N=Math.max(2,Math.round(SQ(12*s*s+1))),a=Math.round(m-(N-1)/2);return[a,a+N-1]}},
+{nm:'Normal',pn:['μ','σ'],def:[50,10],r:{m:[-100,200],s:[.5,50]},need:'a standard deviation above zero',desc:'The bell curve, set by its mean and standard deviation.',
+ f:function(x,p){var z=(x-p[0])/p[1];return EX(-z*z/2)/(p[1]*SQ(2*PI))},F:function(x,p){return Nc((x-p[0])/p[1])},sup:function(){return[NI,INF]},
+ mom:function(p){return{m:p[0],v:p[1]*p[1],s:0,k:0}},inv:function(m,s){return s>0?[m,s]:null}},
+{nm:'Standard Normal',pn:[],lm:1,ls:1,def:[],r:{m:[-1,1],s:[.5,2]},need:'no changes (it is fixed)',desc:'The normal distribution with mean 0 and standard deviation 1, used for z-scores.',
+ f:function(x){return EX(-x*x/2)/SQ(2*PI)},F:function(x){return Nc(x)},sup:function(){return[NI,INF]},
+ mom:function(){return{m:0,v:1,s:0,k:0}},inv:function(){return[]}},
+{nm:'Continuous Uniform',pad:1,pn:['a (min)','b (max)'],def:[0,10],r:{m:[-50,50],s:[.2,20]},need:'a standard deviation above zero',desc:'Every value between a and b is equally likely.',
+ f:function(x,p){return x>=p[0]&&x<=p[1]?1/(p[1]-p[0]):0},F:function(x,p){return x<=p[0]?0:x>=p[1]?1:(x-p[0])/(p[1]-p[0])},sup:function(p){return[p[0],p[1]]},
+ mom:function(p){return{m:(p[0]+p[1])/2,v:Math.pow(p[1]-p[0],2)/12,s:0,k:-1.2}},inv:function(m,s){return s>0?[m-s*SQ(3),m+s*SQ(3)]:null}},
+{nm:'Exponential',pn:['λ (rate)'],def:[.5],r:{m:[.1,20],s:[.1,20]},ls:1,need:'a positive mean',desc:'Waiting time between events that occur at a constant rate.',
+ f:function(x,p){return x<0?0:p[0]*EX(-p[0]*x)},F:function(x,p){return x<0?0:1-EX(-p[0]*x)},sup:function(){return[0,INF]},
+ mom:function(p){return{m:1/p[0],v:1/(p[0]*p[0]),s:2,k:6}},inv:function(m){return m>0?[1/m]:null}},
+{nm:'Chi-Square',pn:['k (degrees of freedom)'],def:[5],r:{m:[1,60],s:[1,12]},ls:1,need:'a positive mean',desc:'Sum of squared standard normals, used for variance and goodness-of-fit tests.',
+ f:function(x,p){var h=p[0]/2;return x<0?0:x===0?(p[0]===2?.5:p[0]<2?INF:0):EX((h-1)*LN(x)-x/2-h*LN(2)-lgam(h))},F:function(x,p){return x<=0?0:gP(p[0]/2,x/2)},sup:function(){return[0,INF]},
+ mom:function(p){return{m:p[0],v:2*p[0],s:SQ(8/p[0]),k:12/p[0]}},inv:function(m){return m>0?[m]:null}},
+{nm:'Student’s t',pn:['ν (degrees of freedom)'],lm:1,def:[5],r:{m:[-1,1],s:[1.02,3]},need:'a standard deviation above 1 (the mean is fixed at 0)',desc:'Like the normal but with heavier tails, used for small-sample means.',
+ f:function(x,p){var v=p[0];return EX(lgam((v+1)/2)-lgam(v/2)-.5*LN(v*PI)-(v+1)/2*LN(1+x*x/v))},F:function(x,p){var v=p[0],ib=bI(v/(v+x*x),v/2,.5);return x>0?1-.5*ib:.5*ib},sup:function(){return[NI,INF]},
+ mom:function(p){var v=p[0];return{m:v>1?0:NaN,v:v>2?v/(v-2):(v>1?INF:NaN),s:v>3?0:NaN,k:v>4?6/(v-4):(v>2?INF:NaN)}},inv:function(m,s){return s>1?[2*s*s/(s*s-1)]:null}},
+{nm:'F',pn:['d₁','d₂'],def:[5,10],r:{m:[1.05,2],s:[.3,3]},need:'a mean between 1 and 2, and a large enough standard deviation',desc:'Ratio of two scaled chi-squares, used to compare variances and in ANOVA.',
+ f:function(x,p){var a=p[0],b=p[1];return x<=0?0:EX(.5*(a*LN(a)+b*LN(b))+(a/2-1)*LN(x)-(a+b)/2*LN(b+a*x)-lb(a/2,b/2))},F:function(x,p){return x<=0?0:bI(p[0]*x/(p[0]*x+p[1]),p[0]/2,p[1]/2)},sup:function(){return[0,INF]},
+ mom:function(p){var a=p[0],b=p[1];return{m:b>2?b/(b-2):NaN,v:b>4?2*b*b*(a+b-2)/(a*Math.pow(b-2,2)*(b-4)):(b>2?INF:NaN),s:b>6?(2*a+b-2)*SQ(8*(b-4))/((b-6)*SQ(a*(a+b-2))):NaN,k:b>8?12*(a*(5*b-22)*(a+b-2)+(b-4)*Math.pow(b-2,2))/(a*(b-6)*(b-8)*(a+b-2)):NaN}},
+ inv:function(m,s){if(!(m>1&&s>0))return null;var b=2*m/(m-1);if(b<=4)return null;var den=s*s*Math.pow(b-2,2)*(b-4)-2*b*b;if(den<=0)return null;var a=2*b*b*(b-2)/den;return a>0?[a,b]:null}},
+{nm:'Beta',pn:['α','β'],def:[2,5],r:{m:[.02,.98],s:[.02,.45]},need:'a mean between 0 and 1, and a standard deviation below √(mean × (1 − mean))',desc:'Values between 0 and 1, often used to model probabilities.',
+ f:function(x,p){return x<=0||x>=1?(x===0&&p[0]<1||x===1&&p[1]<1?INF:0):EX((p[0]-1)*LN(x)+(p[1]-1)*LN(1-x)-lb(p[0],p[1]))},F:function(x,p){return bI(x,p[0],p[1])},sup:function(){return[0,1]},
+ mom:function(p){var a=p[0],b=p[1],t=a+b;return{m:a/t,v:a*b/(t*t*(t+1)),s:2*(b-a)*SQ(t+1)/((t+2)*SQ(a*b)),k:6*(Math.pow(a-b,2)*(t+1)-a*b*(t+2))/(a*b*(t+2)*(t+3))}},
+ inv:function(m,s){if(!(m>0&&m<1&&s>0))return null;var c=m*(1-m)/(s*s)-1;return c>0?[m*c,(1-m)*c]:null}},
+{nm:'Lognormal',pn:['μ (of ln x)','σ (of ln x)'],def:[0,.5],r:{m:[.1,20],s:[.05,20]},need:'a positive mean and standard deviation',desc:'A variable whose logarithm is normal: positive and right-skewed, like incomes or prices.',
+ f:function(x,p){if(x<=0)return 0;var z=(LN(x)-p[0])/p[1];return EX(-z*z/2)/(x*p[1]*SQ(2*PI))},F:function(x,p){return x<=0?0:Nc((LN(x)-p[0])/p[1])},sup:function(){return[0,INF]},
+ mom:function(p){var u=p[0],w=p[1]*p[1],e=EX(w);return{m:EX(u+w/2),v:(e-1)*EX(2*u+w),s:(e+2)*SQ(e-1),k:EX(4*w)+2*EX(3*w)+3*EX(2*w)-6}},
+ inv:function(m,s){if(!(m>0&&s>0))return null;var w=LN(1+s*s/(m*m));return[LN(m)-w/2,SQ(w)]}},
+{nm:'Pareto',pn:['xₘ (minimum)','α (tail index)'],def:[1,3],r:{m:[.5,20],s:[.05,20]},need:'a positive mean and standard deviation',desc:'Heavy-tailed, with 80/20 patterns such as wealth or city sizes.',
+ f:function(x,p){return x<p[0]?0:p[1]*Math.pow(p[0],p[1])/Math.pow(x,p[1]+1)},F:function(x,p){return x<p[0]?0:1-Math.pow(p[0]/x,p[1])},sup:function(p){return[p[0],INF]},
+ mom:function(p){var xm=p[0],a=p[1];return{m:a>1?a*xm/(a-1):INF,v:a>2?xm*xm*a/(Math.pow(a-1,2)*(a-2)):INF,s:a>3?2*(1+a)/(a-3)*SQ((a-2)/a):NaN,k:a>4?6*(a*a*a+a*a-6*a-2)/(a*(a-3)*(a-4)):NaN}},
+ inv:function(m,s){if(!(m>0&&s>0))return null;var a=1+SQ(1+m*m/(s*s));return[m*(a-1)/a,a]}}
+];
+function qf(d,p,pp){var sp=d.sup(p),lo=sp[0],hi=sp[1],c=function(x){return d.F(x,p)},g=0;
+ if(d.disc){if(!isFinite(hi)){hi=lo+1;while(c(hi)<pp&&g++<80)hi=hi*2+1}
+  while(lo<hi){var md=Math.floor((lo+hi)/2);if(c(md)>=pp)hi=md;else lo=md+1}return lo}
+ if(!isFinite(lo)){lo=-1;while(c(lo)>pp&&g++<200)lo*=2}
+ if(!isFinite(hi)){var b=isFinite(sp[0])?sp[0]:0;hi=b+1;g=0;while(c(hi)<pp&&g++<200)hi=b+2*(hi-b)}
+ for(var i=0;i<70;i++){var mid=(lo+hi)/2;if(c(mid)<pp)lo=mid;else hi=mid}return(lo+hi)/2}
+function dom(d,p){var sp=d.sup(p),lo,hi;
+ if(d.disc){lo=Math.max(sp[0],qf(d,p,.0005)-1);hi=Math.min(sp[1],qf(d,p,.9995)+1);if(hi-lo>300)hi=lo+300;return[lo,hi]}
+ lo=isFinite(sp[0])?sp[0]:qf(d,p,.002);hi=isFinite(sp[1])?sp[1]:qf(d,p,.998);
+ var w=hi-lo||1;if(d.pad){lo-=.12*w;hi+=.12*w}return[lo,hi]}
+
+D[0].mode=function(p){return p[0]>.5?1:p[0]<.5?0:'0 and 1'};
+D[1].mode=function(p){return Math.min(p[0],Math.floor((p[0]+1)*p[1]))};
+D[2].mode=function(p){return Math.floor(p[0])};
+D[3].mode=function(p){return 'any from '+p[0]+' to '+p[1]};
+D[4].mode=function(p){return p[0]};
+D[5].mode=function(){return 0};
+D[6].mode=function(p){return 'any in the range'};
+D[7].mode=function(){return 0};
+D[8].mode=function(p){return Math.max(p[0]-2,0)};
+D[9].mode=function(){return 0};
+D[10].mode=function(p){var a=p[0],b=p[1];return a>2?b*(a-2)/(a*(b+2)):0};
+D[11].mode=function(p){var a=p[0],b=p[1];return a>1&&b>1?(a-1)/(a+b-2):(a<1&&b<1?'0 and 1':(a<=1&&b>1?0:(a>1&&b<=1?1:'any in the range')))};
+D[12].mode=function(p){return EX(p[0]-p[1]*p[1])};
+D[13].mode=function(p){return p[0]};
+var TLS={nm:'Student’s t (location-scale)',pn:['ν','μ','σ'],sup:function(){return[NI,INF]},
+ f:function(x,p){var z=(x-p[1])/p[2],v=p[0];return EX(lgam((v+1)/2)-lgam(v/2)-.5*LN(v*PI)-LN(p[2])-(v+1)/2*LN(1+z*z/v))},
+ F:function(x,p){var z=(x-p[1])/p[2],v=p[0],ib=bI(v/(v+z*z),v/2,.5);return z>0?1-.5*ib:.5*ib},
+ mom:function(p){var v=p[0],sg=p[2];return{m:v>1?p[1]:NaN,v:v>2?sg*sg*v/(v-2):(v>1?INF:NaN),s:v>3?0:NaN,k:v>4?6/(v-4):(v>2?INF:NaN)}},mode:function(p){return p[1]}};
+var LGm=null;
+function dig(x){var r=0;while(x<6){r-=1/x;x++}var f=1/(x*x);return r+LN(x)-.5/x-f*(1/12-f*(1/120-f*(1/252-f*(1/240-f/132))))}
+function trig(x){var h=1e-5*Math.max(1,x);return (dig(x+h)-dig(x-h))/(2*h)}
+function nm(f0,x0,it){var f=function(q){var v=f0(q);return isNaN(v)?INF:v},n=x0.length,P=[x0.slice()],i,j;
+ for(i=0;i<n;i++){var p=x0.slice();p[i]+=Math.abs(p[i])>1e-3?.2*Math.abs(p[i]):.2;P.push(p)}
+ var F=P.map(f);
+ for(var k=0;k<it;k++){
+  var o=F.map(function(_,i){return i}).sort(function(a,b){return F[a]-F[b]});P=o.map(function(i){return P[i]});F=o.map(function(i){return F[i]});
+  var c=new Array(n).fill(0);for(i=0;i<n;i++)for(j=0;j<n;j++)c[j]+=P[i][j]/n;
+  var xr=c.map(function(v,j){return v+(v-P[n][j])}),fr=f(xr);
+  if(fr<F[0]){var xe=c.map(function(v,j){return v+2*(v-P[n][j])}),fe=f(xe);if(fe<fr){P[n]=xe;F[n]=fe}else{P[n]=xr;F[n]=fr}}
+  else if(fr<F[n-1]){P[n]=xr;F[n]=fr}
+  else{var xc=c.map(function(v,j){return v+.5*(P[n][j]-v)}),fc=f(xc);
+   if(fc<F[n]){P[n]=xc;F[n]=fc}else{for(i=1;i<=n;i++){P[i]=P[i].map(function(v,j){return P[0][j]+.5*(v-P[0][j])});F[i]=f(P[i])}}}
+  if(Math.abs(F[n]-F[0])<1e-10*(1+Math.abs(F[0])))break}
+ var b=0;for(i=1;i<=n;i++)if(F[i]<F[b])b=i;return P[b]}
+function sub(x,m){if(x.length<=m)return x;var r=[];for(var i=0;i<m;i++)r.push(x[Math.round(i*(x.length-1)/(m-1))]);return r}
+function qs(a,q){var i=(a.length-1)*q,lo=Math.floor(i),hi=Math.ceil(i);return a[lo]+(a[hi]-a[lo])*(i-lo)}
+function stats(a){var n=a.length,m=0,i;for(i=0;i<n;i++)m+=a[i];m/=n;var m2=0,m3=0,m4=0;for(i=0;i<n;i++){var d=a[i]-m,d2=d*d;m2+=d2;m3+=d2*d;m4+=d2*d2}m2/=n;m3/=n;m4/=n;
+ return{n:n,m:m,sdp:SQ(m2),sd:SQ(m2*n/(n-1)),v:m2*n/(n-1),skew:m3/Math.pow(m2,1.5),kurt:m4/(m2*m2)-3,min:a[0],max:a[n-1],med:qs(a,.5),q1:qs(a,.25),q3:qs(a,.75)}}
+var seed=20260531;function rnd(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}
+function gn(){var u=rnd()||1e-9;return SQ(-2*LN(u))*Math.cos(2*PI*rnd())}
+function rg(k){if(k<1)return rg(k+1)*Math.pow(rnd(),1/k);var d=k-1/3,c=1/SQ(9*d);for(;;){var x,v;do{x=gn();v=1+c*x}while(v<=0);v=v*v*v;var u=rnd();if(u<1-.0331*x*x*x*x||LN(u)<.5*x*x+d*(1-v+LN(v)))return d*v}}
+var GENS=[function(){return rnd()<.3?1:0},function(){var s=0;for(var i=0;i<20;i++)s+=rnd()<.3?1:0;return s},function(){var L=EX(-4),k=0,p=1;do{k++;p*=rnd()}while(p>L);return k-1},function(){return 1+Math.floor(6*rnd())},
+ function(){return 100+15*gn()},function(){return gn()},function(){return 10+20*rnd()},function(){return -5*LN(rnd()||1e-9)},function(){return 2*rg(2)},function(){return gn()/SQ(2*rg(2)/4)},
+ function(){return(2*rg(2.5)/5)/(2*rg(5)/10)},function(){var a=rg(2),b=rg(5);return a/(a+b)},function(){return EX(3+.6*gn())},function(){return 1/Math.pow(rnd()||1e-9,1/2.5)}];
+function gen(i,n){seed=20260531;var a=[];for(var k=0;k<n;k++)a.push(Math.round(GENS[i]()*1e4)/1e4);return a}
+// ---- fitting
+var FT=[
+{i:0,lp:function(x,p){return x===1?LN(p[0]):LN(1-p[0])},fit:function(c){return c.disc&&c.min>=0&&c.max<=1&&c.m>0&&c.m<1?[c.m]:null}},
+{i:1,lp:function(x,p){var n=p[0],q=p[1];if(x<0||x>n)return NI;if(q>=1)return x===n?0:NI;return cmb(n,x)+x*LN(q)+(n-x)*LN(1-q)},
+ fit:function(c){if(!c.disc||c.min<0||!(c.m>0))return null;var best=null,bl=NI,nmax=Math.min(5000,Math.max(c.max*4,c.max+20)),self=this;
+  for(var n=Math.max(1,c.max);n<=nmax;n++){var q=c.m/n;if(!(q>0&&q<1))continue;var l=0;for(var j=0;j<c.V.length;j++)l+=c.C[j]*self.lp(c.V[j],[n,q]);if(l>bl){bl=l;best=[n,q]}}return best}},
+{i:2,lp:function(x,p){return x<0?NI:-p[0]+x*LN(p[0])-lgam(x+1)},fit:function(c){return c.disc&&c.min>=0&&c.m>0?[c.m]:null}},
+{i:3,lp:function(x,p){return x<p[0]||x>p[1]?NI:-LN(p[1]-p[0]+1)},fit:function(c){return c.disc&&c.max>c.min?[c.min,c.max]:null}},
+{i:4,lp:function(x,p){var z=(x-p[0])/p[1];return -.5*LN(2*PI)-LN(p[1])-.5*z*z},fit:function(c){return[c.S2.m,c.S2.sdp]}},
+{i:5,lp:function(x){return -.5*LN(2*PI)-x*x/2},fit:function(){return[]}},
+{i:6,lp:function(x,p){return x<p[0]||x>p[1]?NI:-LN(p[1]-p[0])},fit:function(c){return c.S2.max>c.S2.min?[c.S2.min,c.S2.max]:null}},
+{i:7,lp:function(x,p){return x<0?NI:LN(p[0])-p[0]*x},fit:function(c){return c.S2.min>=0&&c.S2.m>0?[1/c.S2.m]:null}},
+{i:8,lp:function(x,p){var h=p[0]/2;return x<=0?NI:(h-1)*LN(x)-x/2-h*LN(2)-lgam(h)},
+ fit:function(c){if(!(c.S2.min>0))return null;var s=0,i,x=c.xs;for(i=0;i<x.length;i++)s+=LN(x[i]);s=s/x.length-LN(2);var y=s>=-2.22?EX(s)+.5:-1/(s-dig(1));for(i=0;i<8;i++)y-=(dig(y)-s)/trig(y);return y>0?[2*y]:null}},
+{i:9,d:TLS,lp:function(x,p){var z=(x-p[1])/p[2],v=p[0];return lgam((v+1)/2)-lgam(v/2)-.5*LN(v*PI)-LN(p[2])-(v+1)/2*LN(1+z*z/v)},
+ fit:function(c){var xx=sub(c.xs,2000),self=this,sc=(c.S2.q3-c.S2.q1)/1.349||c.S2.sdp;var q=nm(function(q){var v=-sumC(self,[Math.min(EX(q[0]),1000),q[1],EX(q[2])],xx);return isFinite(v)?v:INF},[LN(5),c.S2.med,LN(sc)],400);return[Math.min(EX(q[0]),1000),q[1],EX(q[2])]}},
+{i:10,lp:function(x,p){var a=p[0],b=p[1];return x<=0?NI:.5*(a*LN(a)+b*LN(b))+(a/2-1)*LN(x)-(a+b)/2*LN(b+a*x)-lb(a/2,b/2)},
+ fit:function(c){if(!(c.S2.min>0))return null;var xx=sub(c.xs,2000),self=this,d2=c.S2.m>1.2?Math.min(2*c.S2.m/(c.S2.m-1),200):20;
+  var q=nm(function(q){var v=-sumC(self,[Math.min(EX(q[0]),1e4),Math.min(EX(q[1]),1e4)],xx);return isFinite(v)?v:INF},[LN(5),LN(d2)],300);return[Math.min(EX(q[0]),1e4),Math.min(EX(q[1]),1e4)]}},
+{i:11,lp:function(x,p){return x<=0||x>=1?NI:(p[0]-1)*LN(x)+(p[1]-1)*LN(1-x)-lb(p[0],p[1])},
+ fit:function(c){var S=c.S2;if(!(S.min>0&&S.max<1))return null;var k=S.m*(1-S.m)/(S.sdp*S.sdp)-1;if(!(k>0))return null;var xx=sub(c.xs,2000),self=this;
+  var q=nm(function(q){var v=-sumC(self,[EX(q[0]),EX(q[1])],xx);return isFinite(v)?v:INF},[LN(S.m*k),LN((1-S.m)*k)],200);return[EX(q[0]),EX(q[1])]}},
+{i:12,lp:function(x,p){if(x<=0)return NI;var z=(LN(x)-p[0])/p[1];return -LN(x)-LN(p[1])-.5*LN(2*PI)-.5*z*z},
+ fit:function(c){if(!(c.S2.min>0))return null;var x=c.xs,m=0,v=0,i;for(i=0;i<x.length;i++)m+=LN(x[i]);m/=x.length;for(i=0;i<x.length;i++)v+=Math.pow(LN(x[i])-m,2);return[m,SQ(v/x.length)]}},
+{i:13,lp:function(x,p){return x<p[0]?NI:LN(p[1])+p[1]*LN(p[0])-(p[1]+1)*LN(x)},
+ fit:function(c){if(!(c.S2.min>0))return null;var s=0,x=c.xs,i;for(i=0;i<x.length;i++)s+=LN(x[i]/c.S2.min);return s>0?[c.S2.min,x.length/s]:null}}
+];
+FT.forEach(function(f,k){f.d=f.d||D[f.i];f.k=f.i===5?0:(f.fit.length&&0,0)});
+var NPAR=[1,2,1,2,2,0,2,1,1,3,2,2,2,2];FT.forEach(function(f,k){f.k=NPAR[k]});
+function sumC(f,p,x){var s=0;for(var i=0;i<x.length;i++)s+=f.lp(x[i],p);return s}
+function sumD(f,p,c){var s=0;for(var j=0;j<c.V.length;j++)s+=c.C[j]*f.lp(c.V[j],p);return s}
+function ksC(d,p,x){var n=x.length,M=0;for(var i=0;i<n;i++){var F=d.F(x[i],p);M=Math.max(M,(i+1)/n-F,F-i/n)}return M}
+function ksD(d,p,c){var cum=0,M=0;for(var j=0;j<c.V.length;j++){cum+=c.C[j];M=Math.max(M,Math.abs(cum/c.n-d.F(c.V[j],p)))}return M}
+function evalFit(f,c){var p=null;try{p=f.fit(c)}catch(e){}
+ if(!p||!p.every(isFinite))return{ok:false};
+ var dd=f.d,ll=dd.disc?sumD(f,p,c):sumC(f,p,c.xs);if(!isFinite(ll))return{ok:false};
+ return{ok:true,p:p,ll:ll,aic:2*f.k-2*ll,ks:dd.disc?ksD(dd,p,c):ksC(dd,p,c.xs)}}
+
+
+var $=function(i){return document.getElementById(i)},cards=[],U={c:null,fits:[],sel:0,cols:[],name:'',S:null};
+function css(k){return getComputedStyle(document.documentElement).getPropertyValue(k).trim()}
+function fm(v){if(typeof v==='string')return v;if(v===undefined||v===null||isNaN(v))return 'undefined';if(v===INF)return '∞';if(v===NI)return '−∞';var a=Math.abs(v);if(a<1e-7)return '0';if(a>=1e6||a<1e-4)return v.toExponential(3);return (+v.toPrecision(4)).toString()}
+function fill(r){r.style.setProperty('--p',Math.max(0,Math.min(100,(r.value-r.min)/(r.max-r.min)*100))+'%')}
+function setR(n,r,lo,hi,v,st){var rr=$(r);lo=Math.min(lo,v);hi=Math.max(hi,v);if(!(hi>lo)){lo=v-1;hi=v+1}rr.min=lo;rr.max=hi;rr.step=st||(hi-lo)/400;rr.value=v;$(n).value=+v.toPrecision(5);fill(rr);return[lo,hi]}
+function pstr(d,p){return d.pn.length?d.pn.map(function(n,i){return n+' = '+fm(p[i])}).join(', '):'μ = 0, σ = 1'}
+function yr(a,fac){var v=a.filter(isFinite).sort(function(x,y){return x-y});if(!v.length)return 1;var mx=v[v.length-1],p9=v[Math.floor(.9*(v.length-1))];return Math.max(1e-12,Math.min(mx,fac*p9))*1.12}
+function cv2(cv){var d=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;cv.width=w*d;cv.height=h*d;var c=cv.getContext('2d');c.setTransform(d,0,0,d,0,0);c.clearRect(0,0,w,h);c.font='10.5px "IBM Plex Mono",monospace';c.textBaseline='middle';return{c:c,w:w,h:h}}
+function chart(cv,xs,ys,kind,o){
+ var q=cv2(cv),c=q.c,w=q.w,h=q.h,L=48,R=10,T=20,B=24,acc=css('--acc'),wr=css('--warn'),mu=css('--mute'),ln=css('--line'),i;
+ var X=function(v){return L+(v-o.x0)/(o.x1-o.x0)*(w-L-R)},Y=function(v){return h-B-(Math.min(Math.max(v,o.y0),o.y1)-o.y0)/(o.y1-o.y0)*(h-B-T)};
+ for(i=0;i<=4;i++){var v=o.y0+(o.y1-o.y0)*i/4,y=h-B-i/4*(h-B-T);c.strokeStyle=ln;c.lineWidth=1;c.beginPath();c.moveTo(L,y);c.lineTo(w-R,y);c.stroke();c.fillStyle=mu;c.textAlign='right';c.fillText(fm(v),L-6,y)}
+ c.fillStyle=mu;c.textAlign='left';c.fillText(fm(o.lab[0]),L,h-8);c.textAlign='center';c.fillText(fm((o.lab[0]+o.lab[1])/2),L+(w-L-R)/2,h-8);c.textAlign='right';c.fillText(fm(o.lab[1]),w-R,h-8);
+ function vl(x,col,lab,dash){if(!(x>=o.x0&&x<=o.x1))return;c.setLineDash(dash);c.strokeStyle=col;c.lineWidth=1;c.beginPath();c.moveTo(X(x),T);c.lineTo(X(x),h-B);c.stroke();c.setLineDash([]);if(lab){c.fillStyle=col;c.textAlign='center';c.fillText(lab,X(x),T-9)}}
+ if(kind==='bars'){var bw=Math.max(2,Math.min(16,(w-L-R)/(xs.length+1)*.62));xs.forEach(function(x,j){var y=ys[j];if(!isFinite(y))return;c.fillStyle=(x>=o.lo&&x<=o.hi)?wr:acc;c.globalAlpha=.85;c.fillRect(X(x)-bw/2,Y(y),bw,Math.max(1,h-B-Y(y)));c.globalAlpha=1})}
+ else{
+  c.beginPath();var st=false,fx=null,lx=null;for(i=0;i<xs.length;i++){if(xs[i]<o.lo||xs[i]>o.hi||!isFinite(ys[i]))continue;if(!st){c.moveTo(X(xs[i]),Y(0));st=true;fx=xs[i]}c.lineTo(X(xs[i]),Y(ys[i]));lx=xs[i]}
+  if(st){c.lineTo(X(lx),Y(0));c.closePath();c.fillStyle=wr;c.globalAlpha=.22;c.fill();c.globalAlpha=1}
+  c.strokeStyle=acc;c.lineWidth=2;c.beginPath();var on=false;for(i=0;i<xs.length;i++){if(!isFinite(ys[i])){on=false;continue}on?c.lineTo(X(xs[i]),Y(ys[i])):c.moveTo(X(xs[i]),Y(ys[i]));on=true}c.stroke()}
+ if(!o.disc){vl(o.lo,wr,'',[3,3]);vl(o.hi,wr,'',[3,3])}
+ if(o.mu!==undefined&&isFinite(o.mu))vl(o.mu,mu,'μ',[4,4])}
+function shape(m){var t=[],s=m.s,k=m.k;
+ if(isNaN(s))t.push('skewness is undefined');else if(Math.abs(s)<.1)t.push('symmetric');else t.push(s>0?'right-skewed (longer right tail)':'left-skewed (longer left tail)');
+ if(isNaN(k))t.push('kurtosis is undefined');else if(!isFinite(k))t.push('infinite kurtosis (very heavy tails)');else if(k>.5)t.push('heavier tails than the normal');else if(k<-.5)t.push('lighter tails than the normal');else t.push('tails like the normal');
+ return 'Shape: '+t.join(', ')+'.'}
+function sgrid(d,p,mm){var sd=SQ(mm.v),cv=isFinite(mm.m)&&mm.m!==0&&isFinite(sd)?Math.abs(sd/mm.m):NaN,sp=d.sup(p),
+ sup=d.disc?(isFinite(sp[1])?'{'+fm(sp[0])+' … '+fm(sp[1])+'}':'{'+fm(sp[0])+', '+fm(sp[0]+1)+', …}'):(isFinite(sp[0])?'[':'(')+fm(sp[0])+', '+fm(sp[1])+(isFinite(sp[1])?']':')');
+ var it=[['Mean',fm(mm.m)],['Median',fm(qf(d,p,.5))],['Mode',fm(d.mode(p))],['Std deviation',fm(sd)],['Variance',fm(mm.v)],['CV (SD ÷ mean)',fm(cv)],['Skewness',fm(mm.s)],['Excess kurtosis',fm(mm.k)],['Support',sup]];
+ return it.map(function(t){return '<div style="background:var(--panel);padding:.45rem .6rem"><div class="mono mute" style="font-size:.66rem">'+t[0]+'</div><div class="mono" style="font-size:.8rem;font-weight:500">'+t[1]+'</div></div>'}).join('')}
+function draw(i){
+ var d=D[i],s=cards[i],p=s.p,cf=s.c/100,r=dom(d,p),x0=r[0],x1=r[1],xs=[],k;
+ if(d.disc){for(k=x0;k<=x1;k++)xs.push(k)}else{for(k=0;k<=240;k++)xs.push(x0+(x1-x0)*k/240)}
+ var pdf=xs.map(function(x){return d.f(x,p)}),lo=qf(d,p,(1-cf)/2),hi=qf(d,p,(1+cf)/2),mm=d.mom(p);
+ var ym=d.disc?Math.max.apply(null,pdf.filter(isFinite))*1.15:yr(pdf,6);
+ chart($('zg'+i),xs,pdf,d.disc?'bars':'line',{x0:d.disc?x0-.5:x0,x1:d.disc?x1+.5:x1,y0:0,y1:ym,mu:isFinite(mm.m)?mm.m:undefined,lo:lo,hi:hi,lab:[x0,x1],disc:d.disc});
+ var cov=d.disc?d.F(hi,p)-d.F(lo-1,p):cf;
+ $('zi'+i).innerHTML='Middle '+fm(s.c)+'% of outcomes: <b class="acc">'+fm(lo)+'</b> to <b class="acc">'+fm(hi)+'</b>'+(d.disc?' (covers '+fm(cov*100)+'%)':'');
+ $('zp'+i).textContent='Parameters: '+pstr(d,p);$('zs_'+i).innerHTML=sgrid(d,p,mm);$('zh'+i).textContent=shape(mm)}
+function adjust(i){
+ var d=D[i],s=cards[i],m=parseFloat($('zm'+i).value),sd=parseFloat($('zs'+i).value);
+ if(!isFinite(m)||!isFinite(sd)){$('zw'+i).textContent='Enter valid numbers for the mean and standard deviation.';return}
+ var p=d.inv(m,sd,s.p);
+ if(!p||!p.every(isFinite)){$('zw'+i).textContent='That mean and standard deviation can’t be matched by the '+d.nm+' distribution. It needs '+d.need+'.';return}
+ s.p=p;$('zw'+i).textContent='';var mm=d.mom(p),as=SQ(mm.v);
+ if(d.ls&&isFinite(as)){var rr=$('zrs'+i);setR('zs'+i,'zrs'+i,+rr.min,+rr.max,as)}
+ var off=(!d.lm&&Math.abs(mm.m-m)>1e-6*(1+Math.abs(m)))||(!d.ls&&Math.abs(as-sd)>1e-6*(1+sd));
+ $('zn'+i).textContent=off?'Whole-number parameters, so the closest match is shown: mean '+fm(mm.m)+', SD '+fm(as)+'.':'';
+ draw(i)}
+function init(i){
+ var d=D[i],s=cards[i];s.p=d.def.slice();s.c=95;var mm=d.mom(s.p),a=setR('zm'+i,'zrm'+i,d.r.m[0],d.r.m[1],mm.m),b=setR('zs'+i,'zrs'+i,d.r.s[0],d.r.s[1],SQ(mm.v)),c=setR('zq'+i,'zrq'+i,50,99.9,95,.1);
+ $('zam'+i).textContent=fm(a[0]);$('zbm'+i).textContent=fm(a[1]);$('zas'+i).textContent=fm(b[0]);$('zbs'+i).textContent=fm(b[1]);$('zaq'+i).textContent='50%';$('zbq'+i).textContent='99.9%';
+ var fx=d.nm==='Standard Normal';
+ $('zlm'+i).textContent=(d.lm||fx)?'Mean (fixed at 0)':'Mean (μ)';
+ $('zls'+i).textContent=fx?'Standard deviation (fixed at 1)':d.ls?'Standard deviation (set by the mean)':'Standard deviation (σ)';
+ $('zm'+i).disabled=$('zrm'+i).disabled=!!d.lm;$('zs'+i).disabled=$('zrs'+i).disabled=!!d.ls;
+ $('zrm'+i).style.opacity=d.lm?.45:1;$('zrs'+i).style.opacity=d.ls?.45:1;
+ $('zw'+i).textContent='';$('zn'+i).textContent='';draw(i)}
+function link(n,r,fn){var nn=$(n),rr=$(r);rr.addEventListener('input',function(){nn.value=+(+rr.value).toPrecision(5);fill(rr);fn()});nn.addEventListener('input',function(){rr.value=nn.value;fill(rr);fn()})}
+function blk(k,i,lab,w,unit){return '<div class="mt-4"><div class="flex items-center justify-between gap-3"><label class="text-sm" for="z'+k+i+'" id="zl'+k+i+'">'+lab+'</label><span class="flex items-center gap-1"><input id="z'+k+i+'" class="vi" style="width:'+w+'" type="number" step="any">'+(unit?'<span class="mono acc">'+unit+'</span>':'')+'</span></div><input id="zr'+k+i+'" class="rg mt-2" type="range" aria-label="'+lab+' slider, '+D[i].nm+'"><div class="flex justify-between mono text-xs mute mt-1"><span id="za'+k+i+'"></span><span id="zb'+k+i+'"></span></div></div>'}
+var host=$('zgrid');
+D.forEach(function(d,i){
+ var el=document.createElement('div');el.className='p-5';el.style.background='var(--panel)';cards.push({p:[],c:95});
+ el.innerHTML='<div class="flex items-baseline justify-between gap-3"><h3 class="font-extrabold">'+(i+1)+'. '+d.nm+' Distribution</h3><button type="button" id="zx'+i+'" class="chip" style="cursor:pointer;background:transparent">Reset</button></div>'+
+ '<p class="text-sm mute mt-1">'+d.desc+'</p><canvas id="zg'+i+'" class="block w-full mt-3" style="height:200px" role="img" aria-label="Graph of the '+d.nm+' distribution"></canvas><div id="zi'+i+'" class="mono text-xs mt-2"></div>'+
+ '<div id="zs_'+i+'" class="grid grid-cols-3 mt-3" style="gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden"></div><p id="zh'+i+'" class="text-xs mute mt-2"></p>'+
+ blk('m',i,'Mean (μ)','10ch','')+blk('s',i,'Standard deviation (σ)','10ch','')+blk('q',i,'Confidence level','6ch','%')+
+ '<div id="zp'+i+'" class="mono text-xs mute mt-4"></div><div id="zw'+i+'" class="warn mono text-xs mt-2" role="status"></div><div id="zn'+i+'" class="acc mono text-xs mt-1" role="status"></div>';
+ host.appendChild(el);
+ link('zm'+i,'zrm'+i,function(){adjust(i)});link('zs'+i,'zrs'+i,function(){adjust(i)});
+ link('zq'+i,'zrq'+i,function(){var v=parseFloat($('zq'+i).value);if(v>=50&&v<100){cards[i].c=v;draw(i)}});
+ $('zx'+i).addEventListener('click',function(){init(i)});
+ init(i)});
+function all(){D.forEach(function(d,i){draw(i)});if(U.c)uShow()}
+var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(all,120)});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',all);
+
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function uErr(t){var e=$('uerr');e.textContent=t;e.hidden=false}
+function ctxOf(vals,asCont){var srt=vals.slice().sort(function(a,b){return a-b}),S=stats(srt),xs=sub(srt,5000),all=srt.every(Number.isInteger),c={n:srt.length,m:S.m,min:S.min,max:S.max,allInt:all,disc:all&&!asCont,xs:xs,S2:stats(xs),V:[],C:[],cnt:{},S:S};
+ if(all){srt.forEach(function(v){c.cnt[v]=(c.cnt[v]||0)+1});Object.keys(c.cnt).map(Number).sort(function(a,b){return a-b}).forEach(function(k){c.V.push(k);c.C.push(c.cnt[k])})}return c}
+function uLoad(vals,name){
+ $('uerr').hidden=true;vals=vals.filter(function(v){return isFinite(v)});U.vals=vals;U.name=name;
+ if(vals.length<20){uErr('Need at least 20 numeric values to fit a distribution.');return}
+ var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);if(mn===mx){uErr('All values are identical, so there is no distribution to fit.');return}
+ var c=ctxOf(vals,$('uc').checked);U.c=c;
+ $('uchkw').style.display=c.allInt?'inline-flex':'none';
+ U.fits=FT.map(function(f){return(!!f.d.disc!==!!c.disc)?{ok:false,skip:1}:evalFit(f,c)});
+ var ord=[];U.fits.forEach(function(f,k){if(f.ok)ord.push(k)});ord.sort(function(a,b){return U.fits[a].aic-U.fits[b].aic});U.ord=ord;
+ $('ustat').textContent=name+': '+c.n.toLocaleString()+' values from '+fm(c.min)+' to '+fm(c.max)+(c.disc?' (whole numbers, compared with the discrete distributions)':c.allInt?' (whole numbers treated as continuous)':'')+(c.n>5000&&!c.disc?'. Fitted on an even sample of 5,000':'');
+ var b=ord[0];
+ if(b===undefined){$('ures').hidden=true;uErr('None of the distributions could be fitted to this data.');return}
+ $('ures').hidden=false;
+ var t='Best fit by AIC: <b class="acc">'+FT[b].d.nm+'</b> ('+pstr(FT[b].d,U.fits[b].p)+').';
+ if(ord[1]!==undefined){var dA=U.fits[ord[1]].aic-U.fits[b].aic;t+=' Next closest: <b>'+FT[ord[1]].d.nm+'</b> (AIC higher by '+fm(dA)+').'+(dA<2?' The two are hard to tell apart on this data.':'')}
+ $('usum').innerHTML=t;
+ var rest=[];U.fits.forEach(function(f,k){if(!f.ok&&!f.skip)rest.push(k)});
+ $('urk').innerHTML='<thead><tr><th>Rank</th><th>Distribution</th><th>Fitted parameters</th><th>AIC</th><th>KS distance</th><th></th></tr></thead><tbody>'+
+  ord.map(function(k,r){var f=U.fits[k];return '<tr><td>'+(r+1)+'</td><td>'+esc(FT[k].d.nm)+'</td><td>'+esc(pstr(FT[k].d,f.p))+'</td><td>'+fm(f.aic)+'</td><td>'+fm(f.ks)+'</td><td><button type="button" class="chip" data-k="'+k+'" style="cursor:pointer;background:transparent">View</button></td></tr>'}).join('')+
+  rest.map(function(k){return '<tr style="color:var(--mute)"><td>–</td><td>'+esc(FT[k].d.nm)+'</td><td colspan="4" style="text-align:left">Not applicable: data falls outside what this distribution allows</td></tr>'}).join('')+'</tbody>';
+ uPick(b)}
+function uPick(k){U.sel=k;uShow()}
+function uAx(cx,w,h,L,T,B,R,y0,y1,l0,l1){for(var i=0;i<=4;i++){var v=y0+(y1-y0)*i/4,y=h-B-i/4*(h-B-T);cx.strokeStyle=css('--line');cx.lineWidth=1;cx.beginPath();cx.moveTo(L,y);cx.lineTo(w-R,y);cx.stroke();cx.fillStyle=css('--mute');cx.textAlign='right';cx.fillText(fm(v),L-6,y)}
+ cx.fillStyle=css('--mute');for(i=0;i<=4;i++){cx.textAlign=i===0?'left':i===4?'right':'center';cx.fillText(fm(l0+(l1-l0)*i/4),L+(w-L-R)*i/4,h-8)}}
+function uShow(){
+ var c=U.c,k=U.sel;if(!c)return;var f=FT[k],d=f.d,p=U.fits[k].p,acc=css('--acc'),wr=css('--warn'),mu=css('--mute'),rgb=css('--path'),n=c.n,i,j;
+ $('ush').textContent='Showing '+d.nm+': '+pstr(d,p);
+ var o=cv2($('ug1')),cx=o.c,w=o.w,h=o.h,L=48,R=10,T=12,B=24,x0,x1,leg='';
+ var o2=null;
+ if(c.disc){
+  var lo=c.min,hi=c.max;if(hi-lo>120){lo=Math.floor(qs(c.xs,.005));hi=Math.ceil(qs(c.xs,.995))}
+  var ks=[],rel=[],pm=[];for(i=lo;i<=hi;i++){ks.push(i);rel.push((c.cnt[i]||0)/n);pm.push(d.f(i,p))}
+  x0=lo-.5;x1=hi+.5;var ym=Math.max(Math.max.apply(null,rel),Math.max.apply(null,pm))*1.15;
+  var X=function(v){return L+(v-x0)/(x1-x0)*(w-L-R)},Y=function(v){return h-B-Math.min(v,ym)/ym*(h-B-T)},bw=Math.max(2,Math.min(18,(w-L-R)/(ks.length+1)*.62));
+  uAx(cx,w,h,L,T,B,R,0,ym,lo,hi);
+  cx.fillStyle='rgba('+rgb+',.4)';ks.forEach(function(v,q){cx.fillRect(X(v)-bw/2,Y(rel[q]),bw,Math.max(0,h-B-Y(rel[q])))});
+  cx.strokeStyle=acc;cx.lineWidth=1.5;cx.beginPath();ks.forEach(function(v,q){q?cx.lineTo(X(v),Y(pm[q])):cx.moveTo(X(v),Y(pm[q]))});cx.stroke();cx.fillStyle=acc;ks.forEach(function(v,q){cx.beginPath();cx.arc(X(v),Y(pm[q]),3.2,0,6.2832);cx.fill()});
+  leg='<span>Bars: share of your data at each value</span><span>Dots: fitted '+esc(d.nm)+' probability</span>';
+  o2=function(){var q2=cv2($('ug2')),c2=q2.c,w2=q2.w,h2=q2.h,X2=function(v){return L+(v-x0)/(x1-x0)*(w2-L-R)},Y2=function(v){return h2-B-v*(h2-B-T)};
+   uAx(c2,w2,h2,L,T,B,R,0,1,lo,hi);var cum=0;c2.strokeStyle=mu;c2.lineWidth=1.5;c2.beginPath();c2.moveTo(X2(x0),Y2(0));ks.forEach(function(v,q){c2.lineTo(X2(v),Y2(cum));cum+=rel[q];c2.lineTo(X2(v),Y2(cum))});c2.lineTo(X2(x1),Y2(cum));c2.stroke();
+   c2.strokeStyle=acc;c2.lineWidth=2;c2.beginPath();c2.moveTo(X2(x0),Y2(0));ks.forEach(function(v){var pr=d.F(v-1,p);c2.lineTo(X2(v),Y2(pr));c2.lineTo(X2(v),Y2(d.F(v,p)))});c2.lineTo(X2(x1),Y2(d.F(hi,p)));c2.stroke()}
+ }else{
+  var xs=c.xs,lo2=qs(xs,.005),hi2=qs(xs,.995),sp=(hi2-lo2)||1;lo2-=.03*sp;hi2+=.03*sp;if(c.min>=0&&lo2<0)lo2=0;if(c.min>=0&&c.max<=1&&hi2>1)hi2=1;x0=lo2;x1=hi2;
+  var NB=Math.max(10,Math.min(50,Math.round(SQ(xs.length)))),bwd=(x1-x0)/NB,cnt=new Array(NB).fill(0);xs.forEach(function(v){if(v>=x0&&v<=x1)cnt[Math.min(NB-1,Math.floor((v-x0)/bwd))]++});
+  var dens=cnt.map(function(q){return q/(xs.length*bwd)}),ym2=Math.max.apply(null,dens)*1.25||1;
+  var X3=function(v){return L+(v-x0)/(x1-x0)*(w-L-R)},Y3=function(v){return h-B-Math.min(v,ym2)/ym2*(h-B-T)};
+  uAx(cx,w,h,L,T,B,R,0,ym2,x0,x1);
+  cx.fillStyle='rgba('+rgb+',.35)';dens.forEach(function(v,q){cx.fillRect(X3(x0+q*bwd)+.5,Y3(v),Math.max(1,X3(x0+(q+1)*bwd)-X3(x0+q*bwd)-1),h-B-Y3(v))});
+  cx.strokeStyle=acc;cx.lineWidth=2;cx.beginPath();var on=false;for(j=0;j<=240;j++){var x=x0+(x1-x0)*j/240,y=d.f(x,p);if(!isFinite(y)){on=false;continue}on?cx.lineTo(X3(x),Y3(y)):cx.moveTo(X3(x),Y3(y));on=true}cx.stroke();
+  leg='<span>Bars: your data</span><span>Line: fitted '+esc(d.nm)+'</span>'+((c.min<x0||c.max>x1)?'<span>Axis trimmed to the 0.5th–99.5th percentile</span>':'');
+  o2=function(){var q2=cv2($('ug2')),c2=q2.c,w2=q2.w,h2=q2.h,X2=function(v){return L+(v-x0)/(x1-x0)*(w2-L-R)},Y2=function(v){return h2-B-v*(h2-B-T)};
+   uAx(c2,w2,h2,L,T,B,R,0,1,x0,x1);var st=Math.max(1,Math.floor(xs.length/300)),first=true;c2.strokeStyle=mu;c2.lineWidth=1.5;c2.beginPath();
+   for(j=0;j<xs.length;j+=st){var v=xs[j];if(v<x0||v>x1)continue;first?c2.moveTo(X2(v),Y2((j+1)/xs.length)):c2.lineTo(X2(v),Y2((j+1)/xs.length));first=false}c2.stroke();
+   c2.strokeStyle=acc;c2.lineWidth=2;c2.beginPath();for(j=0;j<=240;j++){var xx=x0+(x1-x0)*j/240,yy=d.F(xx,p);j?c2.lineTo(X2(xx),Y2(yy)):c2.moveTo(X2(xx),Y2(yy))}c2.stroke()}
+ }
+ o2();$('uleg').innerHTML=leg;
+ var S=c.S,mm=d.mom(p),sp2=d.sup(p),sdv=SQ(mm.v),dmode='–';
+ if(c.disc){var bi=0;c.C.forEach(function(v,q){if(v>c.C[bi])bi=q});dmode=fm(c.V[bi])}
+ var rows=[['Mean',S.m,mm.m],['Median',S.med,qf(d,p,.5)],['Mode',dmode,d.mode(p)],['Standard deviation',S.sd,sdv],['Variance',S.v,mm.v],['Skewness',S.skew,mm.s],['Excess kurtosis',S.kurt,mm.k],['25th percentile',S.q1,qf(d,p,.25)],['75th percentile',S.q3,qf(d,p,.75)],['Lowest value / lower bound',S.min,sp2[0]],['Highest value / upper bound',S.max,sp2[1]]];
+ $('ust').innerHTML='<thead><tr><th>Statistic</th><th>Your data</th><th>'+esc(d.nm)+'</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+fm(r[1])+'</td><td class="acc">'+fm(r[2])+'</td></tr>'}).join('')+'</tbody>';
+ $('ushp').textContent='Your data: '+shape({s:S.skew,k:S.kurt}).replace('Shape: ','')+' Fitted '+d.nm+': '+shape(mm).replace('Shape: ','')}
+function numv(v){if(typeof v==='number')return v;if(typeof v==='string'&&v.trim()!==''){return Number(v.replace(/[,₹$€£%\s]/g,''))}return NaN}
+function uRead(f){
+ if(typeof XLSX==='undefined'){uErr('The Excel reader could not load. Check your connection and reload the page.');return}
+ var rd=new FileReader();
+ rd.onload=function(){try{
+  var wb=XLSX.read(new Uint8Array(rd.result),{type:'array',cellDates:true}),ws=wb.Sheets[wb.SheetNames[0]],aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null}).filter(function(r){return r&&r.some(function(c){return c!==null&&c!==''})});
+  if(aoa.length<3)throw new Error('The file needs a header row and at least two data rows.');
+  var nc=Math.max.apply(null,aoa.map(function(r){return r.length})),rows=aoa.slice(1),out=[],j;
+  for(j=0;j<nc;j++){var vals=rows.map(function(r){return numv(r[j])}),ok=vals.filter(isFinite);
+   if(ok.length/rows.length>.7&&ok.length>=20){var h=aoa[0][j],nmx=h==null?'Column '+(j+1):String(h);if(typeof h==='number'){ok.unshift(h);nmx='Column '+(j+1)}out.push({name:nmx,vals:ok})}}
+  if(!out.length)throw new Error('Could not find a numeric column with at least 20 values. Put each data set in a column with a header in row 1.');
+  U.cols=out;U.file=f.name;$('ucol').innerHTML=out.map(function(c,q){return '<option value="'+q+'">'+esc(c.name)+'</option>'}).join('');$('usamp').value='';
+  uLoad(out[0].vals,f.name+' ('+out[0].name+')')}catch(x){uErr(x.message)}};
+ rd.onerror=function(){uErr('Could not read that file.')};rd.readAsArrayBuffer(f)}
+$('usamp').innerHTML='<option value="">Choose a sample…</option>'+D.map(function(d,i){return '<option value="'+i+'">'+d.nm+'</option>'}).join('');
+$('usamp').addEventListener('change',function(){var v=$('usamp').value;if(v==='')return;$('uf').value='';var i=+v,nmx=D[i].nm;U.cols=[{name:nmx,vals:gen(i,600)}];$('ucol').innerHTML='<option value="0">Simulated '+esc(nmx)+' sample</option>';uLoad(U.cols[0].vals,'Simulated '+nmx+' sample (not real data)')});
+$('ucol').addEventListener('change',function(){var c=U.cols[+$('ucol').value];if(c)uLoad(c.vals,(U.file&&$('usamp').value===''?U.file:'Sample')+' ('+c.name+')')});
+$('uc').addEventListener('change',function(){if(U.vals)uLoad(U.vals,U.name)});
+$('uf').addEventListener('change',function(e){var f=e.target.files[0];if(f)uRead(f)});
+$('urk').addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('button[data-k]');if(b)uPick(+b.dataset.k)});
+$('usamp').value='12';$('usamp').dispatchEvent(new Event('change'));
+addEventListener('load',all);
+
+})();
+</script>
+<script>
+(function(){
+var LN=Math.log,EX=Math.exp,SQ=Math.sqrt,PI=Math.PI,INF=Infinity;
+// ---------- basic stats ----------
+function mean(a){var s=0;for(var i=0;i<a.length;i++)s+=a[i];return s/a.length}
+function sd(a){var m=mean(a),s=0;for(var i=0;i<a.length;i++)s+=(a[i]-m)*(a[i]-m);return SQ(s/(a.length-1))}
+function diff(a,d){var x=a.slice();for(var k=0;k<(d===undefined?1:d);k++){var y=[];for(var i=1;i<x.length;i++)y.push(x[i]-x[i-1]);x=y}return x}
+function pctl(sorted,q){var i=(sorted.length-1)*q/100,lo=Math.floor(i),hi=Math.ceil(i);return sorted[lo]+(sorted[hi]-sorted[lo])*(i-lo)}
+function qnorm(p){ // Acklam's rational approximation, relative error ~1e-9
+ var a=[-39.69683028665376,220.9460984245205,-275.9285104469687,138.357751867269,-30.66479806614716,2.506628277459239],
+ b=[-54.47609879822406,161.5858368580409,-155.6989798598866,66.80131188771972,-13.28068155288572],
+ c=[-0.007784894002430293,-0.3223964580411365,-2.400758277161838,-2.549732539343734,4.374664141464968,2.938163982698783],
+ d=[0.007784695709041462,0.3224671290700398,2.445134137142996,3.754408661907416],pl=0.02425,q,r;
+ if(p<pl){q=SQ(-2*LN(p));return(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}
+ if(p>1-pl){q=SQ(-2*LN(1-p));return-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}
+ q=p-.5;r=q*q;return(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1)}
+function dnorm(x){return EX(-x*x/2)/SQ(2*PI)}
+function pnorm(x){ // Hart-style via erf series (West 2005 double precision)
+ var ax=Math.abs(x),c;if(ax>37)c=0;else{var e=EX(-ax*ax/2);if(ax<7.07106781186547){var b=3.52624965998911e-02*ax+0.700383064443688;b=b*ax+6.37396220353165;b=b*ax+33.912866078383;b=b*ax+112.079291497871;b=b*ax+221.213596169931;b=b*ax+220.206867912376;c=e*b;b=8.83883476483184e-02*ax+1.75566716318264;b=b*ax+16.064177579207;b=b*ax+86.7807322029461;b=b*ax+296.564248779674;b=b*ax+637.333633378831;b=b*ax+793.826512519948;b=b*ax+440.413735824752;c=c/b}else{var b2=ax+0.65;b2=ax+4/b2;b2=ax+3/b2;b2=ax+2/b2;b2=ax+1/b2;c=e/b2/2.506628274631}}
+ return x>0?1-c:c}
+// ---------- linear algebra ----------
+function ols(X,y){var n=X.length,k=X[0].length,i,j,l,A=[];
+ for(i=0;i<k;i++){A.push(new Array(2*k).fill(0));for(j=0;j<k;j++){var s=0;for(l=0;l<n;l++)s+=X[l][i]*X[l][j];A[i][j]=s}A[i][k+i]=1}
+ var Xty=new Array(k).fill(0);for(i=0;i<k;i++)for(l=0;l<n;l++)Xty[i]+=X[l][i]*y[l];
+ for(i=0;i<k;i++){var p=i;for(j=i+1;j<k;j++)if(Math.abs(A[j][i])>Math.abs(A[p][i]))p=j;var t=A[i];A[i]=A[p];A[p]=t;
+  if(Math.abs(A[i][i])<1e-14)throw new Error('singular');var d=A[i][i];for(j=0;j<2*k;j++)A[i][j]/=d;
+  for(j=0;j<k;j++)if(j!==i){var f=A[j][i];if(f)for(l=0;l<2*k;l++)A[j][l]-=f*A[i][l]}}
+ var beta=[],inv=[];for(i=0;i<k;i++){inv.push(A[i].slice(k));var b=0;for(j=0;j<k;j++)b+=inv[i][j]*Xty[j];beta.push(b)}
+ var ssr=0;for(l=0;l<n;l++){var f2=y[l];for(j=0;j<k;j++)f2-=X[l][j]*beta[j];ssr+=f2*f2}
+ var s2=ssr/(n-k),se=beta.map(function(_,i){return SQ(s2*inv[i][i])});return{beta:beta,se:se,ssr:ssr,n:n,k:k,s2:s2}}
+// ---------- ADF (mirrors statsmodels adfuller, regression='c', autolag='AIC') ----------
+function mackinnonCrit(n){var B=[[-3.43035,-6.5393,-16.786,-79.433],[-2.86154,-2.8903,-4.234,-40.040],[-2.56677,-1.5384,-2.809,0]];
+ return B.map(function(b){return b[0]+b[1]/n+b[2]/(n*n)+b[3]/(n*n*n)})}
+function mackinnonP(t){var small=[2.1659,1.4412,0.038269],large=[1.7339,0.93202,-0.12745,-0.010368];
+ if(t>2.74)return 1;if(t<-18.83)return 0;var c=t<=-1.61?small:large,v=0;for(var i=c.length-1;i>=0;i--)v=v*t+c[i];return pnorm(v)}
+function adf(y){var n=y.length,dy=diff(y),N=dy.length,maxlag=Math.min(Math.floor(n/2)-1-1,Math.ceil(12*Math.pow(n/100,.25)));
+ if(maxlag<0||n<20)throw new Error('Need at least 20 observations for the ADF test.');
+ function rows(k,from){var X=[],Y=[];for(var i=from;i<N;i++){var r=[1,y[i]];for(var j=1;j<=k;j++)r.push(dy[i-j]);X.push(r);Y.push(dy[i])}return[X,Y]}
+ var best=0,bestA=INF;
+ for(var k=0;k<=maxlag;k++){var xy=rows(k,maxlag),f=ols(xy[0],xy[1]),aic=f.n*LN(f.ssr/f.n)+2*f.k;if(aic<bestA){bestA=aic;best=k}}
+ var xy2=rows(best,best),fit=ols(xy2[0],xy2[1]),stat=fit.beta[1]/fit.se[1],nobs=fit.n,cv=mackinnonCrit(nobs);
+ return{stat:stat,p:mackinnonP(stat),crit:{'1%':cv[0],'5%':cv[1],'10%':cv[2]},lags:best,nobs:nobs}}
+// ---------- KPSS (regression='c', nlags='auto' as statsmodels) ----------
+function kpss(y){var n=y.length;if(n<20)throw new Error('Need at least 20 observations for the KPSS test.');
+ var m=mean(y),e=y.map(function(v){return v-m}),cov=Math.floor(Math.pow(n,2/9)),s0=0,s1=0,i,j;
+ for(i=0;i<n;i++)s0+=e[i]*e[i];s0/=n;
+ for(i=1;i<=cov;i++){var pr=0;for(j=0;j<n-i;j++)pr+=e[j]*e[j+i];pr/=n/2;s0+=pr;s1+=i*pr}
+ var sh=s1/s0,pg=Math.floor(1.1447*Math.pow(sh*sh,1/3)*Math.pow(n,1/3)),lags=Math.min(pg,n-1);
+ var cs=0,eta=0;for(i=0;i<n;i++){cs+=e[i];eta+=cs*cs}eta/=n*n;
+ var s2=0;for(i=0;i<n;i++)s2+=e[i]*e[i];s2/=n;
+ for(i=1;i<=lags;i++){var pr2=0;for(j=i;j<n;j++)pr2+=e[j]*e[j-i];s2+=2*pr2/n*(1-i/(lags+1))}
+ var stat=eta/s2,cr=[0.347,0.463,0.574,0.739],pv=[0.10,0.05,0.025,0.01],p;
+ if(stat<=cr[0])p=0.10;else if(stat>=cr[3])p=0.01;else{for(i=0;i<3;i++)if(stat<=cr[i+1]){p=pv[i]+(pv[i+1]-pv[i])*(stat-cr[i])/(cr[i+1]-cr[i]);break}}
+ return{stat:stat,p:p,crit:{'10%':cr[0],'5%':cr[1],'2.5%':cr[2],'1%':cr[3]},lags:lags,nobs:n}}
+// ---------- risk ----------
+function holdingReturns(r,h){if(h===1)return r.slice();var lg=r.map(function(v){return Math.log1p(v)}),o=[],s=0,i;for(i=0;i<lg.length;i++){s+=lg[i];if(i>=h)s-=lg[i-h];if(i>=h-1)o.push(Math.expm1(s))}return o}
+function riskSummary(r,conf,h){var hp=holdingReturns(r,h).sort(function(a,b){return a-b}),q=pctl(hp,(1-conf)*100),tail=hp.filter(function(v){return v<=q}),
+ sg=sd(r)*SQ(h),z=qnorm(1-conf);
+ return{histVaR:Math.max(-q,0),histCVaR:Math.max(-mean(tail),0),paramVaR:Math.max(-z*sg,0),paramCVaR:Math.max(sg*dnorm(z)/(1-conf),0),hp:hp,q:q}}
+function drawdown(p){var pk=-INF,o=[];for(var i=0;i<p.length;i++){pk=Math.max(pk,p[i]);o.push(p[i]/pk-1)}return o}
+function rollSd(r,w,ppy){var o=[];for(var i=0;i<r.length;i++){if(i<w-1){o.push(NaN);continue}var s=r.slice(i-w+1,i+1);o.push(sd(s)*SQ(ppy))}return o}
+// ---------- Nelder-Mead + GARCH(1,1) ----------
+function nm(f0,x0,it){var f=function(q){var v=f0(q);return isNaN(v)?INF:v},n=x0.length,P=[x0.slice()],i,j;
+ for(i=0;i<n;i++){var p=x0.slice();p[i]+=Math.abs(p[i])>1e-3?.2*Math.abs(p[i]):.2;P.push(p)}
+ var F=P.map(f);
+ for(var k=0;k<it;k++){var o=F.map(function(_,i){return i}).sort(function(a,b){return F[a]-F[b]});P=o.map(function(i){return P[i]});F=o.map(function(i){return F[i]});
+  var c=new Array(n).fill(0);for(i=0;i<n;i++)for(j=0;j<n;j++)c[j]+=P[i][j]/n;
+  var xr=c.map(function(v,j){return v+(v-P[n][j])}),fr=f(xr);
+  if(fr<F[0]){var xe=c.map(function(v,j){return v+2*(v-P[n][j])}),fe=f(xe);if(fe<fr){P[n]=xe;F[n]=fe}else{P[n]=xr;F[n]=fr}}
+  else if(fr<F[n-1]){P[n]=xr;F[n]=fr}
+  else{var xc=c.map(function(v,j){return v+.5*(P[n][j]-v)}),fc=f(xc);if(fc<F[n]){P[n]=xc;F[n]=fc}else{for(i=1;i<=n;i++){P[i]=P[i].map(function(v,j){return P[0][j]+.5*(v-P[0][j])});F[i]=f(P[i])}}}
+  if(Math.abs(F[n]-F[0])<1e-10*(1+Math.abs(F[0])))break}
+ var b=0;for(i=1;i<=n;i++)if(F[i]<F[b])b=i;return P[b]}
+function sig(x){return 1/(1+EX(-x))}
+function garchPath(e,om,al,be,v0){var h=[],hp=v0;for(var i=0;i<e.length;i++){h.push(hp);hp=om+al*e[i]*e[i]+be*hp}return{h:h,next:hp}}
+function garch(logret){ // returns in percent, constant mean = sample mean (documented simplification)
+ var r=logret.map(function(v){return v*100}),mu=mean(r),e=r.map(function(v){return v-mu}),v=mean(e.map(function(x){return x*x}));
+ function par(q){var al=sig(q[0]),be=(1-al)*sig(q[1]);return[EX(q[2]),al,be]}
+ function nll(q){var p=par(q),s=0,hp=v;for(var i=0;i<e.length;i++){s+=LN(hp)+e[i]*e[i]/hp;hp=p[0]+p[1]*e[i]*e[i]+p[2]*hp}return s/2}
+ var q0=[Math.log(.08/.92),Math.log(.9/.1),LN(v*.02)],q=nm(nll,q0,500),p=par(q),gp=garchPath(e,p[0],p[1],p[2],v),pers=p[1]+p[2];
+ return{mu:mu/100,omega:p[0],alpha:p[1],beta:p[2],persistence:pers,halfLife:pers<1&&pers>0?LN(.5)/LN(pers):NaN,
+  uncond:pers<1?SQ(p[0]/(1-pers))/100:NaN,cond:gp.h.map(function(x){return SQ(x)/100}),next:SQ(gp.next)/100,loglik:-nll(q)-e.length*.5*LN(2*PI)}}
+
+// ---------- forecasting (browser versions of the MarketPulse models) ----------
+function sesRun(y,al){var l=y[0],e=[];for(var i=1;i<y.length;i++){e.push(y[i]-l);l=al*y[i]+(1-al)*l}return{l:l,e:e}}
+function sesAuto(y){var b=.5,bs=INF;for(var a=.02;a<.995;a+=.01){var r=sesRun(y,a),s=0;for(var i=0;i<r.e.length;i++)s+=r.e[i]*r.e[i];if(s<bs){bs=s;b=a}}return b}
+function holtRun(y,al,bs){var l=y[0],b=y[1]-y[0],e=[];for(var i=1;i<y.length;i++){var f=l+b;e.push(y[i]-f);var ln=al*y[i]+(1-al)*f;b=bs*(ln-l)+(1-bs)*b;l=ln}return{l:l,b:b,e:e}}
+function holtAuto(y){var best=[.3,.1],bs=INF;for(var a=.05;a<.96;a+=.05)for(var b=.01;b<.51;b+=.03){var r=holtRun(y,a,b),s=0;for(var i=0;i<r.e.length;i++)s+=r.e[i]*r.e[i];if(s<bs){bs=s;best=[a,b]}}return best}
+function arFit(x,p,icpt){var X=[],Y=[];for(var i=p;i<x.length;i++){var r=icpt?[1]:[];for(var j=1;j<=p;j++)r.push(x[i-j]);X.push(r);Y.push(x[i])}
+ var f=ols(X,Y),c=icpt?f.beta[0]:0,phi=icpt?f.beta.slice(1):f.beta;return{c:c,phi:phi,sigma:SQ(f.ssr/(f.n-f.k)),n:f.n}}
+function forecastModel(model,y,H,prm,integrated){ // returns {fc[],se[]} with se = standard error at each step
+ var n=y.length,h=[],i;for(i=1;i<=H;i++)h.push(i);
+ if(model==='naive'){var e=diff(y),s=sd(e);if(!integrated)s=sd(y);return{fc:h.map(function(){return y[n-1]}),se:h.map(function(k){return integrated?s*SQ(k):sd(y)})}}
+ if(model==='ma'){var w=prm.w,fcv=mean(y.slice(-w)),er=[];for(i=w;i<n;i++)er.push(y[i]-mean(y.slice(i-w,i)));var s2=sd(er);return{fc:h.map(function(){return fcv}),se:h.map(function(k){return integrated?s2*SQ(k):s2})}}
+ if(model==='ses'){var r=sesRun(y,prm.alpha),s3=sd(r.e),a=prm.alpha;return{fc:h.map(function(){return r.l}),se:h.map(function(k){return s3*SQ(1+(k-1)*a*a)})}}
+ if(model==='holt'){var rh=holtRun(y,prm.alpha,prm.beta),s4=sd(rh.e),a2=prm.alpha,be=a2*prm.beta;return{fc:h.map(function(k){return rh.l+k*rh.b}),se:h.map(function(k){return s4*SQ(1+(k-1)*(a2*a2+a2*be*k+be*be*k*(2*k-1)/6))})}}
+ // AR(p) on differences (ARIMA(p,1,0)) for prices, AR(p) with intercept on levels (ARIMA(p,0,0)) for returns
+ var d=integrated?1:0,x=d?diff(y):y.slice(),ar=arFit(x,prm.p,d?prm.drift:true),hist=x.slice(),dfc=[];
+ for(i=0;i<H;i++){var v=ar.c;for(var j=0;j<ar.phi.length;j++)v+=ar.phi[j]*hist[hist.length-1-j];hist.push(v);dfc.push(v)}
+ var fcs=[],last=y[n-1];if(d){for(i=0;i<H;i++){last+=dfc[i];fcs.push(last)}}else fcs=dfc;
+ var psi=[1];for(i=1;i<H;i++){var t=0;for(j=1;j<=Math.min(i,ar.phi.length);j++)t+=ar.phi[j-1]*psi[i-j];psi.push(t)}
+ var w2=psi.slice();if(d){var c=0;w2=psi.map(function(v){c+=v;return c})}
+ var cum=0,ses=w2.map(function(v){cum+=v*v;return ar.sigma*SQ(cum)});return{fc:fcs,se:ses,ar:ar}}
+function metrics(a,f){var n=a.length,mae=0,mse=0,mape=0,bias=0;for(var i=0;i<n;i++){var e=a[i]-f[i];mae+=Math.abs(e);mse+=e*e;bias+=e;mape+=Math.abs(e/a[i])}return{mae:mae/n,rmse:SQ(mse/n),mape:mape/n*100,bias:bias/n}}
+
+// ======================= UI =======================
+var $=function(i){return document.getElementById(i)};
+function css(k){return getComputedStyle(document.documentElement).getPropertyValue(k).trim()}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function pc(v,d){return isFinite(v)?(v*100).toFixed(d==null?2:d)+'%':'n/a'}
+function fn(v,d){if(!isFinite(v))return 'n/a';var a=Math.abs(v);return a!==0&&a<1e-3?v.toExponential(2):v.toFixed(d==null?(a>=1000?0:a>=100?1:a>=1?2:4):d)}
+function iso(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function igroup(n){var s=String(Math.abs(Math.round(n)));if(s.length>3){var h=s.slice(0,-3),t=s.slice(-3),p=[];while(h.length>2){p.unshift(h.slice(-2));h=h.slice(0,-2)}if(h)p.unshift(h);s=p.join(',')+','+t}return(n<0?'-':'')+s}
+function money(v,sym){return sym==='₹'?sym+igroup(v):sym+Math.round(v).toLocaleString('en-US')}
+function mkd(y,m,d){return new Date(y,m,d,12)}
+var FQ={Daily:{ppy:252,unit:'trading days'},Weekly:{ppy:52,unit:'weeks'},Monthly:{ppy:12,unit:'months'}};
+var M=null,tab=0,G=null,seedN=1;
+function fill(r){r.style.setProperty('--p',Math.max(0,Math.min(100,(r.value-r.min)/(r.max-r.min)*100))+'%')}
+function setR(k,lo,hi,v,st){var rr=$('mkr'+k);lo=Math.min(lo,v);hi=Math.max(hi,v);if(!(hi>lo)){lo=v-1;hi=v+1}rr.min=lo;rr.max=hi;rr.step=st||(hi-lo)/400;rr.value=v;$('mkv'+k).value=+v.toPrecision(5);fill(rr);$('mka'+k).textContent=fn(lo);$('mkb'+k).textContent=fn(hi)}
+function blk(k,lab,w,unit){return '<div class="mt-3"><div class="flex items-center justify-between gap-3"><label class="text-sm" for="mkv'+k+'">'+lab+'</label><span class="flex items-center gap-1"><input id="mkv'+k+'" class="vi" style="width:'+w+'" type="number" step="any">'+(unit?'<span class="mono acc">'+unit+'</span>':'')+'</span></div><input id="mkr'+k+'" class="rg mt-2" type="range" aria-label="'+lab+' slider"><div class="flex justify-between mono text-xs mute mt-1"><span id="mka'+k+'"></span><span id="mkb'+k+'"></span></div></div>'}
+function link(k,fnc){var nn=$('mkv'+k),rr=$('mkr'+k);rr.addEventListener('input',function(){nn.value=+(+rr.value).toPrecision(5);fill(rr);fnc()});nn.addEventListener('input',function(){rr.value=nn.value;fill(rr);fnc()})}
+function sel(id,opts,def){return '<select id="'+id+'" class="inp">'+opts.map(function(o){return '<option value="'+o[0]+'"'+(o[0]===def?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select>'}
+function lab(t,f){return '<label class="mono text-xs mute block mb-1" for="'+f+'">'+t+'</label>'}
+function card(l,v,s,tone){return '<div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute">'+l+'</div><div class="text-xl font-extrabold" '+(tone?'style="color:var(--'+tone+')"':'')+'>'+v+'</div><div class="mono text-xs mute">'+(s||'')+'</div></div>'}
+function note(t,warn){return '<div style="border-left:3px solid var(--'+(warn?'warn':'acc')+');background:var(--panel);padding:.6rem .9rem;border-radius:4px;margin:.4rem 0;font-size:.9rem">'+t+'</div>'}
+// ---------- canvas charts ----------
+function cv2(cv){var d=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;cv.width=w*d;cv.height=h*d;var c=cv.getContext('2d');c.setTransform(d,0,0,d,0,0);c.clearRect(0,0,w,h);c.font='10.5px "IBM Plex Mono",monospace';c.textBaseline='middle';return{c:c,w:w,h:h}}
+function lc(cv,o){ // o:{x:[Date],lines:[{y,color,dash,w}],band:{lo,hi,color},vx:[{i,color,label}],fill0:color,ylab}
+ var q=cv2(cv),c=q.c,w=q.w,h=q.h;if(!w)return;var L=54,R=10,T=14,B=24,n=o.x.length,mn=INF,mx=-INF,i,k;
+ var all=[];o.lines.forEach(function(l){l.y.forEach(function(v){if(isFinite(v))all.push(v)})});if(o.band)for(i=0;i<n;i++){if(isFinite(o.band.lo[i]))all.push(o.band.lo[i]);if(isFinite(o.band.hi[i]))all.push(o.band.hi[i])}
+ if(!all.length)return;all.forEach(function(v){if(v<mn)mn=v;if(v>mx)mx=v});if(o.fill0!==undefined){mn=Math.min(mn,0);mx=Math.max(mx,0)}var pd=(mx-mn||1)*.07;mn-=pd;mx+=pd;
+ var X=function(j){return L+j/Math.max(n-1,1)*(w-L-R)},Y=function(v){return h-B-(v-mn)/(mx-mn)*(h-B-T)};
+ for(k=0;k<=4;k++){var v=mn+(mx-mn)*k/4,y=Y(v);c.strokeStyle=css('--line');c.lineWidth=1;c.beginPath();c.moveTo(L,y);c.lineTo(w-R,y);c.stroke();c.fillStyle=css('--mute');c.textAlign='right';c.fillText(o.pct?(v*100).toFixed(0)+'%':fn(v),L-6,y)}
+ for(k=0;k<=4;k++){var ix=Math.round((n-1)*k/4);c.fillStyle=css('--mute');c.textAlign=k===0?'left':k===4?'right':'center';c.fillText(iso(o.x[ix]),X(ix),h-8)}
+ if(o.band){c.beginPath();var s=false,j;for(j=0;j<n;j++)if(isFinite(o.band.hi[j])){s?c.lineTo(X(j),Y(o.band.hi[j])):c.moveTo(X(j),Y(o.band.hi[j]));s=true}for(j=n-1;j>=0;j--)if(isFinite(o.band.lo[j]))c.lineTo(X(j),Y(o.band.lo[j]));c.closePath();c.fillStyle=o.band.color;c.globalAlpha=.2;c.fill();c.globalAlpha=1}
+ o.lines.forEach(function(l){var step=Math.max(1,Math.floor(n/700)),on=false;c.strokeStyle=l.color;c.lineWidth=l.w||1.6;c.setLineDash(l.dash||[]);c.beginPath();
+  for(var j=0;j<n;j+=step){var yv=l.y[j];if(!isFinite(yv)){on=false;continue}on?c.lineTo(X(j),Y(yv)):c.moveTo(X(j),Y(yv));on=true}
+  if(step>1&&isFinite(l.y[n-1]))c.lineTo(X(n-1),Y(l.y[n-1]));c.stroke();c.setLineDash([])});
+ if(o.fill0!==undefined){var l0=o.lines[0];c.beginPath();c.moveTo(X(0),Y(0));for(i=0;i<n;i++)c.lineTo(X(i),Y(isFinite(l0.y[i])?l0.y[i]:0));c.lineTo(X(n-1),Y(0));c.closePath();c.fillStyle=o.fill0;c.globalAlpha=.25;c.fill();c.globalAlpha=1}
+ (o.vx||[]).forEach(function(v){c.setLineDash([4,4]);c.strokeStyle=v.color;c.lineWidth=1;c.beginPath();c.moveTo(X(v.i),T);c.lineTo(X(v.i),h-B);c.stroke();c.setLineDash([]);c.fillStyle=v.color;c.textAlign='center';c.fillText(v.label,X(v.i),T-6)})}
+function hc(cv,vals,lines){var q=cv2(cv),c=q.c,w=q.w,h=q.h;if(!w)return;var L=40,R=10,T=14,B=24,mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);lines.forEach(function(l){mn=Math.min(mn,l.x);mx=Math.max(mx,l.x)});var sp=(mx-mn)||1;mn-=sp*.03;mx+=sp*.03;
+ var NB=40,bw=(mx-mn)/NB,cnt=new Array(NB).fill(0);vals.forEach(function(v){cnt[Math.min(NB-1,Math.floor((v-mn)/bw))]++});var mc=Math.max.apply(null,cnt),X=function(v){return L+(v-mn)/(mx-mn)*(w-L-R)},i;
+ for(i=0;i<=4;i++){var y=h-B-i/4*(h-B-T);c.strokeStyle=css('--line');c.beginPath();c.moveTo(L,y);c.lineTo(w-R,y);c.stroke();c.fillStyle=css('--mute');c.textAlign='right';c.fillText(Math.round(mc*i/4),L-6,y)}
+ c.fillStyle='rgba('+css('--path')+',.5)';cnt.forEach(function(k,j){var y=h-B-k/mc*(h-B-T);c.fillRect(X(mn+j*bw)+.5,y,Math.max(1,X(mn+(j+1)*bw)-X(mn+j*bw)-1),h-B-y)});
+ lines.forEach(function(l){c.setLineDash([5,4]);c.strokeStyle=l.color;c.lineWidth=2;c.beginPath();c.moveTo(X(l.x),T);c.lineTo(X(l.x),h-B);c.stroke();c.setLineDash([])});
+ c.fillStyle=css('--mute');c.textAlign='left';c.fillText((mn*100).toFixed(1)+'%',L,h-8);c.textAlign='right';c.fillText((mx*100).toFixed(1)+'%',w-R,h-8)}
+// ---------- data ----------
+function toDate(v){if(v instanceof Date&&!isNaN(v)){var q=new Date(v.getTime()+432e5);return mkd(q.getFullYear(),q.getMonth(),q.getDate())}
+ if(typeof v==='string'){v=v.trim();var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(v);if(m)return mkd(+m[1],m[2]-1,+m[3]);if(/\d{1,4}[\/\-.\s][A-Za-z0-9]{1,9}[\/\-.\s]\d{1,4}/.test(v)){var p=Date.parse(v);if(!isNaN(p)){var z=new Date(p);return mkd(z.getFullYear(),z.getMonth(),z.getDate())}}}return null}
+function numv(v){if(typeof v==='number')return v;if(typeof v==='string'&&v.trim()!=='')return Number(v.replace(/[,₹$€£\s]/g,''));return NaN}
+function err(t){var e=$('mker');e.textContent=t;e.hidden=!t}
+function load(dates,px,name,sample){
+ var rows=[],i,dropped=0;for(i=0;i<dates.length;i++){if(dates[i]&&isFinite(px[i])&&px[i]>0)rows.push([dates[i],px[i]]);else dropped++}
+ rows.sort(function(a,b){return a[0]-b[0]});var out=[];rows.forEach(function(r){if(out.length&&out[out.length-1][0].getTime()===r[0].getTime()){out[out.length-1]=r;dropped++}else out.push(r)});
+ if(out.length<60){err('At least 60 valid price observations are needed; this data has '+out.length+'. Use a longer range or a higher frequency.');return}
+ err('');var d=out.map(function(r){return r[0]}),p=out.map(function(r){return r[1]}),ret=[],lr=[];for(i=1;i<p.length;i++){ret.push(p[i]/p[i-1]-1);lr.push(Math.log(p[i]/p[i-1]))}
+ var f=$('mkfq').value;M={dates:d,px:p,ret:ret,lr:lr,ppy:FQ[f].ppy,unit:FQ[f].unit,freq:f,name:name,sample:sample};G=null;
+ $('mkst').textContent=name+': '+p.length.toLocaleString()+' observations, '+iso(d[0])+' to '+iso(d[p.length-1])+(dropped?' ('+dropped+' invalid or duplicate row(s) removed)':'')+(sample?'. Simulated, not real market data.':'');
+ initControls();render()}
+function simulate(seed){var s=seed*7919+13;function rnd(){s=(s*1664525+1013904223)%4294967296;return s/4294967296}function gn(){return Math.sqrt(-2*Math.log(rnd()||1e-9))*Math.cos(2*Math.PI*rnd())}
+ var n=1500,h=1e-4,r=0,p=100,dates=[],px=[],d=mkd(2020,10,2);var drift=(rnd()-.35)*.0008;
+ while(dates.length<n){if(d.getDay()%6){h=2e-6+.08*r*r+.9*h;r=drift+Math.sqrt(h)*gn();p*=Math.exp(r);dates.push(d);px.push(Math.round(p*100)/100)}d=mkd(d.getFullYear(),d.getMonth(),d.getDate()+1)}
+ return{dates:dates,px:px}}
+function demo(){$('mkfq').value='Daily';var s,tries=0;do{s=simulate(seedN++);tries++}while(tries<25&&adf(s.px).p<.05);$('mkf').value='';load(s.dates,s.px,'Simulated sample '+(seedN-1),true)}
+function readFile(f){
+ if(typeof XLSX==='undefined'){err('The Excel reader could not load. Check your connection and reload the page.');return}
+ var rd=new FileReader();rd.onload=function(){try{
+  var wb=XLSX.read(new Uint8Array(rd.result),{type:'array',cellDates:true}),ws=wb.Sheets[wb.SheetNames[0]],aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null}).filter(function(r){return r&&r.some(function(c){return c!==null&&c!==''})});
+  if(aoa.length<3)throw new Error('The file needs a header row and at least two data rows.');
+  var hdr=aoa[0],rows=aoa.slice(1),nc=Math.max.apply(null,aoa.map(function(r){return r.length})),dc=-1,j;
+  for(j=0;j<nc&&dc<0;j++){var k=0;rows.forEach(function(r){if(toDate(r[j]))k++});if(k/rows.length>.7)dc=j}
+  if(dc<0)throw new Error('Could not find a date column. Put dates in one column and add headers in row 1.');
+  var pcol=-1,names=hdr.map(function(h){return String(h==null?'':h).toLowerCase()});
+  [/adj/,/^close$/,/close|price/].forEach(function(re){if(pcol<0)names.forEach(function(nm,i){if(pcol<0&&i!==dc&&re.test(nm))pcol=i})});
+  if(pcol<0)for(j=0;j<nc;j++){if(j===dc)continue;var ok=rows.filter(function(r){return isFinite(numv(r[j]))}).length;if(ok/rows.length>.7){pcol=j;break}}
+  if(pcol<0)throw new Error('Could not find a numeric price column (look for a column named Close or Adj Close).');
+  load(rows.map(function(r){return toDate(r[dc])}),rows.map(function(r){return numv(r[pcol])}),f.name+' ('+(hdr[pcol]==null?'column '+(pcol+1):hdr[pcol])+')',false)}catch(x){err(x.message)}};
+ rd.onerror=function(){err('Could not read that file.')};rd.readAsArrayBuffer(f)}
+// ---------- series helpers ----------
+function seriesFor(t){return t==='Price'?{v:M.px,d:M.dates}:{v:M.lr,d:M.dates.slice(1)}}
+function rollMean(a,w){var o=[],s=0;for(var i=0;i<a.length;i++){s+=a[i];if(i>=w)s-=a[i-w];o.push(i>=w-1?s/w:NaN)}return o}
+function rollSdv(a,w){var o=[];for(var i=0;i<a.length;i++)o.push(i<w-1?NaN:sd(a.slice(i-w+1,i+1)));return o}
+function verdict(a,k){var A=a.p<.05,K=k.p<.05;if(A&&!K)return['stationary','Both tests agree: ADF rejects a unit root and KPSS does not reject stationarity.',0];if(!A&&K)return['non-stationary','Both tests agree the series is non-stationary: ADF cannot reject a unit root and KPSS rejects stationarity. Differencing is needed.',1];
+ if(A&&K)return['inconclusive','The tests disagree (ADF says stationary, KPSS says not). This often means a stationary series with a trend or break; differencing is the safer choice.',1];return['inconclusive','The tests disagree (ADF cannot reject a unit root, KPSS does not reject stationarity). The data may be too uninformative; interpret with caution.',1]}
+// ---------- build UI ----------
+var root=$('mkroot');
+root.innerHTML='<div class="p-5" style="border-top:1px solid var(--line)"><div class="flex flex-wrap items-end gap-3">'+
+ '<div class="grow" style="min-width:230px">'+lab('Upload prices (Excel .xlsx / .xls, or .csv with Date and Close columns)','mkf')+'<input id="mkf" type="file" class="inp" accept=".xlsx,.xls,.csv"></div>'+
+ '<div style="min-width:130px">'+lab('Data frequency','mkfq')+sel('mkfq',[['Daily','Daily'],['Weekly','Weekly'],['Monthly','Monthly']],'Daily')+'</div>'+
+ '<button id="mksm" type="button" class="tg" style="flex:none;border-radius:6px;border-left:1px solid var(--line);padding:.55rem 1rem">New simulated sample</button></div>'+
+ '<p id="mkst" class="mono text-xs acc mt-3"></p><p id="mker" class="warn mono text-xs mt-1" role="alert" hidden></p>'+
+ '<p class="mono text-xs mute mt-1">Live Yahoo Finance downloads need a Python server, so this browser version works on your own file or a simulated sample. The file is read in your browser and is not uploaded anywhere. Simulated prices follow a random walk with clustered volatility; each new sample is drawn so the unit-root tests reflect that, although such tests can be wrong by chance.</p></div>'+
+ '<div class="flex flex-wrap gap-2 px-5 pb-3" id="mktabs" role="tablist">'+['Overview','Stationarity','Forecast','Risk'].map(function(t,i){return '<button type="button" role="tab" class="chip" data-t="'+i+'" style="cursor:pointer;background:transparent">'+t+'</button>'}).join('')+'</div>'+
+ // overview
+ '<div id="mkp0"><div id="mk0t" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"></div>'+
+ '<div class="p-4" style="border-top:1px solid var(--line)"><div class="mono text-xs mute mb-2">Price with 20, 50 and 200-period moving averages</div><canvas id="mkc0" class="block w-full" style="height:300px" role="img" aria-label="Price and moving averages"></canvas></div><div id="mk0o" class="px-5 pb-4"></div></div>'+
+ // stationarity
+ '<div id="mkp1" hidden><div class="grid sm:grid-cols-3 gap-3 p-5" style="border-top:1px solid var(--line)"><div>'+lab('Series','mks')+sel('mks',[['Price','Price'],['Log return','Log return']],'Price')+'</div><div>'+lab('Differencing order','mksd')+sel('mksd',[['0','0 (none)'],['1','1'],['2','2']],'0')+'</div><div>'+blk('w','Rolling window','8ch','')+'</div></div>'+
+ '<div class="grid lg:grid-cols-2" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"><div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Series and rolling mean</div><canvas id="mkc1a" class="block w-full" style="height:230px" role="img" aria-label="Series with rolling mean"></canvas></div><div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Rolling standard deviation</div><canvas id="mkc1b" class="block w-full" style="height:230px" role="img" aria-label="Rolling standard deviation"></canvas></div></div>'+
+ '<div class="grid lg:grid-cols-2" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"><div id="mk1a" class="p-5" style="background:var(--panel)"></div><div id="mk1k" class="p-5" style="background:var(--panel)"></div></div><div id="mk1v" class="px-5 py-3" style="border-top:1px solid var(--line)"></div></div>'+
+ // forecast
+ '<div id="mkp2" hidden><div class="grid sm:grid-cols-3 lg:grid-cols-6 gap-3 p-5" style="border-top:1px solid var(--line)"><div>'+lab('Target','mkft')+sel('mkft',[['Price','Price'],['Log return','Log return']],'Price')+'</div><div>'+lab('Model','mkfm')+sel('mkfm',[['naive','Naive'],['ma','Moving Average'],['ses','Simple Exp. Smoothing'],['holt','Holt’s Exp. Smoothing'],['ar','ARIMA(p,1,0) / AR(p)']],'ar')+'</div><div>'+lab('Horizon','mkfh')+sel('mkfh',[['7','7 periods'],['15','15 periods'],['30','30 periods'],['60','60 periods']],'30')+'</div><div>'+lab('Interval','mkfl')+sel('mkfl',[['0.9','90%'],['0.95','95%'],['0.99','99%']],'0.95')+'</div><div class="sm:col-span-2">'+lab('Mode','mkfo')+sel('mkfo',[['holdout','Hold-out test (backtest on the latest data)'],['future','Future forecast']],'holdout')+'</div></div>'+
+ '<div class="px-5 pb-3 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8"><div id="mkgma">'+blk('ma','Moving-average window','7ch','')+'</div><div id="mkgs">'+blk('al','Smoothing level α','7ch','')+'</div><div id="mkgh">'+blk('be','Trend smoothing β*','7ch','')+'</div><div id="mkgar">'+blk('p','AR order p','5ch','')+'<label class="mono text-xs mute mt-3 flex items-center gap-2"><input id="mkdr" type="checkbox"> Include drift</label></div></div>'+
+ '<div class="p-4" style="border-top:1px solid var(--line)"><canvas id="mkc2" class="block w-full" style="height:340px" role="img" aria-label="Forecast chart"></canvas><div id="mk2l" class="flex flex-wrap gap-x-4 gap-y-1 mt-2 mono text-xs mute"></div></div><div id="mk2m" class="grid grid-cols-2 sm:grid-cols-5" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"></div><div id="mk2n" class="px-5 py-3"></div></div>'+
+ // risk
+ '<div id="mkp3" hidden><div class="grid sm:grid-cols-4 gap-3 p-5" style="border-top:1px solid var(--line)"><div>'+lab('Confidence level','mkrc')+sel('mkrc',[['0.95','95%'],['0.99','99%']],'0.95')+'</div><div>'+lab('Holding period','mkrh')+sel('mkrh',[['1','1 period'],['5','5 periods'],['10','10 periods']],'1')+'</div><div>'+lab('Currency','mkrs')+sel('mkrs',[['₹','₹'],['$','$'],['€','€'],['£','£']],'₹')+'</div><div>'+blk('pv','Portfolio value','11ch','')+'</div></div>'+
+ '<div id="mk3t" class="grid grid-cols-2 sm:grid-cols-4" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"></div><div id="mk3x" class="px-5 py-3"></div>'+
+ '<div class="grid lg:grid-cols-3" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"><div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Return distribution with VaR and CVaR</div><canvas id="mkc3a" class="block w-full" style="height:230px" role="img" aria-label="Return histogram with VaR"></canvas></div><div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Drawdown from running peak</div><canvas id="mkc3b" class="block w-full" style="height:230px" role="img" aria-label="Drawdown chart"></canvas></div><div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Annualised volatility: rolling and GARCH(1,1)</div><canvas id="mkc3c" class="block w-full" style="height:230px" role="img" aria-label="Volatility chart"></canvas><div class="flex flex-wrap gap-x-3 mono text-xs mute mt-2"><span style="color:var(--acc)">20-period</span><span style="color:var(--up)">30-period</span><span style="color:var(--warn)">GARCH</span></div></div></div></div>'+
+ '<p class="mono text-xs mute px-5 py-3" style="border-top:1px solid var(--line)">This is a browser port of MarketPulse’s core methods: ADF/KPSS use the same procedure and critical values as statsmodels (results were checked against it), VaR/CVaR follow the same formulas, and GARCH(1,1) is fitted by maximum likelihood with a constant mean equal to the sample mean. The full Python app adds decomposition, ACF/PACF, automated ARIMA/SARIMA grid selection, the SQLite forecast tracker, live Yahoo Finance data and 95 automated tests. Simulated samples are not market data. Nothing here is investment advice.</p>';
+// ---------- controls ----------
+function initControls(){setR('w',5,Math.max(10,Math.min(250,Math.floor(M.px.length/4))),Math.min(30,Math.floor(M.px.length/8)),1);
+ setR('ma',2,Math.min(120,Math.floor(M.px.length/4)),20,1);setR('p',1,5,2,1);setR('al',.01,.99,.5,.01);setR('be',.01,.5,.1,.01);
+ setR('pv',5e6,5e7,1e7,1e5);autoParams()}
+function autoParams(){var s=seriesFor($('mkft').value).v,y=s.slice(0,-Math.min(+$('mkfh').value,Math.floor(s.length/3))),m=$('mkfm').value;
+ if(m==='ses'){setR('al',.01,.99,sesAuto(y),.01)}if(m==='holt'){var q=holtAuto(y);setR('al',.01,.99,q[0],.01);setR('be',.01,.5,q[1],.01)}
+ if(m==='ar'){$('mkdr').checked=$('mkft').value!=='Price'?true:$('mkdr').checked}
+ $('mkgma').hidden=m!=='ma';$('mkgs').hidden=!(m==='ses'||m==='holt');$('mkgh').hidden=m!=='holt';$('mkgar').hidden=m!=='ar'}
+// ---------- renderers ----------
+function r0(){var k={price:M.px[M.px.length-1],chg:M.ret[M.ret.length-1],tot:M.px[M.px.length-1]/M.px[0]-1,vol:sd(M.lr)*SQ(M.ppy),dd:Math.min.apply(null,drawdown(M.px))};
+ $('mk0t').innerHTML=card('Latest price',fn(k.price),iso(M.dates[M.dates.length-1]))+card('Latest change',(k.chg>=0?'+':'')+pc(k.chg),'vs previous observation',k.chg>=0?'up':'down')+card('Total return',(k.tot>=0?'+':'')+pc(k.tot,1),'first to last price',k.tot>=0?'up':'down')+card('Annualised volatility',pc(k.vol,1),'std of log returns x sqrt('+M.ppy+')')+card('Maximum drawdown',pc(k.dd,1),'worst peak to trough','down')+card('Observations',M.px.length.toLocaleString(),M.freq.toLowerCase());
+ lc($('mkc0'),{x:M.dates,lines:[{y:M.px,color:css('--acc'),w:1.8},{y:rollMean(M.px,20),color:css('--warn'),w:1.2},{y:rollMean(M.px,50),color:css('--up'),w:1.2},{y:rollMean(M.px,200),color:css('--down'),w:1.2}]});
+ var n=M.px.length,t=[],yrs=(M.dates[n-1]-M.dates[0])/315576e5,cagr=Math.pow(M.px[n-1]/M.px[0],1/yrs)-1;
+ t.push('Over '+yrs.toFixed(1)+' years the price moved from '+fn(M.px[0])+' to '+fn(k.price)+', a total return of '+(k.tot>=0?'+':'')+pc(k.tot,1)+' (about '+(cagr>=0?'+':'')+pc(cagr,1)+' a year, compounded).');
+ [50,200].forEach(function(w){if(n>w){var ma=mean(M.px.slice(-w));t.push('The latest price is '+(k.price>ma?'above':'below')+' its '+w+'-period average ('+fn(ma)+'), '+pc(Math.abs(k.price/ma-1),1)+' away.')}});
+ t.push('Annualised volatility is '+pc(k.vol,1)+' and the worst peak-to-trough fall was '+pc(k.dd,1)+'.');
+ var up=M.ret.filter(function(v){return v>0}).length/M.ret.length;t.push(pc(up,0)+' of periods had positive returns; the best gained '+pc(Math.max.apply(null,M.ret),1)+' and the worst lost '+pc(-Math.min.apply(null,M.ret),1)+'.');
+ $('mk0o').innerHTML='<div class="mono text-xs mute mb-1 mt-2">Automatic observations (computed from the data)</div>'+t.map(function(x){return note(x)}).join('')}
+function r1(){var tg=$('mks').value,d=+$('mksd').value,s=seriesFor(tg),v=diff(s.v,d),dt=s.d.slice(d),w=Math.min(+$('mkvw').value||30,Math.floor(v.length/3));
+ lc($('mkc1a'),{x:dt,lines:[{y:v,color:css('--mute'),w:1.1},{y:rollMean(v,w),color:css('--acc'),w:2}]});lc($('mkc1b'),{x:dt,lines:[{y:rollSdv(v,w),color:css('--warn'),w:1.8}]});
+ try{var a=adf(v),k=kpss(v);
+  function panel(name,nul,alt,r,pnote,reject){return '<div class="font-semibold mb-1">'+name+'</div><div class="text-sm mute mb-2"><b>H0:</b> '+nul+'<br><b>H1:</b> '+alt+'</div><div class="grid grid-cols-3 gap-2 mono text-sm"><div><div class="text-xs mute">Statistic</div>'+r.stat.toFixed(4)+'</div><div><div class="text-xs mute">P-value</div>'+(r.p<1e-4?'<0.0001':r.p.toFixed(4))+'</div><div><div class="text-xs mute">Lags used</div>'+r.lags+'</div></div><div class="mono text-xs mute mt-2">Critical values: '+Object.keys(r.crit).map(function(q){return q+': '+r.crit[q].toFixed(3)}).join(', ')+'</div>'+note('<b>Conclusion at 5%:</b> '+reject,r.p<.05!==(name.indexOf('ADF')>-1))+(pnote?'<div class="mono text-xs mute">'+pnote+'</div>':'')}
+  $('mk1a').innerHTML=panel('Augmented Dickey-Fuller (ADF)','the series has a unit root (it is non-stationary).','the series is stationary.',a,'',a.p<.05?'reject H0: evidence the series is stationary.':'fail to reject H0: a unit root cannot be ruled out, so treat the series as non-stationary.');
+  $('mk1k').innerHTML=panel('KPSS','the series is stationary around a constant level.','the series has a unit root (it is non-stationary).',k,'KPSS p-values are interpolated and limited to the range 0.01 to 0.10.',k.p<.05?'reject H0: evidence the series is NOT stationary.':'fail to reject H0: no evidence against stationarity.');
+  var vd=verdict(a,k),found=null,tbl=[];for(var dd=0;dd<=2&&found===null;dd++){try{var x=diff(s.v,dd),va=verdict(adf(x),kpss(x));tbl.push('d = '+dd+': '+va[0]);if(va[0]==='stationary')found=dd}catch(e){}}
+  $('mk1v').innerHTML=note('<b>Combined reading ('+vd[0]+'):</b> '+vd[1],vd[0]!=='stationary')+'<div class="mono text-xs mute">Smallest differencing order where both tests call the series stationary: '+(found===null?'none up to d = 2':'d = '+found)+' ('+tbl.join('; ')+'). Second differencing is rarely justified and risks over-differencing.</div>'}
+ catch(e){$('mk1a').innerHTML=note(esc(e.message),true);$('mk1k').innerHTML='';$('mk1v').innerHTML=''}}
+var FL={naive:'Naive',ma:'Moving Average',ses:'Simple Exp. Smoothing',holt:'Holt’s Exp. Smoothing',ar:'ARIMA(p,1,0)'};
+function nextDates(last,H,f){var o=[],d=new Date(last.getTime());for(var i=0;i<H;i++){if(f==='Daily'){do{d=mkd(d.getFullYear(),d.getMonth(),d.getDate()+1)}while(d.getDay()%6===0)}else if(f==='Weekly')d=mkd(d.getFullYear(),d.getMonth(),d.getDate()+7);else d=mkd(d.getFullYear(),d.getMonth()+2,0);o.push(d)}return o}
+function r2(){var tg=$('mkft').value,integrated=tg==='Price',s=seriesFor(tg),y=s.v,H=+$('mkfh').value,lvl=+$('mkfl').value,model=$('mkfm').value,z=qnorm(.5+lvl/2),mode=$('mkfo').value;
+ var prm={w:+$('mkvma').value,alpha:+$('mkval').value,beta:+$('mkvbe').value,p:Math.round(+$('mkvp').value),drift:$('mkdr').checked};
+ var label=model==='ar'&&!integrated?'AR(p) on returns':FL[model];
+ try{if(mode==='holdout'){if(y.length-H<40)throw new Error('Not enough data to hold out '+H+' periods and still fit a model.');
+   var tr=y.slice(0,-H),te=y.slice(-H),r=forecastModel(model,tr,H,prm,integrated),nv=forecastModel('naive',tr,H,prm,integrated),mt=metrics(te,r.fc),mn=metrics(te,nv.fc),cov=0,i;
+   for(i=0;i<H;i++)if(te[i]>=r.fc[i]-z*r.se[i]&&te[i]<=r.fc[i]+z*r.se[i])cov++;
+   var tail=Math.min(tr.length,150),dts=s.d.slice(-H-tail),nT=dts.length,pad=function(a,off){var o=new Array(nT).fill(NaN);a.forEach(function(v,i){o[off+i]=v});return o};
+   var hist=pad(tr.slice(-tail),0),act=pad(te,tail),fcl=pad(r.fc,tail),lo=pad(r.fc.map(function(v,i){return v-z*r.se[i]}),tail),hi=pad(r.fc.map(function(v,i){return v+z*r.se[i]}),tail);act[tail-1]=hist[tail-1];fcl[tail-1]=hist[tail-1];
+   lc($('mkc2'),{x:dts,lines:[{y:hist,color:css('--mute'),w:1.4},{y:act,color:css('--up'),w:2},{y:fcl,color:css('--warn'),w:2,dash:[6,4]}],band:{lo:lo,hi:hi,color:css('--warn')},vx:[{i:tail-1,color:css('--mute'),label:'train | test'}]});
+   $('mk2l').innerHTML='<span style="color:var(--mute)">Training data</span><span style="color:var(--up)">Testing data (actual)</span><span style="color:var(--warn)">'+label+' forecast and '+Math.round(lvl*100)+'% interval</span>';
+   var ratio=mt.rmse/mn.rmse;
+   $('mk2m').innerHTML=card('MAE',fn(mt.mae,4))+card('RMSE',fn(mt.rmse,4))+card('MAPE',integrated?mt.mape.toFixed(2)+'%':'n/a','prices only')+card('RMSE vs naive',model==='naive'?'1.00':ratio.toFixed(2),ratio<.98?'better than naive':ratio>1.02?'worse than naive':'about the same','')+card('Interval coverage',Math.round(cov/H*100)+'%','target '+Math.round(lvl*100)+'%');
+   $('mk2n').innerHTML=note('<b>Backtest, chronological split:</b> the model was fitted only on data before the last '+H+' periods, then asked to forecast them.')+(model!=='naive'?note(ratio<.98?'This model’s out-of-sample error is '+pc(1-ratio,1)+' lower than the naive “tomorrow equals today” benchmark on this window. One window is a small sample, so treat it as indicative.':'This model is not meaningfully better than the naive benchmark on this window. For prices that is the usual outcome: past prices already contain almost all the usable information.',ratio>=.98):'')+(integrated?'':note('You are forecasting <b>log returns</b>, not prices. Returns have little predictable structure, so forecasts stay near the average return.',true))}
+  else{var r2_=forecastModel(model,y,H,prm,integrated),fd=nextDates(s.d[s.d.length-1],H,M.freq),tail2=Math.min(y.length,150),dts2=s.d.slice(-tail2).concat(fd),n2=dts2.length;
+   var padf=function(a,off){var o=new Array(n2).fill(NaN);a.forEach(function(v,i){o[off+i]=v});return o},h2=padf(y.slice(-tail2),0),f2=padf(r2_.fc,tail2),l2=padf(r2_.fc.map(function(v,i){return v-z*r2_.se[i]}),tail2),u2=padf(r2_.fc.map(function(v,i){return v+z*r2_.se[i]}),tail2);f2[tail2-1]=h2[tail2-1];
+   lc($('mkc2'),{x:dts2,lines:[{y:h2,color:css('--acc'),w:1.6},{y:f2,color:css('--warn'),w:2.2}],band:{lo:l2,hi:u2,color:css('--warn')},vx:[{i:tail2-1,color:css('--mute'),label:'last data'}]});
+   $('mk2l').innerHTML='<span style="color:var(--acc)">Historical</span><span style="color:var(--warn)">'+label+' forecast and '+Math.round(lvl*100)+'% interval</span>';
+   var last=y[y.length-1],fe=r2_.fc[H-1];
+   $('mk2m').innerHTML=card('Last observed',fn(last),iso(s.d[s.d.length-1]))+card('Forecast at horizon',fn(fe),iso(fd[H-1]))+card('Change',integrated?(fe/last-1>=0?'+':'')+pc(fe/last-1):fn(fe-last,5),'vs last observed')+card('Interval at horizon',fn(fe-z*r2_.se[H-1])+' to '+fn(fe+z*r2_.se[H-1]),Math.round(lvl*100)+'% interval')+card('Interval width',fn(2*z*r2_.se[H-1]),integrated?'widens with horizon':'roughly constant');
+   $('mk2n').innerHTML=note('Future dates skip weekends but not exchange holidays. The interval shows uncertainty; it is not a prediction of where the price will go, and this is not investment advice.',true)}}
+ catch(e){$('mk2m').innerHTML='';$('mk2l').innerHTML='';$('mk2n').innerHTML=note(esc(e.message),true);lc($('mkc2'),{x:[new Date(),new Date()],lines:[{y:[0,0]}]})}}
+function garchFit(){if(G)return G;try{G=garch(M.lr.slice(-3000))}catch(e){G={error:e.message}}return G}
+function r3(){var conf=+$('mkrc').value,h=+$('mkrh').value,sym=$('mkrs').value,pv=+$('mkvpv').value;if(!(pv>0))pv=1e6;
+ if(M.ret.length<30+h){$('mk3t').innerHTML='';$('mk3x').innerHTML=note('Not enough data for these risk measures.',true);return}
+ var rs=riskSummary(M.ret,conf,h),g=M.ret.length>=250?garchFit():{error:'GARCH needs at least 250 return observations.'},u=M.unit;
+ var tl=function(l,f,s){return card(l,pc(f),money(pv*f,sym)+(s?' '+s:''),'down')};
+ var gv=g.error?null:qnorm(conf)*g.next*SQ(h);
+ $('mk3t').innerHTML=(tl('Historical VaR ('+Math.round(conf*100)+'%, '+h+')',rs.histVaR)+tl('Parametric VaR',rs.paramVaR)+tl('Historical CVaR',rs.histCVaR)+tl('Parametric CVaR',rs.paramCVaR)+
+  (g.error?card('GARCH',g.error?'n/a':'',g.error):card('GARCH next-period volatility',pc(g.next,2),pc(g.next*SQ(M.ppy),1)+' annualised')+card('GARCH-based VaR',pc(gv),money(pv*gv,sym),'down')+card('GARCH persistence',g.persistence.toFixed(3),isFinite(g.halfLife)?'half-life ≈ '+g.halfLife.toFixed(0)+' periods':'no mean reversion')+card('Latest conditional volatility',pc(g.cond[g.cond.length-1]*SQ(M.ppy),1),'annualised')));
+ var tail=(1-conf)*100,dd=Math.min.apply(null,drawdown(M.px));
+ $('mk3x').innerHTML=note('On a portfolio of <b>'+money(pv,sym)+'</b>, the historical '+Math.round(conf*100)+'% VaR over '+h+' '+(h===1?u.replace(/s$/,''):u)+' is <b>'+pc(rs.histVaR)+'</b>, i.e. <b>'+money(pv*rs.histVaR,sym)+'</b>. In about '+tail.toFixed(0)+'% of comparable periods in this data, losses were at least that large. VaR is a threshold that is exceeded some of the time, <b>not the maximum possible loss</b>.')+
+  note('If the loss does exceed VaR, the average loss in those worst cases (CVaR / expected shortfall) was <b>'+pc(rs.histCVaR)+'</b> ('+money(pv*rs.histCVaR,sym)+') historically and '+pc(rs.paramCVaR)+' under a normal assumption. '+((rs.histVaR>rs.paramVaR*1.1||rs.histCVaR>rs.paramCVaR*1.1)?'The historical figures are noticeably larger, which signals fatter tails than a normal distribution, so the parametric numbers may understate risk.':'The two approaches agree reasonably well here.'))+
+  note('The worst peak-to-trough decline in the data was <b>'+pc(dd,1)+'</b>, which would have cost about '+money(pv*Math.abs(dd),sym)+' at its deepest. These figures describe past behaviour and are not forecasts, guarantees or investment advice.',true);
+ hc($('mkc3a'),rs.hp,[{x:-rs.histVaR,color:css('--warn')},{x:-rs.histCVaR,color:css('--down')}]);
+ lc($('mkc3b'),{x:M.dates,lines:[{y:drawdown(M.px),color:css('--down'),w:1.2}],fill0:css('--down'),pct:true});
+ var rv20=[NaN].concat(rollSd(M.lr,20,M.ppy)),rv30=[NaN].concat(rollSd(M.lr,30,M.ppy)),gl=g.error?new Array(M.dates.length).fill(NaN):new Array(M.dates.length-M.lr.slice(-3000).length).fill(NaN).concat(g.cond.map(function(v){return v*SQ(M.ppy)}));
+ lc($('mkc3c'),{x:M.dates,lines:[{y:rv20,color:css('--acc'),w:1.2},{y:rv30,color:css('--up'),w:1.2},{y:gl.slice(0,M.dates.length),color:css('--warn'),w:1.6}],pct:true})}
+function render(){if(!M)return;[r0,r1,r2,r3][tab]()}
+function showTab(i){tab=i;[0,1,2,3].forEach(function(k){$('mkp'+k).hidden=k!==i});Array.prototype.forEach.call($('mktabs').children,function(b,k){b.style.color=k===i?'var(--acc)':'';b.style.borderColor=k===i?'var(--acc)':'';b.setAttribute('aria-selected',k===i)});render()}
+Array.prototype.forEach.call($('mktabs').children,function(b){b.addEventListener('click',function(){showTab(+b.dataset.t)})});
+link('w',render);link('ma',render);link('al',render);link('be',render);link('p',render);link('pv',render);
+['mks','mksd','mkfl','mkfo','mkrc','mkrh','mkrs','mkdr'].forEach(function(id){$(id).addEventListener('change',render)});
+['mkft','mkfm','mkfh'].forEach(function(id){$(id).addEventListener('change',function(){if(M)autoParams();render()})});
+$('mkfq').addEventListener('change',function(){if(M){M.freq=$('mkfq').value;M.ppy=FQ[M.freq].ppy;M.unit=FQ[M.freq].unit;G=null;render()}});
+$('mksm').addEventListener('click',demo);
+$('mkf').addEventListener('change',function(e){var f=e.target.files[0];if(f)readFile(f)});
+var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(render,120)});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',render);
+showTab(0);demo();addEventListener('load',render);
+
+})();
+</script>
+<script>
+(function(){
+var LN=Math.log,EX=Math.exp,SQ=Math.sqrt,PI=Math.PI,INF=Infinity;
+function mean(a){var s=0;for(var i=0;i<a.length;i++)s+=a[i];return s/a.length}
+function sd(a){if(a.length<2)return NaN;var m=mean(a),s=0;for(var i=0;i<a.length;i++)s+=(a[i]-m)*(a[i]-m);return SQ(s/(a.length-1))}
+var LG=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+function lgam(x){if(x<.5)return LN(PI/Math.sin(PI*x))-lgam(1-x);x-=1;var a=LG[0],t=x+7.5;for(var i=1;i<9;i++)a+=LG[i]/(x+i);return .5*LN(2*PI)+(x+.5)*LN(t)-t+LN(a)}
+function bcf(a,b,x){var qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<1e-300)d=1e-300;d=1/d;var h=d;
+ for(var m=1;m<500;m++){var m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<1e-300)d=1e-300;c=1+aa/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;h*=d*c;
+  aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<1e-300)d=1e-300;c=1+aa/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;var del=d*c;h*=del;if(Math.abs(del-1)<1e-14)break}return h}
+function bI(x,a,b){if(x<=0)return 0;if(x>=1)return 1;var bt=EX(lgam(a+b)-lgam(a)-lgam(b)+a*LN(x)+b*LN(1-x));return x<(a+1)/(a+b+2)?bt*bcf(a,b,x)/a:1-bt*bcf(b,a,1-x)/b}
+function tTwoSided(t,df){return bI(df/(df+t*t),df/2,.5)}            // two-sided p-value of a t statistic
+function simpleOLS(x,y){var n=x.length,mx=mean(x),my=mean(y),sxx=0,sxy=0,i;for(i=0;i<n;i++){sxx+=(x[i]-mx)*(x[i]-mx);sxy+=(x[i]-mx)*(y[i]-my)}
+ var b=sxy/sxx,a=my-b*mx,ssr=0,sst=0;for(i=0;i<n;i++){var e=y[i]-a-b*x[i];ssr+=e*e;sst+=(y[i]-my)*(y[i]-my)}
+ var df=n-2,s2=ssr/df,seB=SQ(s2/sxx),seA=SQ(s2*(1/n+mx*mx/sxx)),tA=a/seA,tB=b/seB;
+ return{a:a,b:b,seA:seA,seB:seB,tA:tA,tB:tB,pA:tTwoSided(tA,df),pB:tTwoSided(tB,df),r2:1-ssr/sst,n:n,df:df,resSd:SQ(s2)}}
+// ---- the five formulas (all inputs as decimals, e.g. 0.12 for 12%) ----
+function sharpe(rp,rf,sp){return sp>0?(rp-rf)/sp:NaN}
+function treynor(rp,rf,b){return b!==0?(rp-rf)/b:NaN}
+function capmExpected(rf,b,rm){return rf+b*(rm-rf)}
+function jensen(rp,rf,b,rm){return rp-capmExpected(rf,b,rm)}
+function infoRatio(rp,rb,te){return te>0?(rp-rb)/te:NaN}
+function trackingError(active){var m=mean(active),s=0;for(var i=0;i<active.length;i++)s+=(active[i]-m)*(active[i]-m);return{te:active.length>1?SQ(s/(active.length-1)):NaN,ssd:s,n:active.length,mean:m}}
+function rollBeta(rm,rp,w){var o=[];for(var i=0;i<rm.length;i++){if(i<w-1){o.push(NaN);continue}var xs=rm.slice(i-w+1,i+1),ys=rp.slice(i-w+1,i+1),mx=mean(xs),my=mean(ys),sxx=0,sxy=0;for(var j=0;j<w;j++){sxx+=(xs[j]-mx)*(xs[j]-mx);sxy+=(xs[j]-mx)*(ys[j]-my)}o.push(sxy/sxx)}return o}
+
+// ======================= UI =======================
+var $=function(i){return document.getElementById(i)};
+function css(k){return getComputedStyle(document.documentElement).getPropertyValue(k).trim()}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function pc(v,d){return isFinite(v)?(v*100).toFixed(d==null?2:d)+'%':'undefined'}
+function f2(v,d){return isFinite(v)?v.toFixed(d==null?2:d):'undefined'}
+function pv(p){return p<1e-4?'<0.0001':p.toFixed(4)}
+function iso(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function mkd(y,m,d){return new Date(y,m,d,12)}
+var PPY={Daily:252,Weekly:52,Monthly:12};
+function fill(r){r.style.setProperty('--p',Math.max(0,Math.min(100,(r.value-r.min)/(r.max-r.min)*100))+'%')}
+function setR(k,lo,hi,v,st){var rr=$('cpr'+k);lo=Math.min(lo,v);hi=Math.max(hi,v);if(!(hi>lo)){lo=v-1;hi=v+1}rr.min=lo;rr.max=hi;rr.step=st;rr.value=v;$('cpv'+k).value=+(+v).toPrecision(5);fill(rr);$('cpa'+k).textContent=lo;$('cpb'+k).textContent=hi}
+function blk(k,lab,w,unit){return '<div class="mt-3"><div class="flex items-center justify-between gap-3"><label class="text-sm" for="cpv'+k+'">'+lab+'</label><span class="flex items-center gap-1"><input id="cpv'+k+'" class="vi" style="width:'+w+'" type="number" step="any">'+(unit?'<span class="mono acc">'+unit+'</span>':'')+'</span></div><input id="cpr'+k+'" class="rg mt-2" type="range" aria-label="'+lab+' slider"><div class="flex justify-between mono text-xs mute mt-1"><span id="cpa'+k+'"></span><span id="cpb'+k+'"></span></div></div>'}
+function link(k,fnc){var nn=$('cpv'+k),rr=$('cpr'+k);rr.addEventListener('input',function(){nn.value=+(+rr.value).toPrecision(5);fill(rr);fnc()});nn.addEventListener('input',function(){rr.value=nn.value;fill(rr);fnc()})}
+function sel(id,opts,def){return '<select id="'+id+'" class="inp">'+opts.map(function(o){return '<option value="'+o[0]+'"'+(String(o[0])===String(def)?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select>'}
+function lab(t,f){return '<label class="mono text-xs mute block mb-1" for="'+f+'">'+t+'</label>'}
+function card(l,v,s,tone){return '<div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute">'+l+'</div><div class="text-xl font-extrabold" '+(tone?'style="color:var(--'+tone+')"':'')+'>'+v+'</div><div class="mono text-xs mute">'+(s||'')+'</div></div>'}
+function note(t,warn){return '<div style="border-left:3px solid var(--'+(warn?'warn':'acc')+');background:var(--panel);padding:.6rem .9rem;border-radius:4px;margin:.4rem 0;font-size:.9rem">'+t+'</div>'}
+// ---------- charts ----------
+function cv2(cv){var d=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;cv.width=w*d;cv.height=h*d;var c=cv.getContext('2d');c.setTransform(d,0,0,d,0,0);c.clearRect(0,0,w,h);c.font='10.5px "IBM Plex Mono",monospace';c.textBaseline='middle';return{c:c,w:w,h:h}}
+function xy(cv,o){var q=cv2(cv),c=q.c,w=q.w,h=q.h;if(!w)return;var L=54,R=14,T=14,B=34,i,X=function(v){return L+(v-o.x0)/(o.x1-o.x0)*(w-L-R)},Y=function(v){return h-B-(v-o.y0)/(o.y1-o.y0)*(h-B-T)};
+ for(i=0;i<=4;i++){var y=h-B-i/4*(h-B-T),v=o.y0+(o.y1-o.y0)*i/4;c.strokeStyle=css('--line');c.lineWidth=1;c.beginPath();c.moveTo(L,y);c.lineTo(w-R,y);c.stroke();c.fillStyle=css('--mute');c.textAlign='right';c.fillText(o.ypct?(v*100).toFixed(1)+'%':v.toFixed(2),L-6,y)}
+ for(i=0;i<=4;i++){var x=L+i/4*(w-L-R),xv=o.x0+(o.x1-o.x0)*i/4;c.fillStyle=css('--mute');c.textAlign='center';c.fillText(o.xpct?(xv*100).toFixed(1)+'%':xv.toFixed(2),x,h-B+12)}
+ c.fillStyle=css('--mute');c.textAlign='center';c.fillText(o.xl,L+(w-L-R)/2,h-6);
+ if(o.y0<0&&o.y1>0){c.strokeStyle=css('--mute');c.beginPath();c.moveTo(L,Y(0));c.lineTo(w-R,Y(0));c.stroke()}
+ if(o.x0<0&&o.x1>0){c.strokeStyle=css('--mute');c.beginPath();c.moveTo(X(0),T);c.lineTo(X(0),h-B);c.stroke()}
+ (o.dots||[]).forEach(function(p){c.fillStyle=css('--acc');c.globalAlpha=.45;c.beginPath();c.arc(X(p[0]),Y(p[1]),2.2,0,6.2832);c.fill();c.globalAlpha=1});
+ (o.lines||[]).forEach(function(l){c.strokeStyle=l.color;c.lineWidth=l.w||2;c.setLineDash(l.dash||[]);c.beginPath();l.pts.forEach(function(p,k){k?c.lineTo(X(p[0]),Y(p[1])):c.moveTo(X(p[0]),Y(p[1]))});c.stroke();c.setLineDash([])});
+ (o.points||[]).forEach(function(p){c.fillStyle=p.color;c.beginPath();c.arc(X(p.x),Y(p.y),5,0,6.2832);c.fill();c.textAlign=p.left?'right':'left';c.fillText(p.label,X(p.x)+(p.left?-9:9),Y(p.y)+(p.dy||0))})}
+function lc(cv,o){var q=cv2(cv),c=q.c,w=q.w,h=q.h;if(!w)return;var L=54,R=10,T=14,B=24,n=o.x.length,mn=INF,mx=-INF,k,j;
+ o.lines.forEach(function(l){l.y.forEach(function(v){if(isFinite(v)){if(v<mn)mn=v;if(v>mx)mx=v}})});if(!isFinite(mn))return;var pd=(mx-mn||1)*.07;mn-=pd;mx+=pd;
+ var X=function(i){return L+i/Math.max(n-1,1)*(w-L-R)},Y=function(v){return h-B-(v-mn)/(mx-mn)*(h-B-T)};
+ for(k=0;k<=4;k++){var v=mn+(mx-mn)*k/4,y=Y(v);c.strokeStyle=css('--line');c.lineWidth=1;c.beginPath();c.moveTo(L,y);c.lineTo(w-R,y);c.stroke();c.fillStyle=css('--mute');c.textAlign='right';c.fillText(v.toFixed(2),L-6,y)}
+ for(k=0;k<=4;k++){var ix=Math.round((n-1)*k/4);c.fillStyle=css('--mute');c.textAlign=k===0?'left':k===4?'right':'center';c.fillText(iso(o.x[ix]),X(ix),h-8)}
+ o.lines.forEach(function(l){var st=Math.max(1,Math.floor(n/700)),on=false;c.strokeStyle=l.color;c.lineWidth=l.w||1.6;c.setLineDash(l.dash||[]);c.beginPath();for(j=0;j<n;j+=st){var yv=l.y[j];if(!isFinite(yv)){on=false;continue}on?c.lineTo(X(j),Y(yv)):c.moveTo(X(j),Y(yv));on=true}c.stroke();c.setLineDash([])});
+ if(o.ref!==undefined){c.setLineDash([4,4]);c.strokeStyle=css('--mute');c.beginPath();c.moveTo(L,Y(o.ref));c.lineTo(w-R,Y(o.ref));c.stroke();c.setLineDash([])}}
+// ---------- build UI ----------
+var root=$('cproot'),T=null,CD=null,tab=0;
+var CALC=[['rp','Portfolio return Rp','7ch','%',-10,40,12,.1],['rf','Risk-free rate Rf','7ch','%',0,12,4,.1],['rm','Market return Rm','7ch','%',-10,30,10,.1],['bt','Portfolio beta β','7ch','',-.5,2.5,1.2,.01],['sp','Portfolio std. deviation σp','7ch','%',1,60,16,.1],['sm','Market std. deviation σm','7ch','%',1,50,15,.1],['rb','Benchmark return Rb','7ch','%',-10,40,10,.1],['te','Tracking error TE','7ch','%',.1,20,3,.1]];
+root.innerHTML='<div class="flex flex-wrap gap-2 px-5 pb-3 pt-4" id="cptabs" role="tablist" style="border-top:1px solid var(--line)">'+['Formula calculator','Your data: CAPM regression'].map(function(t,i){return '<button type="button" role="tab" class="chip" data-t="'+i+'" style="cursor:pointer;background:transparent">'+t+'</button>'}).join('')+'</div>'+
+ // ---- calculator
+ '<div id="cpp0"><div class="grid lg:grid-cols-2" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"><div class="p-5" style="background:var(--panel)"><h3 class="text-sm font-semibold">Inputs (start with the worked examples from the study sheet)</h3><div class="grid sm:grid-cols-2 gap-x-8">'+CALC.map(function(c){return blk(c[0],c[1],c[2],c[3])}).join('')+'</div>'+
+ '<div class="mt-4">'+lab('Active returns Rp − Rb per period (%, comma separated)','cpal')+'<input id="cpal" class="inp" type="text" value="2, 1, -1, 2"><div id="cpte" class="mt-2 text-sm"></div><button id="cpute" type="button" class="chip mt-2" style="cursor:pointer;background:transparent">Use this as the tracking error input</button></div></div>'+
+ '<div class="p-5" style="background:var(--panel)"><h3 class="text-sm font-semibold mb-2">Capital Asset Pricing Model (CAPM)</h3><div id="cpcapm"></div><div class="grid sm:grid-cols-2 gap-3 mt-3"><div><div class="mono text-xs mute mb-1">Security Market Line: return against beta</div><canvas id="cpc1" class="block w-full" style="height:250px" role="img" aria-label="Security market line"></canvas></div><div><div class="mono text-xs mute mb-1">Capital Market Line: return against total risk</div><canvas id="cpc2" class="block w-full" style="height:250px" role="img" aria-label="Capital market line"></canvas></div></div></div></div>'+
+ '<div id="cpfive" class="grid md:grid-cols-2" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"></div><div id="cpsum" class="px-5 py-3"></div></div>'+
+ // ---- data
+ '<div id="cpp1" hidden><div class="p-5" style="border-top:1px solid var(--line)"><div class="flex flex-wrap items-end gap-3"><div class="grow" style="min-width:230px">'+lab('Upload data (Excel .xlsx / .xls, or .csv): a Date column, your portfolio or stock, and a market index','cpf')+'<input id="cpf" type="file" class="inp" accept=".xlsx,.xls,.csv"></div><button id="cpsm" type="button" class="tg" style="flex:none;border-radius:6px;border-left:1px solid var(--line);padding:.55rem 1rem">Use simulated sample</button></div>'+
+ '<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 mt-4"><div>'+lab('Date column','cpdc')+'<select id="cpdc" class="inp"></select></div><div>'+lab('Portfolio / stock','cppc')+'<select id="cppc" class="inp"></select></div><div>'+lab('Market / benchmark','cpmc')+'<select id="cpmc" class="inp"></select></div><div>'+lab('Risk-free column','cprc')+'<select id="cprc" class="inp"></select></div><div>'+lab('Columns hold','cpty')+sel('cpty',[['prices','Prices'],['returns','Returns']],'prices')+'</div><div>'+lab('Returns shown as','cpun')+sel('cpun',[['dec','Decimals (0.01)'],['pct','Percent (1.0)']],'dec')+'</div><div>'+lab('Frequency','cpfq')+sel('cpfq',[['Daily','Daily'],['Weekly','Weekly'],['Monthly','Monthly']],'Daily')+'</div></div>'+
+ '<div class="grid sm:grid-cols-2 gap-x-8">'+blk('rfa','Risk-free rate (annual, used if no column)','7ch','%')+blk('rw','Rolling beta window (periods)','7ch','')+'</div>'+
+ '<p id="cpst" class="mono text-xs acc mt-3"></p><p id="cper" class="warn mono text-xs mt-1" role="alert" hidden></p></div>'+
+ '<div id="cpd" hidden><div id="cpdt" class="grid grid-cols-2 sm:grid-cols-4" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"></div><div id="cpdx" class="px-5 py-3"></div><div class="px-5 pb-3"><button id="cpsend" type="button" class="tg" style="flex:none;border-radius:6px;border-left:1px solid var(--line);padding:.5rem 1rem">Send these values to the calculator</button></div>'+
+ '<div class="grid lg:grid-cols-2" style="gap:1px;background:var(--line);border-top:1px solid var(--line)"><div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Characteristic line: excess portfolio return against excess market return (slope = β, intercept = α)</div><canvas id="cpc3" class="block w-full" style="height:260px" role="img" aria-label="Scatter of excess returns with regression line"></canvas></div><div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Security Market Line with your portfolio</div><canvas id="cpc4" class="block w-full" style="height:260px" role="img" aria-label="Security market line with portfolio"></canvas></div><div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Rolling beta</div><canvas id="cpc5" class="block w-full" style="height:240px" role="img" aria-label="Rolling beta"></canvas></div><div class="p-4" style="background:var(--panel)"><div class="mono text-xs mute mb-2">Growth of 100: portfolio against market</div><canvas id="cpc6" class="block w-full" style="height:240px" role="img" aria-label="Growth of 100"></canvas><div class="flex gap-4 mono text-xs mute mt-2"><span style="color:var(--acc)">Portfolio</span><span style="color:var(--warn)">Market</span></div></div></div></div></div>'+
+ '<p class="mono text-xs mute px-5 py-3" style="border-top:1px solid var(--line)">CAPM: E(Rp) = Rf + β(Rm − Rf). Beta and alpha come from an ordinary-least-squares regression of the portfolio’s excess returns on the market’s excess returns; annual figures multiply per-period means by the number of periods per year. The tracking-error calculation uses deviations from the mean active return, as in the worked example. The simulated sample is not market data. Results are statistics about a past sample, not predictions or investment advice.</p>';
+// ---------- calculator ----------
+function v(k){return +$('cpv'+k).value}
+function rc(){var rp=v('rp')/100,rf=v('rf')/100,rm=v('rm')/100,b=v('bt'),sp=v('sp')/100,sm=v('sm')/100,rb=v('rb')/100,te=v('te')/100;
+ var al=$('cpal').value.split(/[,;]+/).map(function(s){return s.trim()}).filter(function(s){return s!==''}).map(Number),ok=al.length>1&&al.every(isFinite),t=ok?trackingError(al.map(function(x){return x/100})):null;
+ $('cpte').innerHTML=ok?'Mean active return '+f2(t.mean*100)+'%. Σ(active − mean)² = '+f2(t.ssd*1e4)+' (in %²). TE = √('+f2(t.ssd*1e4)+' / '+(t.n-1)+') = √'+f2(t.ssd*1e4/(t.n-1))+' = <b>'+f2(t.te*100)+'%</b>':'<span style="color:var(--warn)">Enter at least two numbers, for example 2, 1, -1, 2.</span>';
+ var sh=sharpe(rp,rf,sp),tr=treynor(rp,rf,b),ex=capmExpected(rf,b,rm),ja=jensen(rp,rf,b,rm),ir=infoRatio(rp,rb,te),msh=sharpe(rm,rf,sm);
+ $('cpcapm').innerHTML='<div class="mono text-sm">E(Rp) = Rf + β(Rm − Rf)<br>= '+f2(rf*100)+'% + '+f2(b)+' × ('+f2(rm*100)+'% − '+f2(rf*100)+'%)<br>= <b class="acc">'+f2(ex*100)+'%</b></div>'+note('CAPM says a portfolio with beta '+f2(b)+' should <b>require</b> a return of '+f2(ex*100)+'%. Yours earned '+f2(rp*100)+'%, so it sits '+(ja>0?'<b>above</b> the line (positive alpha)':ja<0?'<b>below</b> the line (negative alpha)':'<b>on</b> the line')+'.',ja<0);
+ function box(n,name,formula,sub,res,take,extra){return '<div class="p-5" style="background:var(--panel)"><div class="flex items-baseline justify-between gap-3"><h3 class="font-extrabold">'+n+'. '+name+'</h3><span class="text-2xl font-extrabold acc">'+res+'</span></div><div class="mono text-xs mute mt-2">'+formula+'</div><div class="mono text-sm mt-1">'+sub+'</div><p class="text-sm mt-3"><b>Takeaway:</b> '+take+'</p>'+(extra?'<p class="text-sm mute mt-1">'+extra+'</p>':'')+'</div>'}
+ $('cpfive').innerHTML=
+  box(1,'Sharpe ratio','(Rp − Rf) / σp','('+f2(rp*100)+'% − '+f2(rf*100)+'%) / '+f2(sp*100)+'%',f2(sh),'a higher Sharpe ratio (all else equal) means better risk-adjusted performance per unit of <i>total</i> risk.','The market’s Sharpe ratio on your inputs is '+f2(msh)+', so the portfolio earned '+(sh>msh?'more':'less')+' excess return per unit of total risk than the market.')+
+  box(2,'Treynor ratio','(Rp − Rf) / βp','('+f2(rp*100)+'% − '+f2(rf*100)+'%) / '+f2(b),isFinite(tr)?f2(tr*100)+'%':'undefined','a higher Treynor ratio is better, especially when comparing well-diversified portfolios, because it counts only <i>systematic</i> (market) risk.','The market portfolio’s Treynor ratio is Rm − Rf = '+f2((rm-rf)*100)+'%, so the portfolio '+(isFinite(tr)&&tr>rm-rf?'beat':'did not beat')+' the market per unit of beta.')+
+  box(3,'Jensen’s alpha','α = Rp − [Rf + β(Rm − Rf)]',f2(rp*100)+'% − ['+f2(rf*100)+'% + '+f2(b)+'('+f2(rm*100)+'% − '+f2(rf*100)+'%)] = '+f2(rp*100)+'% − '+f2(ex*100)+'%',(ja>=0?'+':'')+f2(ja*100)+'%','positive alpha means outperformance relative to CAPM; negative alpha means underperformance.','Alpha is the part of the return that beta cannot explain: the abnormal return generated by the manager.')+
+  box(4,'Information ratio','(Rp − Rb) / TE','('+f2(rp*100)+'% − '+f2(rb*100)+'%) / '+f2(te*100)+'%',f2(ir),'a higher information ratio means more active return per unit of active risk.','It rewards a manager for return above the benchmark and penalises inconsistency relative to it.')+
+  box(5,'Tracking error','TE = √[ Σ(active − mean)² / (n − 1) ]',ok?'√('+f2(t.ssd*1e4)+' / '+(t.n-1)+')':'enter active returns on the left',ok?f2(t.te*100)+'%':'undefined','a lower tracking error means the portfolio stays closer to its benchmark (more consistent).','The tracking-error input used for the information ratio above is '+f2(te*100)+'%. Use the button on the left to switch it to this computed value.')+
+  box('+','Reading them together','Sharpe, Treynor, Jensen, IR, TE','total risk → Sharpe; systematic risk → Treynor','','Sharpe uses total risk, Treynor systematic risk, the information ratio active return, tracking error active risk, and Jensen’s alpha the abnormal return (skill). Use them together for a complete view.');
+ $('cpsum').innerHTML='';
+ var bmax=Math.max(2,b*1.25,1.5),rmax=Math.max(rm,rp,ex)+.03,rmin=Math.min(0,rf,rp,ex)-.01;
+ xy($('cpc1'),{x0:0,x1:bmax,y0:rmin,y1:rmax,xl:'Beta',xpct:false,ypct:true,lines:[{pts:[[0,rf],[bmax,rf+bmax*(rm-rf)]],color:css('--acc')},{pts:[[b,ex],[b,rp]],color:css('--warn'),dash:[4,3],w:1.5}],points:[{x:0,y:rf,color:css('--mute'),label:'Rf',dy:-10},{x:1,y:rm,color:css('--up'),label:'Market',dy:12},{x:b,y:rp,color:css('--warn'),label:'Portfolio',left:b>bmax*.7,dy:-10}]});
+ var smax=Math.max(sp,sm)*1.4,csl=msh;
+ xy($('cpc2'),{x0:0,x1:smax,y0:rmin,y1:Math.max(rmax,rf+csl*smax),xl:'Standard deviation (total risk)',xpct:true,ypct:true,lines:[{pts:[[0,rf],[smax,rf+csl*smax]],color:css('--acc')}],points:[{x:0,y:rf,color:css('--mute'),label:'Rf',dy:-10},{x:sm,y:rm,color:css('--up'),label:'Market',dy:12},{x:sp,y:rp,color:css('--warn'),label:'Portfolio',left:sp>smax*.7,dy:-10}]})}
+// ---------- data ----------
+function toDate(x){if(x instanceof Date&&!isNaN(x)){var q=new Date(x.getTime()+432e5);return mkd(q.getFullYear(),q.getMonth(),q.getDate())}
+ if(typeof x==='string'){x=x.trim();var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(x);if(m)return mkd(+m[1],m[2]-1,+m[3]);if(/\d{1,4}[\/\-.\s][A-Za-z0-9]{1,9}[\/\-.\s]\d{1,4}/.test(x)){var p=Date.parse(x);if(!isNaN(p)){var z=new Date(p);return mkd(z.getFullYear(),z.getMonth(),z.getDate())}}}return null}
+function numv(x){if(typeof x==='number')return x;if(typeof x==='string'&&x.trim()!=='')return Number(x.replace(/[,₹$€£%\s]/g,''));return NaN}
+function derr(t){var e=$('cper');e.textContent=t;e.hidden=!t}
+function setTable(hdr,rows,name){T={hdr:hdr,rows:rows,name:name};var nc=hdr.length,opts=hdr.map(function(h,i){return '<option value="'+i+'">'+esc(h==null||h===''?'Column '+(i+1):h)+'</option>'}).join('');
+ var dc=-1,j,numeric=[];for(j=0;j<nc;j++){var k=0,kn=0;rows.forEach(function(r){if(toDate(r[j]))k++;if(isFinite(numv(r[j])))kn++});if(dc<0&&k/rows.length>.7)dc=j;else if(kn/rows.length>.7)numeric.push(j)}
+ if(dc<0){derr('Could not find a date column. Put dates in one column and add headers in row 1.');return false}
+ if(numeric.length<2){derr('Need at least two numeric columns: your portfolio or stock, and a market index.');return false}
+ $('cpdc').innerHTML=opts;$('cppc').innerHTML=opts;$('cpmc').innerHTML=opts;$('cprc').innerHTML='<option value="-1">None (use the rate below)</option>'+opts;
+ $('cpdc').value=dc;$('cppc').value=numeric[0];$('cpmc').value=numeric[1];$('cprc').value=-1;derr('');return true}
+function compute(){if(!T)return;var ppy=PPY[$('cpfq').value],dc=+$('cpdc').value,pcx=+$('cppc').value,mcx=+$('cpmc').value,rcx=+$('cprc').value,prices=$('cpty').value==='prices',scale=$('cpun').value==='pct'?.01:1,rfa=v('rfa')/100,i;
+ if(pcx===mcx){derr('Choose different columns for the portfolio and the market.');return}
+ var rows=[];T.rows.forEach(function(r){var d=toDate(r[dc]),p=numv(r[pcx]),m=numv(r[mcx]);if(d&&isFinite(p)&&isFinite(m))rows.push({d:d,p:p,m:m,f:rcx>=0?numv(r[rcx]):NaN})});
+ rows.sort(function(a,b){return a.d-b.d});var u=[];rows.forEach(function(r){if(u.length&&u[u.length-1].d.getTime()===r.d.getTime())u[u.length-1]=r;else u.push(r)});
+ if(prices&&u.some(function(r){return r.p<=0||r.m<=0})){derr('Prices must be positive. If the columns hold returns, change “Columns hold” to Returns.');return}
+ var dates=[],rp=[],rm=[],rfp=[];
+ for(i=prices?1:0;i<u.length;i++){dates.push(u[i].d);rp.push(prices?u[i].p/u[i-1].p-1:u[i].p*scale);rm.push(prices?u[i].m/u[i-1].m-1:u[i].m*scale);var ra=rcx>=0&&isFinite(u[i].f)?u[i].f/100:rfa;rfp.push(Math.pow(1+ra,1/ppy)-1)}
+ if(rp.length<30){derr('At least 30 return observations are needed for a meaningful regression; this data has '+rp.length+'.');return}
+ if(sd(rp)===0||sd(rm)===0){derr('One of the series has no variation, so beta cannot be estimated.');return}
+ derr('');var ep=rp.map(function(x,j){return x-rfp[j]}),em=rm.map(function(x,j){return x-rfp[j]}),reg=simpleOLS(em,ep),act=rp.map(function(x,j){return x-rm[j]});
+ var Rp=mean(rp)*ppy,Rm=mean(rm)*ppy,Rf=mean(rfp)*ppy,sP=sd(ep)*SQ(ppy),sM=sd(em)*SQ(ppy),aAnn=reg.a*ppy,TE=sd(act)*SQ(ppy),IRv=mean(act)*ppy/TE,w=Math.min(Math.max(10,Math.round(v('rw'))),Math.floor(rp.length/2)),
+  shP=mean(ep)*ppy/sP,shM=mean(em)*ppy/sM,trP=mean(ep)*ppy/reg.b,capm=Rf+reg.b*(Rm-Rf);
+ CD={dates:dates,rp:rp,rm:rm,ep:ep,em:em,reg:reg,Rp:Rp,Rm:Rm,Rf:Rf,sP:sP,sM:sM,aAnn:aAnn,TE:TE,IR:IRv,shP:shP,shM:shM,trP:trP,capm:capm,ppy:ppy,w:w};
+ $('cpst').textContent=T.name+': '+rp.length.toLocaleString()+' '+$('cpfq').value.toLowerCase()+' return observations, '+iso(dates[0])+' to '+iso(dates[dates.length-1])+(T.sim?'. Simulated with a true beta of 1.20 and a true alpha of 5% a year. The estimates come from noisy data, so they differ a little from those true values. Not real market data.':'');
+ $('cpd').hidden=false;if(tab===1)rd()}
+function rd(){if(!CD)return;var d=CD,r=d.reg,b=r.b,sig=r.pA<.05;
+ $('cpdt').innerHTML=card('Beta (β)',f2(b,3),'± '+f2(r.seB,3)+' standard error')+card('Jensen’s alpha (annual)',(d.aAnn>=0?'+':'')+pc(d.aAnn),'t = '+f2(r.tA)+', p = '+pv(r.pA),sig?(d.aAnn>0?'up':'warn'):'')+card('R-squared',pc(r.r2,1),'explained by the market')+card('CAPM expected return',pc(d.capm),'Rf + β(Rm − Rf)')+
+  card('Portfolio return (annual)',pc(d.Rp),'average per period × '+d.ppy)+card('Market return (annual)',pc(d.Rm))+card('Sharpe ratio',f2(d.shP),'market: '+f2(d.shM))+card('Treynor ratio',pc(d.trP),'market: '+pc(d.Rm-d.Rf))+card('Information ratio',f2(d.IR),'vs the market')+card('Tracking error (annual)',pc(d.TE),'sd of Rp − Rm')+card('Annual volatility',pc(d.sP),'portfolio; market '+pc(d.sM))+card('Observations',r.n.toLocaleString(),$('cpfq').value.toLowerCase());
+ var beta=b<.8?'defensive (it moves less than the market)':b>1.2?'aggressive (it moves more than the market)':'close to the market in sensitivity';
+ $('cpdx').innerHTML=note('<b>Beta '+f2(b,2)+'</b> means that, historically, the portfolio moved about '+f2(b,2)+'% for each 1% move in the market: '+beta+'. Market movements explain <b>'+pc(r.r2,0)+'</b> of its variation; the rest is specific (diversifiable) risk.')+
+  note('<b>Jensen’s alpha is '+(d.aAnn>=0?'+':'')+pc(d.aAnn)+' a year</b> (t-statistic '+f2(r.tA)+', p = '+pv(r.pA)+'). '+(sig?'It is statistically different from zero at the 5% level, ':'It is <b>not</b> statistically different from zero at the 5% level, so this sample does not prove skill or its absence; ')+'but alpha estimates are noisy and short samples rarely settle the question.',!sig)+
+  note('<b>Risk-adjusted view:</b> the portfolio’s Sharpe ratio is '+f2(d.shP)+' against '+f2(d.shM)+' for the market ('+(d.shP>d.shM?'higher':'lower')+'), and its information ratio is '+f2(d.IR)+' with a tracking error of '+pc(d.TE)+'.');
+ var xs=d.em,ys=d.ep,xmn=Math.min.apply(null,xs),xmx=Math.max.apply(null,xs),ymn=Math.min.apply(null,ys),ymx=Math.max.apply(null,ys),px=(xmx-xmn)*.05,py=(ymx-ymn)*.05;
+ xy($('cpc3'),{x0:xmn-px,x1:xmx+px,y0:ymn-py,y1:ymx+py,xl:'Market excess return',xpct:true,ypct:true,dots:xs.map(function(x,i){return [x,ys[i]]}),lines:[{pts:[[xmn-px,r.a+b*(xmn-px)],[xmx+px,r.a+b*(xmx+px)]],color:css('--warn'),w:2.2}]});
+ var bmax=Math.max(2,b*1.25),rmax=Math.max(d.Rm,d.Rp,d.capm)+.03,rmin=Math.min(0,d.Rf,d.Rp,d.capm)-.01;
+ xy($('cpc4'),{x0:0,x1:bmax,y0:rmin,y1:rmax,xl:'Beta',ypct:true,lines:[{pts:[[0,d.Rf],[bmax,d.Rf+bmax*(d.Rm-d.Rf)]],color:css('--acc')},{pts:[[b,d.capm],[b,d.Rp]],color:css('--warn'),dash:[4,3],w:1.5}],points:[{x:0,y:d.Rf,color:css('--mute'),label:'Rf',dy:-10},{x:1,y:d.Rm,color:css('--up'),label:'Market',dy:12},{x:b,y:d.Rp,color:css('--warn'),label:'Portfolio',left:b>bmax*.7,dy:-10}]});
+ var rb=rollBeta(d.em,d.ep,d.w);lc($('cpc5'),{x:d.dates,lines:[{y:rb,color:css('--acc'),w:1.8}],ref:b});
+ var gp=[100],gm=[100];d.rp.forEach(function(x,i){gp.push(gp[i]*(1+x));gm.push(gm[i]*(1+d.rm[i]))});var gd=[d.dates[0]].concat(d.dates);lc($('cpc6'),{x:gd,lines:[{y:gp,color:css('--acc'),w:1.8},{y:gm,color:css('--warn'),w:1.8}]})}
+function simulate(){var s=8,rnd=function(){s=(s*1664525+1013904223)%4294967296;return s/4294967296},gn=function(){return Math.sqrt(-2*Math.log(rnd()||1e-9))*Math.cos(2*Math.PI*rnd())};
+ var n=757,h=1e-4,r=0,dates=[],P=[],Mk=[],pp=100,mm=100,d=mkd(2023,0,2);
+ while(dates.length<n){if(d.getDay()%6){h=1.5e-6+.07*r*r+.9*h;r=.0004+Math.sqrt(h)*gn();var rpv=.0002+1.2*r+.005*gn();mm*=1+r;pp*=1+rpv;dates.push(d);P.push(Math.round(pp*100)/100);Mk.push(Math.round(mm*100)/100)}d=mkd(d.getFullYear(),d.getMonth(),d.getDate()+1)}
+ return{dates:dates,P:P,M:Mk}}
+function useSample(){var s=simulate(),rows=s.dates.map(function(d,i){return [d,s.P[i],s.M[i]]});$('cpf').value='';$('cpfq').value='Daily';$('cpty').value='prices';if(setTable(['Date','Portfolio','Market'],rows,'Simulated sample')){T.sim=true;compute()}}
+function readFile(f){if(typeof XLSX==='undefined'){derr('The Excel reader could not load. Check your connection and reload the page.');return}
+ var rd_=new FileReader();rd_.onload=function(){try{var wb=XLSX.read(new Uint8Array(rd_.result),{type:'array',cellDates:true}),ws=wb.Sheets[wb.SheetNames[0]],aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null}).filter(function(r){return r&&r.some(function(c){return c!==null&&c!==''})});
+  if(aoa.length<3)throw new Error('The file needs a header row and at least two data rows.');if(setTable(aoa[0].map(function(h){return h==null?'':String(h)}),aoa.slice(1),f.name))compute()}catch(x){derr(x.message)}};
+ rd_.onerror=function(){derr('Could not read that file.')};rd_.readAsArrayBuffer(f)}
+// ---------- wiring ----------
+CALC.forEach(function(c){setR(c[0],c[4],c[5],c[6],c[7]);link(c[0],rc)});
+setR('rfa',0,12,4,.1);setR('rw',10,250,60,1);link('rfa',compute);link('rw',function(){if(CD){compute()}});
+$('cpal').addEventListener('input',rc);
+$('cpute').addEventListener('click',function(){var al=$('cpal').value.split(/[,;]+/).map(function(s){return s.trim()}).filter(function(s){return s!==''}).map(Number);if(al.length>1&&al.every(isFinite)){setR('te',.1,20,+(trackingError(al.map(function(x){return x/100})).te*100).toFixed(3),.1);rc()}});
+function showTab(i){tab=i;$('cpp0').hidden=i!==0;$('cpp1').hidden=i!==1;Array.prototype.forEach.call($('cptabs').children,function(b,k){b.style.color=k===i?'var(--acc)':'';b.style.borderColor=k===i?'var(--acc)':'';b.setAttribute('aria-selected',k===i)});if(i===0)rc();else{if(!CD&&!T)useSample();else rd()}}
+Array.prototype.forEach.call($('cptabs').children,function(b){b.addEventListener('click',function(){showTab(+b.dataset.t)})});
+['cpdc','cppc','cpmc','cprc','cpty','cpun','cpfq'].forEach(function(id){$(id).addEventListener('change',compute)});
+$('cpsm').addEventListener('click',useSample);$('cpf').addEventListener('change',function(e){var f=e.target.files[0];if(f)readFile(f)});
+$('cpsend').addEventListener('click',function(){if(!CD)return;var d=CD;setR('rp',-10,40,+(d.Rp*100).toFixed(2),.1);setR('rf',0,12,+(d.Rf*100).toFixed(2),.1);setR('rm',-10,30,+(d.Rm*100).toFixed(2),.1);setR('bt',-.5,2.5,+d.reg.b.toFixed(3),.01);setR('sp',1,60,+(d.sP*100).toFixed(2),.1);setR('sm',1,50,+(d.sM*100).toFixed(2),.1);setR('rb',-10,40,+(d.Rm*100).toFixed(2),.1);setR('te',.1,20,+(d.TE*100).toFixed(2),.1);showTab(0)});
+var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){tab===0?rc():rd()},120)});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){tab===0?rc():rd()});
+showTab(0);addEventListener('load',function(){tab===0?rc():rd()});
+
 })();
 </script>
 </body>
